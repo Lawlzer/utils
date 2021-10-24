@@ -67,15 +67,15 @@ const shallowClone = (array) => {
 exports.shallowClone = shallowClone;
 
 const deepClone = (array) => {
-    console.log('DEEP CLONE NOT YET IMPLEMENTED'); 
-    return; 
+    console.log('DEEP CLONE NOT YET IMPLEMENTED');
+    return;
 }
-exports.deepClone = deepClone; 
+exports.deepClone = deepClone;
 
 const getAmountOfTimesInArray = (array, itemToFind) => {
     return array.filter(item => item === itemToFind).length
 }
-exports.getAmountOfTimesInArray = getAmountOfTimesInArray; 
+exports.getAmountOfTimesInArray = getAmountOfTimesInArray;
 
 const addObjectsTogether = (...args) => {
     let output = {}
@@ -90,7 +90,60 @@ const addObjectsTogether = (...args) => {
 }
 exports.addObjectsTogether = addObjectsTogether;
 
-const pluck = (array, key) => {   
+
+/**
+ * very likely susceptible to an SQL injection as this uses eval. 
+ */
+const recursiveUnsafeAddObjectsTogether = (...args) => {
+    let allPaths = [];
+    let leadingPaths = [];
+    const addAllPaths = (existingPath, input) => {
+        for (key of Object.keys(input)) {
+            const newPath = `${existingPath}['${key}']`;
+            if (typeof input[key] === 'number') {
+                if (allPaths.includes(newPath)) continue;
+                allPaths.push(newPath);
+            }
+            if (typeof input[key] === 'object') {
+                if (!leadingPaths.includes(newPath)) leadingPaths.push(newPath);
+                addAllPaths(newPath, input[key]);
+            }
+
+        }
+    }
+    for (let i = 0; i < args.length; i++) {
+        addAllPaths('', args[i]);
+    }
+
+    let output = {};
+    for (leadingPath of leadingPaths) {
+        eval(`output${leadingPath} = {}`);
+    }
+    for (arg of args) {
+        for (path of allPaths) {
+            // console.log('arg: ', arg, ' path: ', path)
+            // console.log(output['teamMultiplier']['hp']);
+            eval(`if (!output${path}) output${path} = 0`);
+            eval(`output${path} += arg${path}`);
+        }
+    }
+    return output;
+}
+exports.recursiveUnsafeAddObjectsTogether = recursiveUnsafeAddObjectsTogether;
+
+const pluck = (array, key) => {
     return array.map(o => o[key]);
 }
 exports.pluck = pluck;
+
+function returnUniquesOnly(a) {
+    var prims = { "boolean": {}, "number": {}, "string": {} }, objs = [];
+    return a.filter(function (item) {
+        var type = typeof item;
+        if (type in prims)
+            return prims[type].hasOwnProperty(item) ? false : (prims[type][item] = true);
+        else
+            return objs.indexOf(item) >= 0 ? false : objs.push(item);
+    });
+}
+exports.returnUniquesOnly = returnUniquesOnly;
