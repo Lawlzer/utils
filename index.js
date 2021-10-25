@@ -1,4 +1,5 @@
 const ms = require('ms');
+const fs = require('fs'); 
 
 const returnRandomCharacters = (length) => {
     let result = '';
