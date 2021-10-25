@@ -11,7 +11,6 @@ const returnRandomCharacters = (length) => {
 }
 exports.returnRandomCharacters = returnRandomCharacters;
 
-
 const returnRandomPassword = (length) => {
     let result = '';
     var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*()_+-=[]{};:.>,<?';
@@ -77,60 +76,6 @@ const getAmountOfTimesInArray = (array, itemToFind) => {
 }
 exports.getAmountOfTimesInArray = getAmountOfTimesInArray;
 
-const addObjectsTogether = (...args) => {
-    let output = {}
-    args.map((object) => {
-        let objectKeys = Object.keys(object);
-        objectKeys.map((key) => {
-            if (!output[key]) output[key] = 0;
-            output[key] += object[key];
-        });
-    });
-    return output;
-}
-exports.addObjectsTogether = addObjectsTogether;
-
-
-/**
- * very likely susceptible to an SQL injection as this uses eval. 
- */
-const recursiveUnsafeAddObjectsTogether = (...args) => {
-    let allPaths = [];
-    let leadingPaths = [];
-    const addAllPaths = (existingPath, input) => {
-        for (key of Object.keys(input)) {
-            const newPath = `${existingPath}['${key}']`;
-            if (typeof input[key] === 'number') {
-                if (allPaths.includes(newPath)) continue;
-                allPaths.push(newPath);
-            }
-            if (typeof input[key] === 'object') {
-                if (!leadingPaths.includes(newPath)) leadingPaths.push(newPath);
-                addAllPaths(newPath, input[key]);
-            }
-
-        }
-    }
-    for (let i = 0; i < args.length; i++) {
-        addAllPaths('', args[i]);
-    }
-
-    let output = {};
-    for (leadingPath of leadingPaths) {
-        eval(`output${leadingPath} = {}`);
-    }
-    for (arg of args) {
-        for (path of allPaths) {
-            // console.log('arg: ', arg, ' path: ', path)
-            // console.log(output['teamMultiplier']['hp']);
-            eval(`if (!output${path}) output${path} = 0`);
-            eval(`output${path} += arg${path}`);
-        }
-    }
-    return output;
-}
-exports.recursiveUnsafeAddObjectsTogether = recursiveUnsafeAddObjectsTogether;
-
 const pluck = (array, key) => {
     return array.map(o => o[key]);
 }
@@ -147,3 +92,23 @@ function returnUniquesOnly(a) {
     });
 }
 exports.returnUniquesOnly = returnUniquesOnly;
+
+const addObjectsTogether = (...input) => {
+    if (input.length === 1) input = [...input];
+    let output = {};
+
+    for (let object of input) {
+        for (let key of Object.keys(object)) {
+            if (typeof object[key] === 'number') {
+                if (!output[key]) output[key] = 0;
+                output[key] += object[key];
+            }
+            if (typeof object[key] === 'object') {
+                if (!output[key]) output[key] = {}
+                output[key] = addObjectsTogether(output[key], object[key]);
+            }
+        }
+    }
+    return output;
+}
+exports.addObjectsTogether = addObjectsTogether;
