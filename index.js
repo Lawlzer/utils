@@ -112,3 +112,25 @@ const addObjectsTogether = (...input) => {
     return output;
 }
 exports.addObjectsTogether = addObjectsTogether;
+
+
+// const object = {
+//     a: {
+//         b: {
+//             c: 'asdfhl'
+//         },
+//     },
+// };
+
+// const path = "a -> b -> c"
+
+// console.log(path.split(' -> ').reduce((acc, val) => acc = acc[val], object));
+
+
+
+const ensureExists = async (dir) => {
+    if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+    }
+}
+exports.ensureExists = ensureExists;
