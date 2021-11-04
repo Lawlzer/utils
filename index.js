@@ -1,5 +1,5 @@
 const ms = require('ms');
-const fs = require('fs'); 
+const fs = require('fs');
 
 const returnRandomCharacters = (length) => {
     let result = '';
@@ -82,9 +82,9 @@ const pluck = (array, key) => {
 }
 exports.pluck = pluck;
 
-function returnUniquesOnly(a) {
+const returnUniquesOnly = (input) => {
     var prims = { "boolean": {}, "number": {}, "string": {} }, objs = [];
-    return a.filter(function (item) {
+    return input.filter(function (item) {
         var type = typeof item;
         if (type in prims)
             return prims[type].hasOwnProperty(item) ? false : (prims[type][item] = true);
@@ -114,24 +114,127 @@ const addObjectsTogether = (...input) => {
 }
 exports.addObjectsTogether = addObjectsTogether;
 
+const chooseWeightedRandom = (input) => {
+    let maxWeight = 0;
+    for (const key in input) { // create the max weight
+        maxWeight += input[key].weight;
+    }
 
-// const object = {
-//     a: {
-//         b: {
-//             c: 'asdfhl'
-//         },
-//     },
-// };
+    let randomNumber = Math.floor(Math.random() * maxWeight); // generate a max number, between 0 and the max weight allowed
+    for (const key in input) { // then go element by element, subtract the weight, if it's lower than the current element, that's the random element
+        randomNumber -= input[key].weight;
+        if (randomNumber <= 0) {
+            return input[key].name;
+        }
+    }
+    throw new Error('chooseWeightedRandom did find an element to return.');
+}
+exports.chooseWeightedRandom = chooseWeightedRandom;
 
-// const path = "a -> b -> c"
+const deepClone = (item) => {
+    if (!item) { return item; } // null, undefined values check
 
-// console.log(path.split(' -> ').reduce((acc, val) => acc = acc[val], object));
+    var types = [Number, String, Boolean],
+        result;
 
+    // normalizing primitives if someone did new String('aaa'), or new Number('444');
+    types.forEach(function (type) {
+        if (item instanceof type) {
+            result = type(item);
+        }
+    });
+
+    if (typeof result == "undefined") {
+        if (Object.prototype.toString.call(item) === "[object Array]") {
+            result = [];
+            item.forEach(function (child, index, array) {
+                result[index] = clone(child);
+            });
+        } else if (typeof item == "object") {
+            // testing that this is DOM
+            if (item.nodeType && typeof item.cloneNode == "function") {
+                result = item.cloneNode(true);
+            } else if (!item.prototype) { // check that this is a literal
+                if (item instanceof Date) {
+                    result = new Date(item);
+                } else {
+                    // it is an object literal
+                    result = {};
+                    for (var i in item) {
+                        result[i] = clone(item[i]);
+                    }
+                }
+            } else {
+                // depending what you would like here,
+                // just keep the reference, or create new object
+                if (false && item.constructor) {
+                    // would not advice to do that, reason? Read below
+                    result = new item.constructor();
+                } else {
+                    result = item;
+                }
+            }
+        } else {
+            result = item;
+        }
+    }
+    
+    return result;
+}
+exports.deepClone = deepClone;
 
 
 const ensureExists = async (dir) => {
-    if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir, { recursive: true });
-    }
+    fs.mkdirSync(path, { recursive: true }); // ensure the directory exists
+    // if (!fs.existsSync(dir)) {
+    //     fs.mkdirSync(dir, { recursive: true });
+    // }
 }
 exports.ensureExists = ensureExists;
+
+
+const compareObjects = (x, y) => {
+    if (x === y) return true;
+    // if both x and y are null or undefined and exactly the same
+
+    if (!(x instanceof Object) || !(y instanceof Object)) return false;
+    // if they are not strictly equal, they both need to be Objects
+
+    if (x.constructor !== y.constructor) return false;
+    // they must have the exact same prototype chain, the closest we can do is
+    // test there constructor.
+
+    for (var p in x) {
+        if (!x.hasOwnProperty(p)) continue;
+        // other properties were tested using x.constructor === y.constructor
+
+        if (!y.hasOwnProperty(p)) return false;
+        // allows to compare x[ p ] and y[ p ] when set to undefined
+
+        if (x[p] === y[p]) continue;
+        // if they have the same strict value or identity then they are equal
+
+        if (typeof (x[p]) !== "object") return false;
+        // Numbers, Strings, Functions, Booleans must be strictly equal
+        
+        if (!compareObjects(x[p], y[p])) return false;
+        // Objects and Arrays must be tested recursively
+    }
+
+    for (p in y)
+    if (y.hasOwnProperty(p) && !x.hasOwnProperty(p))
+    return false;
+    // allows x[ p ] to be set to undefined
+
+    return true;
+}
+exports.compareObjects = compareObjects;
+
+const returnNextFileNumber = (path) => {
+    fs.mkdirSync(path, { recursive: true }); // ensure the directory exists
+    let existingFileNames = fs.readdirSync(path);
+    if (existingFileNames.length < 1) return '1';
+    existingFileNames.sort((b, a) => parseInt(a) - parseInt(b)); // sort the files by INT (if we don't parseInt, we'll read them as strings === BAD)
+    return (parseInt(existingFileNames[0]) + 1) + '';
+}
+exports.returnNextFileNumber = returnNextFileNumber;
