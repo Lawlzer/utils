@@ -66,12 +66,6 @@ const shallowClone = (array) => {
 }
 exports.shallowClone = shallowClone;
 
-const deepClone = (array) => {
-    console.log('DEEP CLONE NOT YET IMPLEMENTED');
-    return;
-}
-exports.deepClone = deepClone;
-
 const getAmountOfTimesInArray = (array, itemToFind) => {
     return array.filter(item => item === itemToFind).length
 }
@@ -183,7 +177,6 @@ const deepClone = (item) => {
 }
 exports.deepClone = deepClone;
 
-
 const ensureExists = async (dir) => {
     fs.mkdirSync(path, { recursive: true }); // ensure the directory exists
     // if (!fs.existsSync(dir)) {
@@ -191,7 +184,6 @@ const ensureExists = async (dir) => {
     // }
 }
 exports.ensureExists = ensureExists;
-
 
 const compareObjects = (x, y) => {
     if (x === y) return true;
