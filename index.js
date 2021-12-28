@@ -187,6 +187,6 @@ const returnNextFileNumber = (path) => {
 exports.returnNextFileNumber = returnNextFileNumber;
 
 const getStartingDirectory = () => {
-    return fs.readFile(path.resolve(__dirname, 'settings.json'), 'UTF-8', callback);
+    return path.resolve(__dirname);
 }
 exports.getStartingDirectory = getStartingDirectory;
