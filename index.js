@@ -1,6 +1,8 @@
 const ms = require('ms');
 const fs = require('fs');
 
+const path = require('path'); 
+
 const returnRandomCharacters = (length) => {
     let result = '';
     var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
