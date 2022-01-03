@@ -1,7 +1,7 @@
 const ms = require('ms');
 const fs = require('fs');
 
-const path = require('path'); 
+const path = require('path');
 
 const returnRandomCharacters = (length) => {
     let result = '';
@@ -163,14 +163,14 @@ const compareObjects = (x, y) => {
 
         if (typeof (x[p]) !== "object") return false;
         // Numbers, Strings, Functions, Booleans must be strictly equal
-        
+
         if (!compareObjects(x[p], y[p])) return false;
         // Objects and Arrays must be tested recursively
     }
 
     for (p in y)
-    if (y.hasOwnProperty(p) && !x.hasOwnProperty(p))
-    return false;
+        if (y.hasOwnProperty(p) && !x.hasOwnProperty(p))
+            return false;
     // allows x[ p ] to be set to undefined
 
     return true;
@@ -190,3 +190,16 @@ const getStartingDirectory = () => {
     return path.resolve(__dirname);
 }
 exports.getStartingDirectory = getStartingDirectory;
+
+const returnCustomUwUforUwU = (text, faces = false) => {
+    var faces = ["(・`ω´・)", ";;w;;", "owo", "UwU", ">w<", "^w^"];
+    text = text.replace(/(?:r|l)/g, "w"); // replace "r" and "l" with w
+    text = text.replace(/(?:R|L)/g, "W"); // replace "R" and "L" with W
+    text = text.replace(/n([aeiou])/g, 'ny$1'); // replace n(vowel) with ny(vowel) 
+    text = text.replace(/N([aeiou])/g, 'Ny$1'); // replace N(vowel) with Ny(vowel)
+    text = text.replace(/N([AEIOU])/g, 'Ny$1'); // replace N(VOWEL) with Ny(VOWEL)
+    text = text.replace(/ove/g, "uv"); // replace "ove" with "uv"
+    text = text.replace(/\!+/g, " " + faces[Math.floor(Math.random() * faces.length)] + " ");
+    return text;
+}
+module.exports.returnCustomUwUforUwU = returnCustomUwUforUwU
