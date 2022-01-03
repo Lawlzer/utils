@@ -191,15 +191,15 @@ const getStartingDirectory = () => {
 }
 exports.getStartingDirectory = getStartingDirectory;
 
-const returnCustomUwUforUwU = (text, faces = false) => {
-    var faces = ["(・`ω´・)", ";;w;;", "owo", "UwU", ">w<", "^w^"];
+const returnCustomUwUforUwU = (text, addFaces = false) => {
+    const faces = ["(・`ω´・)", ";;w;;", "owo", "UwU", ">w<", "^w^"];
     text = text.replace(/(?:r|l)/g, "w"); // replace "r" and "l" with w
     text = text.replace(/(?:R|L)/g, "W"); // replace "R" and "L" with W
     text = text.replace(/n([aeiou])/g, 'ny$1'); // replace n(vowel) with ny(vowel) 
     text = text.replace(/N([aeiou])/g, 'Ny$1'); // replace N(vowel) with Ny(vowel)
     text = text.replace(/N([AEIOU])/g, 'Ny$1'); // replace N(VOWEL) with Ny(VOWEL)
     text = text.replace(/ove/g, "uv"); // replace "ove" with "uv"
-    text = text.replace(/\!+/g, " " + faces[Math.floor(Math.random() * faces.length)] + " ");
+    if (addFaces) faces = text.replace(/\!+/g, " " + faces[Math.floor(Math.random() * faces.length)] + " ");
     return text;
 }
 module.exports.returnCustomUwUforUwU = returnCustomUwUforUwU
