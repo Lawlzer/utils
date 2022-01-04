@@ -187,7 +187,9 @@ const returnNextFileNumber = (path) => {
 exports.returnNextFileNumber = returnNextFileNumber;
 
 const getStartingDirectory = () => {
-    return path.resolve(__dirname);
+    return process.cwd();
+    // return require.main.path; // seems to be the same?
+    // return path.resolve(__dirname); // may also work? (but not sure)
 }
 exports.getStartingDirectory = getStartingDirectory;
 
