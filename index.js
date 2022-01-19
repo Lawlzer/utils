@@ -25,8 +25,9 @@ const returnRandomPassword = (length) => {
 }
 exports.returnRandomPassword = returnRandomPassword;
 
-const sleep = async (ms) => {
-    return new Promise(resolve => setTimeout(resolve, ms));
+const sleep = async (inputTime) => {
+    if (typeof inputTime === 'string') inputTime = ms(inputTime); // convert to ms if it's not already, this handles things like ('10s' or 10000)
+    return new Promise(resolve => setTimeout(resolve, inputTime));
 }
 exports.sleep = sleep;
 
@@ -204,4 +205,4 @@ const returnCustomUwUforUwU = (text, addFaces = false) => {
     if (addFaces) faces = text.replace(/\!+/g, " " + faces[Math.floor(Math.random() * faces.length)] + " ");
     return text;
 }
-module.exports.returnCustomUwUforUwU = returnCustomUwUforUwU
+module.exports.returnCustomUwUforUwU = returnCustomUwUforUwU;
