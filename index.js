@@ -206,3 +206,8 @@ const returnCustomUwUforUwU = (text, addFaces = false) => {
     return text;
 }
 module.exports.returnCustomUwUforUwU = returnCustomUwUforUwU;
+
+const floorToPlace = (num, precision) => {
+    return Math.floor(num * (Math.pow(10, precision))) / (Math.pow(10, precision));
+}
+exports.floorToPlace = floorToPlace;

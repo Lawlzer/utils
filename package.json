@@ -1,6 +1,6 @@
 {
   "name": "@lawlzer/helpers",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "The default Helpers file for any of Lawlzer's coding projects. ",
   "main": "index.js",
   "scripts": {
