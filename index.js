@@ -12,29 +12,34 @@ const returnRandomCharacters = (length) => {
     }
     return result;
 }
-exports.returnRandomCharacters = returnRandomCharacters;
+module.exports.returnRandomCharacters = returnRandomCharacters;
 
-const returnRandomPassword = (length) => {
-    let result = '';
-    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*()_+-=[]{};:.>,<?';
-    var charactersLength = characters.length;
-    for (var i = 0; i < length; i++) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+const returnRandomString = (length, { capitalLetters = true, lowercaseLetters = true, numbers = true, symbols = true } = {}) => {
+    let characters = ''; 
+
+    characters += capitalLetters ? 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' : '';
+    characters += lowercaseLetters ? 'abcdefghijklmnopqrstuvwxyz' : '';
+    characters += numbers ? '0123456789' : '';
+    characters += symbols ? '!@#$%^&*()_+-=[]{};\':"|,./<>?' : '';
+
+    let result = ''; 
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * characters.length));
     }
     return result;
 }
-exports.returnRandomPassword = returnRandomPassword;
+module.exports.returnRandomString = returnRandomString;
 
 const sleep = async (inputTime) => {
     if (typeof inputTime === 'string') inputTime = ms(inputTime); // convert to ms if it's not already, this handles things like ('10s' or 10000)
     return new Promise(resolve => setTimeout(resolve, inputTime));
 }
-exports.sleep = sleep;
+module.exports.sleep = sleep;
 
 const returnRandom = (input) => {
     return input[Math.floor(Math.random() * input.length)];
 }
-exports.returnRandom = returnRandom;
+module.exports.returnRandom = returnRandom;
 
 const returnShuffledArray = (array) => {
     var currentIndex = array.length, randomIndex;
@@ -54,7 +59,7 @@ const returnShuffledArray = (array) => {
     return array;
 }
 
-exports.returnShuffledArray = returnShuffledArray;
+module.exports.returnShuffledArray = returnShuffledArray;
 
 const replaceAll = (str, find, replace) => {
     const innerEscapeRegExp = (string) => {
@@ -62,22 +67,22 @@ const replaceAll = (str, find, replace) => {
     }
     return str.replace(new RegExp(innerEscapeRegExp(find), 'g'), replace);
 }
-exports.replaceAll = replaceAll;
+module.exports.replaceAll = replaceAll;
 
 const shallowClone = (array) => {
     return JSON.parse(JSON.stringify(array));
 }
-exports.shallowClone = shallowClone;
+module.exports.shallowClone = shallowClone;
 
 const getAmountOfTimesInArray = (array, itemToFind) => {
     return array.filter(item => item === itemToFind).length
 }
-exports.getAmountOfTimesInArray = getAmountOfTimesInArray;
+module.exports.getAmountOfTimesInArray = getAmountOfTimesInArray;
 
 const pluck = (array, key) => {
     return array.map(o => o[key]);
 }
-exports.pluck = pluck;
+module.exports.pluck = pluck;
 
 const returnUniquesOnly = (input) => {
     var prims = { "boolean": {}, "number": {}, "string": {} }, objs = [];
@@ -89,7 +94,7 @@ const returnUniquesOnly = (input) => {
             return objs.indexOf(item) >= 0 ? false : objs.push(item);
     });
 }
-exports.returnUniquesOnly = returnUniquesOnly;
+module.exports.returnUniquesOnly = returnUniquesOnly;
 
 const addObjectsTogether = (...input) => {
     if (input.length === 1) input = [...input];
@@ -109,7 +114,7 @@ const addObjectsTogether = (...input) => {
     }
     return output;
 }
-exports.addObjectsTogether = addObjectsTogether;
+module.exports.addObjectsTogether = addObjectsTogether;
 
 const chooseWeightedRandom = (input) => {
     let maxWeight = 0;
@@ -126,12 +131,12 @@ const chooseWeightedRandom = (input) => {
     }
     throw new Error('chooseWeightedRandom did find an element to return.');
 }
-exports.chooseWeightedRandom = chooseWeightedRandom;
+module.exports.chooseWeightedRandom = chooseWeightedRandom;
 
 const deepClone = (item) => {
     return JSON.parse(JSON.stringify(item));
 }
-exports.deepClone = deepClone;
+module.exports.deepClone = deepClone;
 
 const ensureExists = (path) => {
     fs.mkdirSync(path, { recursive: true }); // ensure the directory exists
@@ -139,7 +144,7 @@ const ensureExists = (path) => {
     //     fs.mkdirSync(path, { recursive: true });
     // }
 }
-exports.ensureExists = ensureExists;
+module.exports.ensureExists = ensureExists;
 
 const compareObjects = (x, y) => {
     if (x === y) return true;
@@ -176,7 +181,7 @@ const compareObjects = (x, y) => {
 
     return true;
 }
-exports.compareObjects = compareObjects;
+module.exports.compareObjects = compareObjects;
 
 const returnNextFileNumber = (path) => {
     fs.mkdirSync(path, { recursive: true }); // ensure the directory exists
@@ -185,14 +190,14 @@ const returnNextFileNumber = (path) => {
     existingFileNames.sort((b, a) => parseInt(a) - parseInt(b)); // sort the files by INT (if we don't parseInt, we'll read them as strings === BAD)
     return (parseInt(existingFileNames[0]) + 1) + '';
 }
-exports.returnNextFileNumber = returnNextFileNumber;
+module.exports.returnNextFileNumber = returnNextFileNumber;
 
 const getStartingDirectory = () => {
     return process.cwd();
     // return require.main.path; // seems to be the same?
     // return path.resolve(__dirname); // may also work? (but not sure)
 }
-exports.getStartingDirectory = getStartingDirectory;
+module.exports.getStartingDirectory = getStartingDirectory;
 
 const returnCustomUwUforUwU = (text, addFaces = false) => {
     const faces = ["(・`ω´・)", ";;w;;", "owo", "UwU", ">w<", "^w^"];
@@ -210,4 +215,4 @@ module.exports.returnCustomUwUforUwU = returnCustomUwUforUwU;
 const floorToPlace = (num, precision) => {
     return Math.floor(num * (Math.pow(10, precision))) / (Math.pow(10, precision));
 }
-exports.floorToPlace = floorToPlace;
+module.exports.floorToPlace = floorToPlace;
