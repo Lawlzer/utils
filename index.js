@@ -20,7 +20,7 @@ const returnRandomString = (length, { capitalLetters = true, lowercaseLetters = 
     characters += capitalLetters ? 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' : '';
     characters += lowercaseLetters ? 'abcdefghijklmnopqrstuvwxyz' : '';
     characters += numbers ? '0123456789' : '';
-    characters += symbols ? '!@#$%^&*()_+-=[]{};\':"|,./<>?' : '';
+    characters += symbols ? '!@#$%^&*()_+-=[]{};:|,./<>?' : '';
 
     let result = ''; 
     for (let i = 0; i < length; i++) {
