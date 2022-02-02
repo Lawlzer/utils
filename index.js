@@ -2,44 +2,38 @@ const ms = require('ms');
 const fs = require('fs');
 
 const path = require('path');
+const fsPromises = fs.promises;
 
-const returnRandomCharacters = (length) => {
-    let result = '';
-    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-    var charactersLength = characters.length;
-    for (var i = 0; i < length; i++) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return result;
-}
-module.exports.returnRandomCharacters = returnRandomCharacters;
 
-const returnRandomString = (length, { capitalLetters = true, lowercaseLetters = true, numbers = true, symbols = true } = {}) => {
-    let characters = ''; 
+const returnRandomCharacters = (length, { capitalLetters = true, lowercaseLetters = true, numbers = true, symbols = true } = {}) => {
+    let characters = '';
 
     characters += capitalLetters ? 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' : '';
     characters += lowercaseLetters ? 'abcdefghijklmnopqrstuvwxyz' : '';
     characters += numbers ? '0123456789' : '';
     characters += symbols ? '!@#$%^&*()_+-=[]{};:|,./<>?' : '';
 
-    let result = ''; 
+    let result = '';
     for (let i = 0; i < length; i++) {
         result += characters.charAt(Math.floor(Math.random() * characters.length));
     }
     return result;
-}
-module.exports.returnRandomString = returnRandomString;
+};
+module.exports.returnRandomCharacters = returnRandomCharacters;
+
 
 const sleep = async (inputTime) => {
     if (typeof inputTime === 'string') inputTime = ms(inputTime); // convert to ms if it's not already, this handles things like ('10s' or 10000)
     return new Promise(resolve => setTimeout(resolve, inputTime));
-}
+};
 module.exports.sleep = sleep;
+
 
 const returnRandom = (input) => {
     return input[Math.floor(Math.random() * input.length)];
-}
+};
 module.exports.returnRandom = returnRandom;
+
 
 const returnShuffledArray = (array) => {
     var currentIndex = array.length, randomIndex;
@@ -57,7 +51,8 @@ const returnShuffledArray = (array) => {
     }
 
     return array;
-}
+};
+
 
 module.exports.returnShuffledArray = returnShuffledArray;
 
@@ -66,23 +61,27 @@ const replaceAll = (str, find, replace) => {
         return string.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
     }
     return str.replace(new RegExp(innerEscapeRegExp(find), 'g'), replace);
-}
+};
 module.exports.replaceAll = replaceAll;
+
 
 const shallowClone = (array) => {
     return JSON.parse(JSON.stringify(array));
-}
+};
 module.exports.shallowClone = shallowClone;
+
 
 const getAmountOfTimesInArray = (array, itemToFind) => {
     return array.filter(item => item === itemToFind).length
-}
+};
 module.exports.getAmountOfTimesInArray = getAmountOfTimesInArray;
+
 
 const pluck = (array, key) => {
     return array.map(o => o[key]);
-}
+};
 module.exports.pluck = pluck;
+
 
 const returnUniquesOnly = (input) => {
     var prims = { "boolean": {}, "number": {}, "string": {} }, objs = [];
@@ -95,6 +94,7 @@ const returnUniquesOnly = (input) => {
     });
 }
 module.exports.returnUniquesOnly = returnUniquesOnly;
+
 
 const addObjectsTogether = (...input) => {
     if (input.length === 1) input = [...input];
@@ -113,8 +113,9 @@ const addObjectsTogether = (...input) => {
         }
     }
     return output;
-}
+};
 module.exports.addObjectsTogether = addObjectsTogether;
+
 
 const chooseWeightedRandom = (input) => {
     let maxWeight = 0;
@@ -130,21 +131,24 @@ const chooseWeightedRandom = (input) => {
         }
     }
     throw new Error('chooseWeightedRandom did find an element to return.');
-}
+};
 module.exports.chooseWeightedRandom = chooseWeightedRandom;
+
 
 const deepClone = (item) => {
     return JSON.parse(JSON.stringify(item));
-}
+};
 module.exports.deepClone = deepClone;
+
 
 const ensureExists = (path) => {
     fs.mkdirSync(path, { recursive: true }); // ensure the directory exists
     // if (!fs.existsSync(path)) {
     //     fs.mkdirSync(path, { recursive: true });
     // }
-}
+};
 module.exports.ensureExists = ensureExists;
+
 
 const compareObjects = (x, y) => {
     if (x === y) return true;
@@ -180,8 +184,9 @@ const compareObjects = (x, y) => {
     // allows x[ p ] to be set to undefined
 
     return true;
-}
+};
 module.exports.compareObjects = compareObjects;
+
 
 const returnNextFileNumber = (path) => {
     fs.mkdirSync(path, { recursive: true }); // ensure the directory exists
@@ -189,15 +194,17 @@ const returnNextFileNumber = (path) => {
     if (existingFileNames.length < 1) return '1';
     existingFileNames.sort((b, a) => parseInt(a) - parseInt(b)); // sort the files by INT (if we don't parseInt, we'll read them as strings === BAD)
     return (parseInt(existingFileNames[0]) + 1) + '';
-}
+};
 module.exports.returnNextFileNumber = returnNextFileNumber;
+
 
 const getStartingDirectory = () => {
     return process.cwd();
     // return require.main.path; // seems to be the same?
     // return path.resolve(__dirname); // may also work? (but not sure)
-}
+};
 module.exports.getStartingDirectory = getStartingDirectory;
+
 
 const returnCustomUwUforUwU = (text, addFaces = false) => {
     const faces = ["(・`ω´・)", ";;w;;", "owo", "UwU", ">w<", "^w^"];
@@ -207,12 +214,43 @@ const returnCustomUwUforUwU = (text, addFaces = false) => {
     text = text.replace(/N([aeiou])/g, 'Ny$1'); // replace N(vowel) with Ny(vowel)
     text = text.replace(/N([AEIOU])/g, 'Ny$1'); // replace N(VOWEL) with Ny(VOWEL)
     text = text.replace(/ove/g, "uv"); // replace "ove" with "uv"
-    if (addFaces) faces = text.replace(/\!+/g, " " + faces[Math.floor(Math.random() * faces.length)] + " ");
+    if (addFaces) text = text.replace(/\!+/g, " " + faces[Math.floor(Math.random() * faces.length)] + " ");
     return text;
-}
+};
 module.exports.returnCustomUwUforUwU = returnCustomUwUforUwU;
+
 
 const floorToPlace = (num, precision) => {
     return Math.floor(num * (Math.pow(10, precision))) / (Math.pow(10, precision));
-}
+};
 module.exports.floorToPlace = floorToPlace;
+
+
+// Files have a name, that look like "1643824533131_O8SwREMybc7Mo7SPh7bGRiLOvpteRpZnQFgXq8ITIPsiRDOt4Q". The first part is the date it should be deleted at, and the second one is a random string. 
+// When this function is called, it will return the name of the new file, and then delete any old files.
+// We also add a random string after, to ensure we don't create 2 files with the exact same time. 
+const temporarySave = async (data, timeToSave = ms('1d')) => {
+    await ensureExists('./temp'); // Ensure the temp directory exists
+
+    const msTimeToSave = typeof timeToSave === 'string' ? ms(timeToSave) : timeToSave;
+    if (!msTimeToSave) {
+        console.log('temporarySave: timeToSave is not a valid time.');
+        return false;
+    }
+
+    const futureDate = Date.now() + msTimeToSave;
+    const fileName = futureDate + '_' + returnRandomCharacters(50, { symbols: false }); // Generate a random file name that includes the date to delete it at
+    await fsPromises.writeFile(`${getStartingDirectory()}/temp/${fileName}`, JSON.stringify(data));
+
+    // An ASYNC function we call SYNC, so we can return faster
+    (async () => {
+        const allFiles = await fsPromises.readdir(getStartingDirectory() + '/temp');
+        for await (const file of allFiles) {
+            const fileTooOld = Date.now() > parseInt(file.split('_')[0]);
+            if (!fileTooOld) continue;
+            await fsPromises.unlink(`${getStartingDirectory()}/temp/${file}`); // The file is too old and should be deleted
+        };
+    })();
+    return fileName;
+};
+module.exports.temporarySave = temporarySave;
