@@ -254,3 +254,15 @@ const temporarySave = async (data, timeToSave = ms('1d')) => {
     return fileName;
 };
 module.exports.temporarySave = temporarySave;
+
+
+// Take an array, and split it into smaller arrays. 
+// E.g: splitArray([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 2) -> [[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]
+const splitArray = (arr, chunkSize) => {
+    let chunks = [];
+    for (let i = 0; i < arr.length; i += chunkSize) {
+        chunks.push(arr.slice(i, i + chunkSize));
+    }
+    return chunks;
+}
+module.exports.splitArray = splitArray; 
