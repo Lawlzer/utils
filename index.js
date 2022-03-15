@@ -253,3 +253,13 @@ const objectMap = (obj, func) => {
 	}, {});
 };
 module.exports.objectMap = objectMap;
+
+const checkIfExists = async (path) => {
+	try {
+		await fsPromises.access(path);
+		return true;
+	} catch (e) {
+		return false;
+	}
+};
+module.exports.checkIfExists = checkIfExists;
