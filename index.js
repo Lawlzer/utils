@@ -263,3 +263,9 @@ const checkIfExists = async (path) => {
 	}
 };
 module.exports.checkIfExists = checkIfExists;
+
+// Force a number to be within the (min) and (max). If it's outside of this range, it will be set to the (min) or the (max)
+const clamp = (value, min, max) => {
+	return Math.min(Math.max(value, min), max);
+};
+module.exports.clamp = clamp;
