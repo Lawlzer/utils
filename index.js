@@ -104,7 +104,12 @@ const addObjectsTogether = (...input) => {
 };
 module.exports.addObjectsTogether = addObjectsTogether;
 
-const chooseWeightedRandom = (input) => {
+// chooseWeightedRandomWithWeightKey({
+// 	one: { weight: 1 },
+// 	two: { weight: 2 },
+// 	three: { weight: 3 },
+// });
+const chooseWeightedRandomWithWeightKey = (input) => {
 	let maxWeight = 0;
 	for (const key in input) {
 		// create the max weight
@@ -119,9 +124,30 @@ const chooseWeightedRandom = (input) => {
 			return input[key].name;
 		}
 	}
-	throw new Error('chooseWeightedRandom did find an element to return.');
+	throw new Error('chooseWeightedRandomWithWeightKey did find an element to return.');
 };
-module.exports.chooseWeightedRandom = chooseWeightedRandom;
+module.exports.chooseWeightedRandomWithWeightKey = chooseWeightedRandomWithWeightKey;
+
+// console.log(
+// 	chooseRandomWeightedObject({
+// 		one: 1,
+// 		two: 2,
+// 		three: 3,
+// 	})
+// );
+const chooseRandomWeightedObject = (allObjects) => {
+	const totalWeight = Object.values(allObjects).reduce((acc, currentWeight) => acc + currentWeight, 0);
+
+	let currentWeight = Math.floor(Math.random() * totalWeight);
+	for (const key of Object.keys(allObjects)) {
+		currentWeight -= allObjects[key];
+		if (currentWeight <= 0) {
+			return key;
+		}
+	}
+	throw new Error('chooseRandomWeightedObject did find an element to return.');
+};
+module.exports.chooseRandomWeightedObject = chooseRandomWeightedObject;
 
 const deepClone = (item) => {
 	return JSON.parse(JSON.stringify(item));
