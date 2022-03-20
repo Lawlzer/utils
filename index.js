@@ -377,3 +377,16 @@ const clamp = (value, min, max) => {
 	return Math.min(Math.max(value, min), max);
 };
 module.exports.clamp = clamp;
+
+// https://www.reddit.com/r/ProgrammerHumor/comments/thqw5c/itll_never_work_and_i_know_that_for_sure/
+const debug = (...message) => {
+	if (message.length <= 0) message = ['Helpers.debug call'];
+	let e = new Error();
+	const fileName = e.stack.split('\n')[2].split('/').pop().split('(')[1].split(')')[0].split('\\')[e.stack.split('\n')[2].split('/').pop().split('(')[1].split(')')[0].split('\\').length - 1].split(':')[0];
+	const frame = e.stack.split('\n')[2]; // change to 3 for grandparent func
+	const lineNumber = frame.split(':').reverse()[1];
+	const functionName = frame.split(' ')[5];
+	const result = `${fileName}: -- ${functionName}(${lineNumber})    -    ${message.join(' ')}`;
+	console.log(result);
+};
+module.exports.debug = debug;
