@@ -390,3 +390,20 @@ const debug = (...message) => {
 	console.log(result);
 };
 module.exports.debug = debug;
+
+const racePromises = async (promises) => {
+	const wrappedPromises = [];
+	promises.map((promise, index) => {
+		wrappedPromises.push(
+			new Promise((resolve) => {
+				promise
+					.then(() => {
+						resolve(index);
+					})
+					.catch();
+			}).catch()
+		);
+	});
+	return Promise.race(wrappedPromises).catch();
+};
+module.exports.racePromises = racePromises;
