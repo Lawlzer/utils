@@ -237,8 +237,9 @@ const deepClone = (item) => {
 };
 module.exports.deepClone = deepClone;
 
+// ensure the directory exists
 const ensureExists = (path) => {
-	fs.mkdirSync(path, { recursive: true }); // ensure the directory exists
+	fs.mkdirSync(path, { recursive: true });
 	// if (!fs.existsSync(path)) {
 	//     fs.mkdirSync(path, { recursive: true });
 	// }
@@ -319,6 +320,7 @@ module.exports.floorToPlace = floorToPlace;
 // When this function is called, it will return the name of the new file, and then delete any old files.
 // We also add a random string after, to ensure we don't create 2 files with the exact same time.
 const temporarySave = async (data, timeToSave = ms('1d')) => {
+	if (typeof data !== 'string') throw new Error('temporarySave was not passed a string for data. Please JSON.stringify(data)');
 	const pathToTemp = path.join(getStartingDirectory() + '/temp/');
 	await ensureExists(pathToTemp); // Ensure the temp directory exists
 
@@ -329,7 +331,7 @@ const temporarySave = async (data, timeToSave = ms('1d')) => {
 
 	const futureDate = Date.now() + msTimeToSave;
 	const fileName = futureDate + '_' + returnRandomCharacters(50, { symbols: false }); // Generate a random file name that includes the date to delete it at
-	await fsPromises.writeFile(`${pathToTemp}/${fileName}`, JSON.stringify(data));
+	await fsPromises.writeFile(`${pathToTemp}/${fileName}`, data);
 
 	// An ASYNC function we call SYNC, so we can return faster
 	(async () => {
