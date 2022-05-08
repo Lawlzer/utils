@@ -2,8 +2,8 @@ const ms = require('ms');
 const fs = require('fs');
 
 const path = require('path');
-const os = require('os');
 const fsPromises = fs.promises;
+
 
 const returnRandomCharacters = (length, { capitalLetters = true, lowercaseLetters = true, numbers = true, symbols = true } = {}) => {
 	let characters = '';
@@ -21,16 +21,19 @@ const returnRandomCharacters = (length, { capitalLetters = true, lowercaseLetter
 };
 module.exports.returnRandomCharacters = returnRandomCharacters;
 
+
 const sleep = async (inputTime) => {
 	if (typeof inputTime === 'string') inputTime = ms(inputTime); // convert to ms if it's not already, this handles things like ('10s' or 10000)
 	return new Promise((resolve) => setTimeout(resolve, inputTime));
 };
 module.exports.sleep = sleep;
 
-const returnRandom = (input) => {
-	return input[Math.floor(Math.random() * input.length)];
+
+const returnRandom = (array) => {
+	return array[Math.floor(Math.random() * array.length)];
 };
 module.exports.returnRandom = returnRandom;
+
 
 const returnShuffledArray = (array) => {
 	var currentIndex = array.length,
@@ -59,20 +62,24 @@ const replaceAll = (str, find, replace) => {
 };
 module.exports.replaceAll = replaceAll;
 
+
 const shallowClone = (array) => {
 	return JSON.parse(JSON.stringify(array));
 };
 module.exports.shallowClone = shallowClone;
 
-const getAmountOfTimesInArray = (array, itemToFind) => {
+
+const returnAmountOfTimesInArray = (array, itemToFind) => {
 	return array.filter((item) => item === itemToFind).length;
 };
-module.exports.getAmountOfTimesInArray = getAmountOfTimesInArray;
+module.exports.returnAmountOfTimesInArray = returnAmountOfTimesInArray;
+
 
 const pluck = (array, key) => {
 	return array.map((o) => o[key]);
 };
 module.exports.pluck = pluck;
+
 
 const returnUniquesOnly = (input) => {
 	var prims = { boolean: {}, number: {}, string: {} },
@@ -85,7 +92,8 @@ const returnUniquesOnly = (input) => {
 };
 module.exports.returnUniquesOnly = returnUniquesOnly;
 
-const addObjectsTogether = (...input) => {
+
+const returnCombinedObjects = (...input) => {
 	if (input.length === 1) input = [...input];
 	let output = {};
 
@@ -97,20 +105,24 @@ const addObjectsTogether = (...input) => {
 			}
 			if (typeof object[key] === 'object') {
 				if (!output[key]) output[key] = {};
-				output[key] = addObjectsTogether(output[key], object[key]);
+				output[key] = returnCombinedObjects(output[key], object[key]);
 			}
 		}
 	}
 	return output;
 };
-module.exports.addObjectsTogether = addObjectsTogether;
+module.exports.returnCombinedObjects = returnCombinedObjects;
 
-// chooseWeightedRandomWithWeightKey({
-// 	one: { weight: 1 },
-// 	two: { weight: 2 },
-// 	three: { weight: 3 },
-// });
-const chooseWeightedRandomWithWeightKey = (input) => {
+/**
+ *  Will choose one of multiple objects based on their weights
+ * 
+ * {
+ * one: { weight: 1 }, 
+ * two: { weight: 2 }, 
+ * three: { weight: 3 }
+ * }
+ */
+const returnRandomWeightedObject = (input) => {
 	let maxWeight = 0;
 	for (const key in input) {
 		// create the max weight
@@ -125,9 +137,10 @@ const chooseWeightedRandomWithWeightKey = (input) => {
 			return input[key].name;
 		}
 	}
-	throw new Error('chooseWeightedRandomWithWeightKey did find an element to return.');
+	throw new Error('returnRandomWeightedObject did find an element to return.');
 };
-module.exports.chooseWeightedRandomWithWeightKey = chooseWeightedRandomWithWeightKey;
+module.exports.returnRandomWeightedObject = returnRandomWeightedObject;
+
 
 // https://stackoverflow.com/questions/19098797/fastest-way-to-flatten-un-flatten-nested-json-objects
 const flattenObject = (function (isArray, wrapped) {
@@ -177,6 +190,7 @@ const flattenObject = (function (isArray, wrapped) {
 })(Array.isArray, Object);
 module.exports.flattenObject = flattenObject;
 
+
 // https://stackoverflow.com/questions/19098797/fastest-way-to-flatten-un-flatten-nested-json-objects
 const unflattenObject = (table) => {
 	var result = {};
@@ -218,7 +232,8 @@ const unflattenObject = (table) => {
 };
 module.exports.unflattenObject = unflattenObject;
 
-const chooseRandomWeightedObject = (allObjects, recursive = false) => {
+
+const returnRandomWeightObject = (allObjects, recursive = false) => {
 	const totalWeight = Object.values(allObjects).reduce((acc, currentWeight) => acc + currentWeight, 0);
 
 	let currentWeight = Math.floor(Math.random() * totalWeight);
@@ -228,20 +243,23 @@ const chooseRandomWeightedObject = (allObjects, recursive = false) => {
 			return key;
 		}
 	}
-	throw new Error('chooseRandomWeightedObject did find an element to return.');
+	throw new Error('@lawlzer/helpers: returnRandomWeightObject did find an element to return.');
 };
-module.exports.chooseRandomWeightedObject = chooseRandomWeightedObject;
+module.exports.returnRandomWeightObject = returnRandomWeightObject;
+
 
 const deepClone = (item) => {
 	return JSON.parse(JSON.stringify(item));
 };
 module.exports.deepClone = deepClone;
 
+
 // ensure the directory exists
 const ensureExists = async (path) => {
 	await fsPromises.mkdir(path, { recursive: true });
 };
 module.exports.ensureExists = ensureExists;
+
 
 const compareObjects = (x, y) => {
 	if (x === y) return true;
@@ -278,23 +296,28 @@ const compareObjects = (x, y) => {
 };
 module.exports.compareObjects = compareObjects;
 
-const returnNextFileNumber = (path) => {
-	fs.mkdirSync(path, { recursive: true }); // ensure the directory exists
-	let existingFileNames = fs.readdirSync(path);
-	if (existingFileNames.length < 1) return '1';
-	existingFileNames.sort((b, a) => parseInt(a) - parseInt(b)); // sort the files by INT (if we don't parseInt, we'll read them as strings === BAD)
-	return parseInt(existingFileNames[0]) + 1 + '';
-};
-module.exports.returnNextFileNumber = returnNextFileNumber;
 
-const getStartingDirectory = () => {
+const nextFileNumber = async (path) => {
+	await ensureExists(path);
+	let existingFileNames = fsPromises.readdir(path);
+
+	let maxFileNumber = 0;
+	for (const fileName of existingFileNames) {
+		if (parseInt(fileName) > maxFileNumber) maxFileNumber = parseInt(fileName);
+	}
+	return ++maxFileNumber; // increment and return 
+};
+module.exports.nextFileNumber = nextFileNumber;
+
+
+const returnStartingDirectory = () => {
 	return process.cwd();
 	// return require.main.path; // seems to be the same?
-	// return path.resolve(__dirname); // may also work? (but not sure)
 };
-module.exports.getStartingDirectory = getStartingDirectory;
+module.exports.returnStartingDirectory = returnStartingDirectory;
 
-const returnCustomUwUforUwU = (text, addFaces = false) => {
+
+const customUwUForUwU = (text, addFaces = false) => {
 	const faces = ['(・`ω´・)', ';;w;;', 'owo', 'UwU', '>w<', '^w^'];
 	text = text.replace(/(?:r|l)/g, 'w'); // replace "r" and "l" with w
 	text = text.replace(/(?:R|L)/g, 'W'); // replace "R" and "L" with W
@@ -305,20 +328,25 @@ const returnCustomUwUforUwU = (text, addFaces = false) => {
 	if (addFaces) text = text.replace(/\!+/g, ' ' + faces[Math.floor(Math.random() * faces.length)] + ' ');
 	return text;
 };
-module.exports.returnCustomUwUforUwU = returnCustomUwUforUwU;
+module.exports.customUwUForUwU = customUwUForUwU;
+
 
 const floorToPlace = (num, precision) => {
 	return Math.floor(num * Math.pow(10, precision)) / Math.pow(10, precision);
 };
 module.exports.floorToPlace = floorToPlace;
 
-// v1
-// Files have a name, that look like "1643824533131_O8SwREMybc7Mo7SPh7bGRiLOvpteRpZnQFgXq8ITIPsiRDOt4Q". The first part is the date it should be deleted at, and the second one is a random string.
-// When this function is called, it will return the name of the new file, and then delete any old files.
-// We also add a random string after, to ensure we don't create 2 files with the exact same time.
+
+/**
+ * @returns Files have a name, that look like "1643824533131_O8SwREMybc7Mo7SPh7bGRiLOvpteRpZnQFgXq8ITIPsiRDOt4Q". The first part is the date it should be deleted at, and the second one is a random string.
+ * 
+ * When this function is called, it will return the name of the new file, and then delete any old files.
+ * 
+ * We also add a random string after, to ensure we don't create 2 files with the exact same time.
+ */
 const temporarySave = async (data, timeToSave = ms('1d')) => {
 	if (typeof data !== 'string') throw new Error('temporarySave was not passed a string for data. Please JSON.stringify(data)');
-	const pathToTemp = path.join(getStartingDirectory() + '/temp/');
+	const pathToTemp = path.join(returnStartingDirectory() + '/temp/');
 	await ensureExists(pathToTemp); // Ensure the temp directory exists
 
 	const msTimeToSave = typeof timeToSave === 'string' ? ms(timeToSave) : timeToSave;
@@ -357,7 +385,7 @@ module.exports.temporarySave = temporarySave;
 // 	const futureDate = Date.now() + msTimeToSave;
 // 	const filePath = path.join(tempFilePath, `/achieveValueTemp_${futureDate}_${returnRandomCharacters(50, { symbols: false })}`); // Generate a random file name that includes the date to delete it at
 // 	await fsPromises.writeFile(filePath, JSON.stringify(data));
-// 	// ${getStartingDirectory()}/temp/
+// 	// ${returnStartingDirectory()}/temp/
 
 // 	return filePath;
 // };
@@ -411,6 +439,7 @@ const debug = (...message) => {
 	console.log(result);
 };
 module.exports.debug = debug;
+
 
 const racePromises = async (promises) => {
 	const wrappedPromises = [];
