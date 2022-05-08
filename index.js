@@ -238,11 +238,8 @@ const deepClone = (item) => {
 module.exports.deepClone = deepClone;
 
 // ensure the directory exists
-const ensureExists = (path) => {
-	fs.mkdirSync(path, { recursive: true });
-	// if (!fs.existsSync(path)) {
-	//     fs.mkdirSync(path, { recursive: true });
-	// }
+const ensureExists = async (path) => {
+	await fsPromises.mkdir(path, { recursive: true });
 };
 module.exports.ensureExists = ensureExists;
 
