@@ -95,10 +95,10 @@ function sleep(inputTime) {
         return __generator(this, function (_a) {
             if (typeof inputTime !== 'number' && typeof inputTime !== 'string')
                 throw new Error('@lawlzer/helpers - sleep: inputTime must be a number or a string representing a number.');
-            if (typeof inputTime !== 'string')
+            if (typeof inputTime === 'string')
                 inputTime = (0, ms_1["default"])(inputTime); // convert to ms if it's not already, this handles things like ('10s' or 10000)
             if (typeof inputTime !== 'number')
-                throw new Error('@lawlzer/helpers - sleep: inputTime must be a string representing a number.');
+                throw new Error('@lawlzer/helpers - sleep: inputTime must be a string that represents a number.');
             myNumber = Number(inputTime);
             return [2 /*return*/, new Promise(function (resolve) { return setTimeout(resolve, myNumber); })];
         });
