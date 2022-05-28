@@ -431,3 +431,8 @@ export async function racePromises(promises: Promise<any>[]): Promise<any> {
     return Promise.race(wrappedPromises).catch();
 };
 
+
+
+export function keys<O extends object>(obj: O): Array<keyof O> {
+    return Object.keys(obj) as Array<keyof O>;
+}; 
