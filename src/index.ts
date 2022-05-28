@@ -4,7 +4,6 @@ import * as path from 'path';
 
 const fsPromises = fs.promises;
 
-
 export function returnRandomCharacters(length: number, { capitalLetters = true, lowercaseLetters = true, numbers = true, symbols = true } = {}): string {
 	let characters = '';
 
@@ -441,7 +440,7 @@ export function keys<O extends object>(obj: O): Array<keyof O> {
 // https://stackoverflow.com/questions/14810506/map-function-for-objects-instead-of-arrays
 interface Dictionary<T> {
     [key: string]: T;
-}
+};
 export function objectMap<TValue, TResult>(
 	obj: Dictionary<TValue>,
 	valSelector: (val: TValue, obj: Dictionary<TValue>) => TResult,
@@ -457,4 +456,4 @@ export function objectMap<TValue, TResult>(
 		ret[retKey] = retVal;
 	}
 	return ret;
-}
+};
