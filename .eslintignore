@@ -1,0 +1,13 @@
+dist
+data
+
+legacy
+temp
+logs
+
+.env
+assets
+
+.eslintrc.js
+babel.config.js
+webpack.config.ts
