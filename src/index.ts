@@ -422,7 +422,7 @@ export function keys<O extends object>(obj: O): Array<keyof O> {
 
 
 // https://stackoverflow.com/questions/14810506/map-function-for-objects-instead-of-arrays
-interface Dictionary<T> {
+export interface Dictionary<T> {
 	[key: string]: T;
 };
 export function objectMap<TValue, TResult>(

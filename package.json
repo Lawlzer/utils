@@ -1,6 +1,6 @@
 {
   "name": "@lawlzer/helpers",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "description": "The default Helpers file for any of Lawlzer's coding projects. ",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
