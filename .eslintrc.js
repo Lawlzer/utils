@@ -44,6 +44,8 @@ module.exports = {
 
 		'prefer-const': 'off', // Will complain if you use "let" and don't reassign the value.
 
+		'no-var': 'off', // "var" is disabled
+
 		// no-misused-promises are cool, but they require the "parserOptions.project" setting
 		// '@typescript-eslint/no-misused-promises': [
 		//     'error',
