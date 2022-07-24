@@ -336,10 +336,7 @@ export async function temporarySave(data: string, timeToSave: string | number = 
 
 	if (typeof timeToSave === 'string') timeToSave = ms(timeToSave);
 
-	if (!timeToSave) {
-		console.log('temporarySave: timeToSave is not a valid time.');
-		return false;
-	}
+	if (!timeToSave) throw new Error('temporarySave: timeToSave is not a valid time.');
 
 	const futureDate = Date.now() + timeToSave;
 	const filePath = path.join(tempFilePath, `/achieveValueTemp_${futureDate}_${returnRandomCharacters(50, { symbols: false })}`); // Generate a random file name that includes the date to delete it at
