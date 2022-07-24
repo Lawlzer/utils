@@ -1,54 +1,70 @@
-module.exports = {
-	'parser': '@typescript-eslint/parser',
-	'plugins': ['@typescript-eslint'],
-	'rules': {
-		'semi': [2, 'always'],
-		'quotes': [
-			'error',
-			'single'
-		],
-		'indent': 2,
-		'no-trailing-spaces': 'off',
-		'no-unused-vars': 'off',
-		'no-extra-semi': 'off',
-		'no-explicit-any': 'off',
-		'no-var': 'off',
-		'no-prototype-builtins': 'off',
-		'no-useless-escape': 'off',
-		'linebreak-style': 'off',
+// We used to run ESLint and Prettier at the same time, but it was extremely slow.
+// Now, ESLint and Prettier are ran separately -- They don't seem to interfere with each other.
 
+module.exports = {
+	parser: '@typescript-eslint/parser',
+	plugins: ['@typescript-eslint', 'simple-import-sort'],
+	rules: {
+		strict: 2,
+
+		'simple-import-sort/imports': 'error',
+		'simple-import-sort/exports': 'error',
+
+		// Prettier should handle all of this
+		// 'semi': [2, 'always'],
+		// 'quotes': [
+		//     'error',
+		//     'single'
+		// ],
+		// 'indent': 'off', // Don't error for JS code, it does weird things -- Only error for TS I guess
+		// '@typescript-eslint/indent': ['error', 'tab'],
+		// 'allowIndentationTabs': 'off',
+		// 'no-mixed-spaces-and-tabs': ['error', 'always'],
+
+		// 'no-extra-semi': 'off', // Prettier handles this anyways
+		// '@typescript-eslint/no-extra-semi': 'off',
+
+		// // When tabbing, it will automatically error if you have tabs/spaces (Handled by Prettier)
+		// 'no-trailing-spaces': 'error',
+		// // 'no-trailing-spaces': 'off',
+
+		// No using functions without code inside them -- Simply unnecessary and annoying.
+		'@typescript-eslint/no-empty-function': 'off',
+
+		// If we specify "let unusedVariable = 'foo'", it will error - Again, simply unnecessary and annoying.
+		'no-unused-vars': 'off',
 		'@typescript-eslint/no-unused-vars': 'off',
-		'@typescript-eslint/no-extra-semi': 'off',
-		'@typescript-eslint/no-trailing-spaces': 'off',
+
+		// MANUAL any -- If we are manually specifying "any", we have a reason for it.
+		'no-explicit-any': 'off',
 		'@typescript-eslint/no-explicit-any': 'off',
 
+		'no-var-requires': 'off', // Forces you to use weird JS imports
 		'@typescript-eslint/no-var-requires': 'off',
 
-		'@typescript-eslint/no-misused-promises': [
-			'error',
-			{
-				'checksVoidReturn': false
-			},
-		],
-		'strict': 2,
+		'prefer-const': 'off', // Will complain if you use "let" and don't reassign the value.
 
-		// 'no-console': 2 // Disables all console.logs(), ONLY UNCOMMENT FOR TESTING ESLINT.
+		// no-misused-promises are cool, but they require the "parserOptions.project" setting
+		// '@typescript-eslint/no-misused-promises': [
+		//     'error',
+		//     {
+		//         checksVoidReturn: false,
+		//     },
+		// ],
 	},
-	'extends': [
-		'eslint:recommended',
-		'plugin:@typescript-eslint/recommended',
-	],
-	'parserOptions': {
-		'tsconfigRootDir': __dirname,
-		'ecmaVersion': 2020,
-		'sourceType': 'module',
-		'ecmaFeatures': {
-			'jsx': true
-		},
-		'project': ['./tsconfig.json', './src/**/*.ts'],
+	extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended'],
+	parserOptions: {
+		tsconfigRootDir: __dirname,
+		ecmaVersion: 2022,
+		sourceType: 'module',
+		ecmaFeatures: {},
+		// project: ['./tsconfig.json', './src/**/*.ts'], // Disabled because it's EXTREMELY slow (~5x slower)
+		extraFileExtensions: ['.json'],
 	},
 
-	'env': {
-		'node': true
+	env: {
+		node: true,
 	},
+
+	settings: {},
 };
