@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import ms from 'ms';
+import os from 'os';
 import * as path from 'path';
 
 const fsPromises = fs.promises;
@@ -301,51 +302,51 @@ export function floorToPlace(num: number, precision: number): number {
  * When this function is called, it will return the name of the new file, and then delete any old files.
  * We also add a random string after, to ensure we don't create 2 files with the exact same time.
  */
-export async function temporarySave(data: string, timeToSave: number = ms('1d')): Promise<string> {
-	if (typeof data !== 'string') throw new Error('temporarySave was not passed a string for data. Please JSON.stringify(data)');
-	const pathToTemp = path.join(returnStartingDirectory() + '/temp/');
-	await ensureExists(pathToTemp); // Ensure the temp directory exists
-
-	const msTimeToSave = typeof timeToSave === 'string' ? ms(timeToSave) : timeToSave;
-	if (!msTimeToSave) throw new Error('temporarySave: timeToSave is not a valid time.');
-	if (typeof msTimeToSave !== 'number') throw new Error('temporarySave was not passed a number for timeToSave. Please pass a string or number.');
-
-	const futureDate = Date.now() + msTimeToSave;
-	const fileName = futureDate + '_' + returnRandomCharacters(50, { symbols: false }); // Generate a random file name that includes the date to delete it at
-	await fsPromises.writeFile(`${pathToTemp}/${fileName}`, data);
-
-	// An ASYNC function we call SYNC, so we can return faster
-	(async () => {
-		const allFiles = await fsPromises.readdir(pathToTemp);
-		for await (const file of allFiles) {
-			// Can probably return after we find one file that does not work.
-			const fileTooOld = Date.now() > parseInt(file.split('_')[0]);
-			if (!fileTooOld) continue;
-			await fsPromises.unlink(path.join(pathToTemp, file)); // The file is too old and should be deleted
-		}
-	})();
-	return path.join(pathToTemp, fileName);
-}
-let a = 'hi';
-
-// Alternative version that uses /tmp. Not used because it could take up to 10 (or 30?) days for these to be deleted. Could be better (faster) though.
-// const temporarySave = async (data, timeToSave = ms('1d')) => {
-// 	// await ensureExists('./temp'); // Ensure the temp directory exists
-// 	const tempFilePath = os.tmpdir();
+// export async function temporarySave(data: string, timeToSave: number = ms('1d')): Promise<string> {
+// 	if (typeof data !== 'string') throw new Error('temporarySave was not passed a string for data. Please JSON.stringify(data)');
+// 	const pathToTemp = path.join(returnStartingDirectory() + '/temp/');
+// 	await ensureExists(pathToTemp); // Ensure the temp directory exists
 
 // 	const msTimeToSave = typeof timeToSave === 'string' ? ms(timeToSave) : timeToSave;
-// 	if (!msTimeToSave) {
-// 		console.log('temporarySave: timeToSave is not a valid time.');
-// 		return false;
-// 	}
+// 	if (!msTimeToSave) throw new Error('temporarySave: timeToSave is not a valid time.');
+// 	if (typeof msTimeToSave !== 'number') throw new Error('temporarySave was not passed a number for timeToSave. Please pass a string or number.');
 
 // 	const futureDate = Date.now() + msTimeToSave;
-// 	const filePath = path.join(tempFilePath, `/achieveValueTemp_${futureDate}_${returnRandomCharacters(50, { symbols: false })}`); // Generate a random file name that includes the date to delete it at
-// 	await fsPromises.writeFile(filePath, JSON.stringify(data));
-// 	// ${returnStartingDirectory()}/temp/
+// 	const fileName = futureDate + '_' + returnRandomCharacters(50, { symbols: false }); // Generate a random file name that includes the date to delete it at
+// 	await fsPromises.writeFile(`${pathToTemp}/${fileName}`, data);
 
-// 	return filePath;
-// };
+// 	// An ASYNC function we call SYNC, so we can return faster
+// 	(async () => {
+// 		const allFiles = await fsPromises.readdir(pathToTemp);
+// 		for await (const file of allFiles) {
+// 			// Can probably return after we find one file that does not work.
+// 			const fileTooOld = Date.now() > parseInt(file.split('_')[0]);
+// 			if (!fileTooOld) continue;
+// 			await fsPromises.unlink(path.join(pathToTemp, file)); // The file is too old and should be deleted
+// 		}
+// 	})();
+// 	return path.join(pathToTemp, fileName);
+// }
+
+// Alternative version that uses /tmp. Now being used due to a bug with temporarySave.
+// "temp" folder is automatically deleted every once in awhile (depends on OS), so we don't need to worry about deleting it.
+export async function temporarySave(data: string, timeToSave: string | number = ms('1d')) {
+	// await ensureExists('./temp'); // Ensure the temp directory exists
+	const tempFilePath = os.tmpdir();
+
+	if (typeof timeToSave === 'string') timeToSave = ms(timeToSave);
+
+	if (!timeToSave) {
+		console.log('temporarySave: timeToSave is not a valid time.');
+		return false;
+	}
+
+	const futureDate = Date.now() + timeToSave;
+	const filePath = path.join(tempFilePath, `/achieveValueTemp_${futureDate}_${returnRandomCharacters(50, { symbols: false })}`); // Generate a random file name that includes the date to delete it at
+	await fsPromises.writeFile(filePath, JSON.stringify(data));
+
+	return filePath;
+}
 
 // Take an array, and split it into smaller arrays.
 // E.g: splitArray([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 2) -> [[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]
