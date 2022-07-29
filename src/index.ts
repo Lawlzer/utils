@@ -1,4 +1,4 @@
-import * as fs from 'fs';
+import fs from 'fs';
 import ms from 'ms';
 import os from 'os';
 import * as path from 'path';
@@ -431,3 +431,23 @@ export type ForceSimplify<T> = T extends Record<string, unknown> ? { [P in keyof
 //         return 0;
 //     });
 // }
+
+/**
+ * Recursively get every file in a directory
+ */
+export async function getAllFiles(pathToFolder: string): Promise<string[]> {
+	try {
+		const allFiles = await fsPromises.readdir(pathToFolder);
+		const output = await Promise.all(
+			await allFiles.map(async (file) => {
+				const filePath = path.join(pathToFolder, file);
+				const isDirectory = (await fsPromises.lstat(filePath))?.isDirectory();
+				if (isDirectory) return await getAllFiles(filePath);
+				return filePath;
+			})
+		);
+		return output.flat(1);
+	} catch (e) {
+		throw new Error('@lawlzer/helpers: getAllFiles crashed.  The path to the folder ' + pathToFolder + ' is invalid.');
+	}
+}

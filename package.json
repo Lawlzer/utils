@@ -1,6 +1,6 @@
 {
 	"name": "@lawlzer/helpers",
-	"version": "2.1.0",
+	"version": "2.1.2",
 	"description": "The default Helpers file for any of Lawlzer's coding projects. ",
 	"license": "ISC",
 	"author": "Lawlzer",
@@ -15,7 +15,7 @@
 		"build": "rimraf ./dist &&  npm run build:js && npm run build:types",
 		"build:types": "tsc",
 		"build:js": "babel src --out-dir dist --extensions \".ts,.tsx\" --source-maps true",
-		"publish": "rimraf ./dist && npm run build && npm publish --access public && echo \"Successfully published to NPM!\""
+		"publish": "npm run build && npm publish --access public && echo \"Successfully published to NPM!\""
 	},
 	"dependencies": {
 		"ms": "^2.1.3"
