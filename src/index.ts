@@ -451,3 +451,7 @@ export async function getAllFiles(pathToFolder: string): Promise<string[]> {
 		throw new Error('@lawlzer/helpers: getAllFiles crashed.  The path to the folder ' + pathToFolder + ' is invalid.');
 	}
 }
+
+export function isObjectWithKey<T, K extends string>(o: T, k: K): o is T & object & Record<K, unknown> {
+	return typeof o === 'object' && o !== null && k in o;
+}
