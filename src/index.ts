@@ -5,6 +5,11 @@ import * as path from 'path';
 
 const fsPromises = fs.promises;
 
+export interface UnknownObject {
+	[key: string]: unknown;
+}
+export type AllTypes = 'string' | 'number' | 'boolean' | 'symbol' | 'bigint' | 'undefined' | 'object' | 'function' | 'null' | 'array';
+
 export function returnRandomCharacters(length: number, { capitalLetters = true, lowercaseLetters = true, numbers = true, symbols = true } = {}): string {
 	let characters = '';
 
@@ -452,6 +457,45 @@ export async function getAllFiles(pathToFolder: string): Promise<string[]> {
 	}
 }
 
-export function isObjectWithKey<T, K extends string>(o: T, k: K): o is T & object & Record<K, unknown> {
-	return typeof o === 'object' && o !== null && k in o;
+export function isObjectWithKey<T, K extends string>(inputObject: T, key: K): inputObject is T & object & Record<K, unknown> {
+	return typeof inputObject === 'object' && inputObject !== null && key in inputObject;
+}
+
+export function isObjectWithKeysOfType<T, K extends string>(inputObject: T, keys: K[], type: AllTypes): inputObject is T & object & Record<K, unknown> {
+	// @ts-expect-error We aren't supposed to index the inputObject[key]
+	return typeof inputObject === 'object' && inputObject !== null && keys.every((key) => key in inputObject && typeof inputObject[key] === type);
+}
+
+const result = isObjectWithKeysOfType({ a: '1', b: 'a', c: '2' }, ['a', 'b', 'c'], 'string');
+console.log('result: ', result);
+
+export function isObjectWithKeys<T, K extends string>(inputObject: T, keys: K[]): inputObject is T & object & Record<K, unknown> {
+	return typeof inputObject === 'object' && inputObject !== null && keys.every((key) => key in inputObject);
+}
+
+// todo, turn a MongoDB Schema into the JSON-ified version, kinda
+// if (!isObjectWithKey(ReportSchema, 'tree') || typeof ReportSchema.tree !== 'object') throw new Error('createFindFromQuery: Could not find the ReportSchema.tree.');
+
+// Recursively turn all keys of a JSON object to lowercase
+export function lowerCaseObjectKeys(input: UnknownObject | UnknownObject[]): UnknownObject | UnknownObject[] {
+	if (typeof input !== 'object' || input === null) return input;
+	const output: { [key: string]: unknown } = {};
+
+	// Arrays
+	if (Array.isArray(input)) {
+		const result = input
+			.map((item) => {
+				item;
+				const result = lowerCaseObjectKeys(item);
+				return result;
+			})
+			.flat(99);
+		return result;
+	}
+
+	// Objects
+	for (const key in input) {
+		output[key.toLowerCase() as keyof typeof output] = lowerCaseObjectKeys(input[key]);
+	}
+	return output;
 }
