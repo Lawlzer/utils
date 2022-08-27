@@ -1,5 +1,5 @@
 /**
- * Will return any unique elements in an array
+ * Will return all unique elements in an array
  *
  * Handles objects as well
  */

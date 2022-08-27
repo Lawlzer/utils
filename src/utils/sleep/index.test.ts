@@ -26,7 +26,8 @@ describe(folderName, () => {
 	});
 
 	it('will throw an error if inputTime is not a number or a string', async () => {
-		await expect(async () => await sleep(undefined as any)).rejects.toThrowError();
+		// @ts-expect-error We are not passing in a number or a string
+		await expect(async () => await sleep(undefined)).rejects.toThrowError();
 	});
 
 	it('will throw an error if inputTime is a non-ms-able string', async () => {

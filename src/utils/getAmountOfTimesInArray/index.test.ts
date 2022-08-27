@@ -26,8 +26,9 @@ describe(folderName, () => {
 	});
 
 	it('will throw an error if the input is not an array', () => {
-		const array = 'not an array' as any;
+		const array = 'not an array';
 		const itemToFind = 1;
+		// @ts-expect-error We are not passing an array
 		expect(() => getAmountOfTimesInArray(array, itemToFind)).toThrow();
 	});
 

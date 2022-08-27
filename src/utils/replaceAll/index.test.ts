@@ -21,7 +21,8 @@ describe(folderName, () => {
 	});
 
 	it('will throw an error if given something other than a string', async () => {
-		const string = 1 as any;
+		const string = 1;
+		// @ts-expect-error We are not passing in a string
 		expect(() => replaceAll(string, 'World', 'Universe')).toThrow();
 	});
 

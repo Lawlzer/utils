@@ -10,7 +10,7 @@ interface Options {
  *
  * If no options are provided, it will generate a random string of characters that are uppercase, lowercase, numbers, and symbols.
  *
- * If ANY option is provided, it will use THOSE parameters, and not the defaults.
+ * If at least ONE option is provided, it will use THOSE parameters, and not the defaults.
  */
 export function getRandomCharacters(length: number, userOptions?: Options): string {
 	// if no userOptions were passed in, all options should be true.

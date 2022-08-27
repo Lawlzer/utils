@@ -18,8 +18,8 @@ describe(folderName, () => {
 		expect(result).toEqual([1, 2, 3]);
 	});
 	it('will throw an error if the input is not an array', () => {
-		const array = 'not an array' as any;
-		// @ts-expect-error - Generics are more STRONK than any
+		const array = 'not an array';
+		// @ts-expect-error We are not passing in an array/object as expected
 		const result = () => pluck(array, a);
 		expect(result).toThrow();
 	});

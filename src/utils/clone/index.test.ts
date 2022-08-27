@@ -78,7 +78,7 @@ describe(folderName, () => {
 	// });
 
 	// it('will work with cyclic references', async () => {
-	// 	const object: any = { a: 1, b: 2, c: { d: 3, e: 4 } };
+	// 	const object = { a: 1, b: 2, c: { d: 3, e: 4 } };
 	// 	object.c.f = object;
 	// 	const copy = cloneShallow(object);
 	// 	expect(copy).toEqual(object);

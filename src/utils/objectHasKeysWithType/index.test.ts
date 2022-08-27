@@ -7,7 +7,7 @@ describe('objectHasKeysWithType', () => {
 		expect(objectHasKeysWithType(object, ['a'], 'number')).toBe(true);
 	});
 
-	it('will return false if any type is incorrect', () => {
+	it('will return false if at least one type is incorrect', () => {
 		const object = { a: 1, b: '2', c: true };
 		expect(objectHasKeysWithType(object, ['a'], 'string')).toBe(false);
 	});

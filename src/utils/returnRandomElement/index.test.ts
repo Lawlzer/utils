@@ -21,7 +21,8 @@ describe(folderName, () => {
 
 	it('will throw an error if not passed in an array', async () => {
 		const array = 'not an array';
-		expect(() => returnRandomElement(array as any)).toThrow();
+		// @ts-expect-error We are not passing an array
+		expect(() => returnRandomElement(array)).toThrow();
 	});
 
 	it('will return undefined if passed in an empty array', async () => {
