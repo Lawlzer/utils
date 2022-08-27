@@ -1,0 +1,6 @@
+// This is the tsconfig used for building
+// If we used one, we would be forced to build .test.ts files, or we would have errors (not exported) in .d.ts files
+{
+	"extends": "./tsconfig.json",
+	"exclude": ["**/*.test.ts"]
+}

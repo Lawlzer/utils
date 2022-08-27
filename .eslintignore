@@ -1,13 +1,31 @@
-dist
-data
+# Dependencies
+node_modules
+node_modules/**/*
 
-legacy
-temp
+# Logs
 logs
 
-.env
-assets
 
-.eslintrc.js
-babel.config.js
-webpack.config.ts
+# Temporary caches
+*.tsbuildinfo
+data
+
+# Environment variables/secrets
+*.env
+
+# Build / Generated output
+dist
+
+# Temporary/dev-test locations
+legacy
+temp
+
+personalTips.txts
+personalTips
+todo
+todo.txt
+# Misc file types that we don't want to lint
+**/*.css
+**/*.txt
+
+# Specific to this project

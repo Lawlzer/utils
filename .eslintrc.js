@@ -28,6 +28,15 @@ module.exports = {
 		// 'no-trailing-spaces': 'error',
 		// // 'no-trailing-spaces': 'off',
 
+		// // Show an error if something is implicitly defined as :any (this is bad!)
+		// 'import/no-unresolved': 'error',
+
+		// Empty interface
+		'@typescript-eslint/no-empty-interface': 'off',
+
+		// Disallow namespaces
+		'@typescript-eslint/no-namespace': 'off',
+
 		// No using functions without code inside them -- Simply unnecessary and annoying.
 		'@typescript-eslint/no-empty-function': 'off',
 
@@ -42,9 +51,17 @@ module.exports = {
 		'no-var-requires': 'off', // Forces you to use weird JS imports
 		'@typescript-eslint/no-var-requires': 'off',
 
-		'prefer-const': 'off', // Will complain if you use "let" and don't reassign the value.
+		// @ts-ignore  -- If we want to ignore an ESLint error, we have a reason for it.
+		'@typescript-eslint/ban-ts-comment': 'off',
 
-		'no-var': 'off', // "var" is disabled
+		// Will complain if you use "let" and don't reassign the value.
+		'prefer-const': 'off',
+
+		// Empty functions - Useful for "future" functions, or for when dev testing.
+		'no-empty': 'off',
+
+		// const notNull = maybeNull!
+		'@typescript-eslint/no-non-null-assertion': 'off',
 
 		// no-misused-promises are cool, but they require the "parserOptions.project" setting
 		// '@typescript-eslint/no-misused-promises': [
