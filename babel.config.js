@@ -9,7 +9,7 @@ module.exports = {
 				root: ['.'],
 				alias: {
 					'~': './dist',
-					// '@test-utils': './test-utils',
+					'@test-utils': './test-utils',
 				},
 			},
 		],

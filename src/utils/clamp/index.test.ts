@@ -23,6 +23,7 @@ describe(folderName, () => {
 			clamp('a', 0, 5);
 		}).toThrowError(`@lawlzer/helpers - clamp - value is not a number. value: a`);
 	});
+
 	it('will throw an error if min is not a number', () => {
 		expect(() => {
 			// @ts-expect-error We are not passing in a number.
