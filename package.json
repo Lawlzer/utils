@@ -1,6 +1,6 @@
 {
 	"name": "@lawlzer/helpers",
-	"version": "3.0.2",
+	"version": "3.0.3",
 	"description": "The default Helpers file for any of Lawlzer's coding projects. ",
 	"license": "ISC",
 	"author": "Lawlzer",
@@ -14,7 +14,7 @@
 		"start": "ts-node-dev --respawn --watch * --ignore-watch node_modules --transpile-only -r tsconfig-paths/register src/index.ts",
 		"build": "rimraf ./dist && npm run build:types && npm run build:js",
 		"build:js": "babel src --out-dir dist --extensions \".ts,.tsx\" --ignore \"**/*.test.ts\" --source-maps true",
-		"build:types": "tsc -p tsconfig-build.json && tsc-alias -p tsconfig.json",
+		"build:types": "tsc -p tsconfig-build.json",
 		"publish": "npm run build && npm publish --access public && echo \"Successfully published to NPM!\"",
 		"lint": "npm run lint:eslint && npm run lint:prettier",
 		"lint:eslint": "eslint . --cache --fix --cache-location ./temp/eslint-cache",
