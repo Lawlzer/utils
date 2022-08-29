@@ -1,4 +1,4 @@
-// If we export * from '~/place', then .d.ts files aren't generated for the functionss.  It *works*, but there's no intellisense.
+// If we export * from '~/place', then .d.ts files aren't generated for the functions.  It *works*, but there's no intellisense.
 
 // Ideally, we would dynamically export every function without referencing them here, but that seemed to be impossible.
 // If you know a better way to do this with TypeScript (that offers intellisense), I'd love to know :p
