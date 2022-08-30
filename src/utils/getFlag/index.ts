@@ -1,0 +1,22 @@
+
+
+
+/**
+ * Find a CLI flag, and return the result.
+ * 
+ * Will always return a string, or undefined. DOES NOT PARSE THE RESULT.
+ */
+ export function getFlag(flagInput: string): string | true | undefined { 
+	// The flags are not truly "flags", they are simple argv.  For example, "--foo=foo" will be "--foo=foo" as an argv. 
+	// So we will find the relevant flag (either find "foo", "-foo", or "--foo"), and return the value (or, if no value, true)
+
+	// --foo=foo -> foo
+	// -foo=foo ->s foo
+	// foo -> true
+
+	const flagFound = process.argv.find((arg) => arg.startsWith(`--${flagInput}=`) || arg.startsWith(`-${flagInput}=`) || arg === flagInput);
+	if (!flagFound) return undefined; 
+
+	const flagValue = flagFound.split(flagInput + '=')[1] || true;
+	return flagValue ? flagValue : true;
+}
