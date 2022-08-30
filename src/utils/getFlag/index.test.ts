@@ -33,4 +33,16 @@ describe(folderName, () => {
 		const flag = getFlag('flag');
 		expect(flag).toBe('12');
 	}); 
+
+	it('will parse --flag=true as true', () => {
+		process.argv[2] = '--flag=true';
+		const flag = getFlag('flag');
+		expect(flag).toBe(true);
+	}); 
+
+	it('will parse --flag=false as false', () => {
+		process.argv[2] = '--flag=false';
+		const flag = getFlag('flag');
+		expect(flag).toBe(false);
+	}); 
 });
