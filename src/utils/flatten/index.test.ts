@@ -13,7 +13,7 @@ describe('flattenObject', () => {
 		};
 		const output = flattenObject(input);
 		expect(output).toEqual({
-			'a.b.c': 'value'
+			'a-b-c': 'value'
 		});
 	});
 
@@ -46,10 +46,11 @@ describe('flattenObject', () => {
 			}
 		};
 		const output = flattenObject(input);
+		console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoutput: ', output); 
 		expect(output).toEqual({
-			'a.b.c': 'value',
-			'a.b.d': 'value2',
-			'a.b.e': true
+			'a-b-c': 'value',
+			'a-b-d': 'value2',
+			'a-b-e': true
 		});
 	});
 
@@ -62,8 +63,8 @@ describe('flattenObject', () => {
 		}
 		const output = flattenObject(input);
 		expect(output).toEqual({
-			'a.b': true,
-			'a.c.d': 'value'
+			'a-b': true,
+			'a-c-d': 'value'
 		});
 	});
 
@@ -77,7 +78,7 @@ describe('flattenObject', () => {
 describe('unflattenObject', () => {
 	it('will unflatten a flattened object', () => {
 		const input = {
-			'a.b.c': 'value'
+			'a-b-c': 'value'
 		};
 		const output = unflattenObject(input);
 		expect(output).toEqual({
@@ -106,6 +107,38 @@ describe('unflattenObject', () => {
 			}
 		});
 	}); 
+
+	it('will unflatten multiple keys at the same level', () => {
+		const input = {
+			'a-b-c': 'value',
+			'a-b-d': 'value2',
+			'a-b-e': true
+		}; 
+		const output = unflattenObject(input);
+		expect(output).toEqual({
+			a: {
+				b: {
+					c: 'value',
+					d: 'value2',
+					e: true
+				}
+			}
+		});
+	}); 
+
+		it('will unflatten multiple keys at different levels', () => {
+			const input = {
+				'a-b': true,
+				'a-c-d': 'value'
+			}
+			const output = unflattenObject(input);
+			expect(output).toEqual({
+				a: {
+					b: true,
+					c: { d: 'value' }
+				}
+			});
+		}); 
 
 	it.todo('will unflatten an array'); 
 	it.todo('will unflatten an array of objects');

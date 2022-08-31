@@ -33,7 +33,7 @@ export function flattenObject(input: unknown, separator = '-', output?: UnknownO
 		return output; 
 	}
 
-	
+	currentPath = currentPath.replace(separator, ''); // The currentPath starts with the separator, so we need to remove it.
 	output[currentPath] = input;
 	return output; 
 }
