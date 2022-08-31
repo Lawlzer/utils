@@ -45,4 +45,22 @@ describe(folderName, () => {
 		const flag = getFlag('flag');
 		expect(flag).toBe(false);
 	}); 
+
+	it('will parse flags with dashes', () => {
+		process.argv[2] = '--flag-with-dashes=foo';
+  		const flag = getFlag('flag-with-dashes');											
+		expect(flag).toBe('foo');
+	}); 	
+
+	it('will not incorrectly parse a flag with dashes as ', () => {
+		process.argv[2] = '--flag-with-dashes';
+		const flag1 = getFlag('flag');
+		expect(flag1).toBeUndefined();
+
+		const flag2 = getFlag('with'); 
+		expect(flag2).toBeUndefined();
+
+		const flag3 = getFlag('dashes'); 
+		expect(flag3).toBeUndefined();
+	}); 
 });
