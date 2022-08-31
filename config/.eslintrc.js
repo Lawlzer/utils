@@ -3,7 +3,7 @@
 
 module.exports = {
 	parser: '@typescript-eslint/parser',
-	plugins: ['@typescript-eslint', 'simple-import-sort'],
+	plugins: ['@typescript-eslint', 'simple-import-sort'], // simple-import-sort uses "eslint-plugin-simple-import-sort"
 	rules: {
 		strict: 2,
 

@@ -1,3 +1,5 @@
+require('prettier'); // This import does nothing -- However, Prettier requires prettier to be a dependency, but if we run this without Prettier we get a very weird error. This makes the error more verbose.
+
 module.exports = {
 	trailingComma: 'es5',
 	useTabs: true,

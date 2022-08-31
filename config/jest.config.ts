@@ -11,7 +11,7 @@ export default {
 	// bail: 0,
 
 	// The directory where Jest should store its cached dependency information
-	cacheDirectory: './temp/jest-cache',
+	cacheDirectory: '../temp/jest-cache',
 
 	// Automatically clear mock calls, instances, contexts and results before every test
 	clearMocks: true,
@@ -23,7 +23,7 @@ export default {
 	// collectCoverageFrom: undefined,
 
 	// The directory where Jest should output its coverage files
-	coverageDirectory: './temp/jest-coverage',
+	coverageDirectory: '../temp/jest-coverage',
 
 	// An array of regexp pattern strings used to skip coverage collection
 	// coveragePathIgnorePatterns: [
@@ -59,10 +59,10 @@ export default {
 	// forceCoverageMatch: [],
 
 	// A path to a module which exports an async function that is triggered once before all test suites
-	globalSetup: './test-utils/testSetup.ts',
+	globalSetup: '../test-utils/testSetup.ts',
 
 	// A path to a module which exports an async function that is triggered once after all test suites
-	globalTeardown: './test-utils/testTeardown.ts',
+	globalTeardown: '../test-utils/testTeardown.ts',
 
 	// A set of global variables that need to be available in all test environments
 	globals: {},

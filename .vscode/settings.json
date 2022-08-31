@@ -1,5 +1,11 @@
 {
 	"files.eol": "\n", // End of Line (use LF, not CRLF)
+	"eslint.validate": ["javascript", "typescript", "javascriptreact", "typescriptreact", "json", "jsonc"],
+	"editor.quickSuggestions": {
+		// Honestly, not 100% sure what this does
+		"strings": true
+	},
+	"typescript.tsdk": "node_modules\\typescript\\lib", // VSCode should use the same TypeScript version as the project
 	// "emeraldwalk.runonsave": {
 	// 	"commands": [
 	// 		{
@@ -30,19 +36,18 @@
 	"editor.insertSpaces": false, // Use Tabs for indentation, not spaces! Otherwise, ESLint will error
 	//
 	// ESLint stuff
+	"eslint.options": {
+		"overrideConfigFile": "config/.eslintrc.js",
+		"ignorePath": "config/.eslintignore"
+	}, // Specify where the eslint config is (relative to CWD)
 	"editor.formatOnSave": true, // Run Prettier on save
-	"eslint.format.enable": true, // Maybe unecessary? // Maybe we actually want to disable this now?
+	"eslint.format.enable": true, // Maybe unnecessary? // Maybe we actually want to disable this now?
 	"eslint.run": "onSave",
-	"eslint.workingDirectories": ["**/*"],
+	"eslint.workingDirectories": ["../config", "../**/*"],
 	"editor.codeActionsOnSave": {
-		"source.fixAll.eslint": true
+		"source.fixAll.eslint": true,
+		"source.fixAll.format": true
 	},
-	"eslint.validate": ["javascript", "typescript", "javascriptreact", "typescriptreact", "json", "jsonc"],
-	"editor.quickSuggestions": {
-		// Honestly, not 100% sure what this does
-		"strings": true
-	},
-	"typescript.tsdk": "node_modules\\typescript\\lib", // VSCode should use the same TypeScript version as the project
 	//
 	// Prettier settings
 	"editor.defaultFormatter": "esbenp.prettier-vscode", // Force VSCode to use Prettier

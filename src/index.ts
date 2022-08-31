@@ -14,6 +14,7 @@ export * from '~/utils/flatten';
 export * from '~/utils/floorToPrecision';
 export * from '~/utils/getAllFiles'; // If I do this (relative import), there is intellisense :/
 export * from '~/utils/getAmountOfTimesInArray';
+export * from '~/utils/getFlag';
 export * from '~/utils/getRandomCharacters';
 export * from '~/utils/getUniques';
 export * from '~/utils/keys';
@@ -31,4 +32,3 @@ export * from '~/utils/sleep';
 export * from '~/utils/temporarySave';
 export * from '~/utils/types';
 export * from '~/utils/UwU';
-export * from '~/utils/getFlag'; 
