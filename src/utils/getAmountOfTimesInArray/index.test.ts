@@ -31,7 +31,4 @@ describe(folderName, () => {
 		// @ts-expect-error We are not passing an array
 		expect(() => getAmountOfTimesInArray(array, itemToFind)).toThrow();
 	});
-
-	it.todo('will handle nested arrays');
-	it.todo('will handle nested objects');
 });
