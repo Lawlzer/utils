@@ -8,6 +8,7 @@
 
 export * from '~/utils/clamp'; // If I do this (absolute import from src/dist), there is no intellisense.
 export * from '~/utils/clone';
+export * from '~/utils/combineObjects';
 export * from '~/utils/deepCompare';
 export * from '~/utils/ensureExists';
 export * from '~/utils/flatten';

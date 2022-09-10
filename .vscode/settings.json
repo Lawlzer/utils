@@ -38,7 +38,7 @@
 	// ESLint stuff
 	"eslint.options": {
 		"overrideConfigFile": "config/.eslintrc.js",
-		"ignorePath": "config/.eslintignore"
+		"ignorePath": ".gitignore"
 	}, // Specify where the eslint config is (relative to CWD)
 	"editor.formatOnSave": true, // Run Prettier on save
 	"eslint.format.enable": true, // Maybe unnecessary? // Maybe we actually want to disable this now?

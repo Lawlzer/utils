@@ -13,8 +13,8 @@ describe(folderName, () => {
 		let start = Date.now();
 		await sleep(1000);
 		let end = Date.now();
-		expect(end - start).toBeGreaterThan(900);
-		expect(end - start).toBeLessThan(1100);
+		expect(end - start).toBeGreaterThan(800);
+		expect(end - start).toBeLessThan(1200);
 	});
 
 	it('will work for strings that represent numbers (ms)', async () => {

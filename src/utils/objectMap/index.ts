@@ -7,6 +7,7 @@ import { Dictionary } from '~/utils/types';
  *
  * HOWEVER, it does not modify the input object; it will return a new object.
  */
+
 // https://stackoverflow.com/questions/14810506/map-function-for-objects-instead-of-arrays
 export function objectMap<TValue, TResult>(obj: Dictionary<TValue>, valSelector: (val: TValue, obj: Dictionary<TValue>) => TResult, keySelector?: (key: string, obj: Dictionary<TValue>) => string, ctx?: Dictionary<TValue>) {
 	const ret: Dictionary<TResult> = {};
