@@ -5,19 +5,31 @@ import { getFlag } from './index';
 const folderName = __dirname.split('\\').pop()!;
 
 describe(folderName, () => {
-	it('will work with a "--flag=value"', () => {
+	it('will parse --flag as true', () => {
+		process.argv[2] = '--flag';
+		const flag = getFlag('flag');
+		expect(flag).toBe(true);
+	});
+
+	it('will parse -flag as true', () => {
+		process.argv[2] = '-flag';
+		const flag = getFlag('flag');
+		expect(flag).toBe(true);
+	});
+
+	it('will parse "--flag=value" as value', () => {
 		process.argv[2] = '--flag=value';
 		const flag = getFlag('flag');
 		expect(flag).toBe('value');
 	});
 
-	it('will work with a "-flag=value"', () => {
+	it('will parse "-flag=value" as value', () => {
 		process.argv[2] = '-flag=value';
 		const flag = getFlag('flag');
 		expect(flag).toBe('value');
 	});
 
-	it('will work with a "flag"', () => {
+	it('will parse "flag" as true', () => {
 		process.argv[2] = 'flag';
 		const flag = getFlag('flag');
 		expect(flag).toBe(true);
@@ -52,7 +64,7 @@ describe(folderName, () => {
 		expect(flag).toBe('foo');
 	});
 
-	it('will not incorrectly parse a flag with dashes as ', () => {
+	it('will not incorrectly parse a flag with dashes', () => {
 		process.argv[2] = '--flag-with-dashes';
 		const flag1 = getFlag('flag');
 		expect(flag1).toBeUndefined();
@@ -62,5 +74,21 @@ describe(folderName, () => {
 
 		const flag3 = getFlag('dashes');
 		expect(flag3).toBeUndefined();
+	});
+
+	it('will not incorrectly parse a flag that starts with the string', () => {
+		process.argv[2] = '--flagTricked';
+		const flag1 = getFlag('flag');
+		expect(flag1).toBeUndefined();
+	});
+
+	it('will parse multiple flags', () => {
+		process.argv[2] = '--flag1=foo';
+		process.argv[3] = '--flag2=bar';
+		const flag1 = getFlag('flag1');
+		expect(flag1).toBe('foo');
+
+		const flag2 = getFlag('flag2');
+		expect(flag2).toBe('bar');
 	});
 });
