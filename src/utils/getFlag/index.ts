@@ -1,3 +1,5 @@
+import { throwError } from '~/utils/throwError';
+
 /**
  * Find a CLI flag, and return the result.
  *
@@ -30,6 +32,3 @@ export function getFlag(flagInput: string): string | boolean | undefined {
 
 	return flagValue ? flagValue : true;
 }
-
-console.log(getFlag('--flag'));
-console.log(getFlag('--flag-with-dashes'));

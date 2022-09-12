@@ -31,7 +31,8 @@
 	},
 	"prettier": "./config/.prettierrc.js",
 	"dependencies": {
-		"ms": "^2.1.3"
+		"ms": "^2.1.3",
+		"node-color-log": "^10.0.2"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.18.10",
