@@ -19,9 +19,17 @@ describe(folderName, () => {
 		const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
 		expect(() => throwError('test')).toThrow();
 		expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('  at '));
-		consoleSpy.mockRestore();
 	});
 
-	// We could add specific tests to ensure the file name, function name, etc are logged.
-	// However, the exact implementation/log details are not required and will change. As long as the stack trace is logged, it's fine.
+	it('will log the file the code runs from', () => {
+		const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+		expect(() => throwError('test')).toThrow();
+		expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('index.test.ts'));
+	});
+
+	it('will log the message passed in', () => {
+		const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+		expect(() => throwError('test')).toThrow();
+		expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('test'));
+	});
 });

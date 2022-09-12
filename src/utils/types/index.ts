@@ -1,7 +1,7 @@
 export interface UnknownObject {
 	[key: string]: unknown;
 }
-export type AllTypes = 'string' | 'number' | 'boolean' | 'symbol' | 'bigint' | 'undefined' | 'object' | 'function' | 'null' | 'array';
+export type AllTypesUnion = 'string' | 'number' | 'boolean' | 'symbol' | 'bigint' | 'undefined' | 'object' | 'function' | 'null' | 'array';
 export interface Dictionary<T> {
 	[key: string]: T;
 }
