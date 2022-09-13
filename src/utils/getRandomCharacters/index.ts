@@ -1,3 +1,5 @@
+import { throwError } from '~/utils/throwError';
+
 interface Options {
 	upperCase?: boolean;
 	lowerCase?: boolean;
@@ -23,7 +25,7 @@ export function getRandomCharacters(length: number, userOptions?: Options): stri
 		};
 
 	// if every option is false, throw an error
-	if (!userOptions.upperCase && !userOptions.lowerCase && !userOptions.numbers && !userOptions.symbols) throw new Error(`@lawlzer/helpers: userOptions was passed in, but every value is false: ${userOptions}.`);
+	if (!userOptions.upperCase && !userOptions.lowerCase && !userOptions.numbers && !userOptions.symbols) throwError(`@lawlzer/helpers: userOptions was passed in, but every value is false: ${userOptions}.`);
 
 	let validCharacters = '';
 	validCharacters += userOptions.upperCase ? 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' : '';

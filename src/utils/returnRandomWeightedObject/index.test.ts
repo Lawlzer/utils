@@ -28,11 +28,11 @@ describe(folderName, () => {
 	});
 
 	it('will throw an error if passed an empty array', () => {
-		expect(() => returnRandomWeightedObject([])).toThrowError();
+		expect(() => returnRandomWeightedObject([])).toThrow();
 	});
 
 	it('will throw an error if passed in an object without weight', () => {
 		// @ts-expect-error We are not passing in an object with weight.
-		expect(() => returnRandomWeightedObject([{ a: 1 }])).toThrowError();
+		expect(() => returnRandomWeightedObject([{ a: 1 }])).toThrow();
 	});
 });

@@ -25,12 +25,18 @@ describe(folderName, () => {
 		expect(end - start).toBeLessThan(1100);
 	});
 
-	it('will throw an error if inputTime is not a number or a string', async () => {
-		// @ts-expect-error We are not passing in a number or a string
-		await expect(async () => await sleep(undefined)).rejects.toThrowError();
+	it('will throw an error if inputTime is undefined (not a number or a string)', async () => {
+		try {
+			// @ts-expect-error We are not passing in a number or a string
+			await sleep(undefined);
+			expect(true).toBe(false); // Sleep should have crashed.
+		} catch (e) {}
 	});
 
-	it('will throw an error if inputTime is a non-ms-able string', async () => {
-		await expect(async () => await sleep('hello world')).rejects.toThrowError();
+	it('will throw an error if inputTime is a string that does not represent an MS string', async () => {
+		try {
+			await sleep('invalid string');
+			expect(true).toBe(false); // Sleep should have crashed.
+		} catch (e) {}
 	});
 });

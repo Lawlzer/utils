@@ -12,11 +12,11 @@ describe(folderName, () => {
 
 	it('will error if we pass a string as the number-to-floor', () => {
 		// @ts-expect-error We are not passing in a string.
-		expect(() => floorToPrecision('1.2345', 2)).toThrowError();
+		expect(() => floorToPrecision('1.2345', 2)).toThrow();
 	});
 
 	it('will error if we pass a string as the precision', () => {
 		// @ts-expect-error We are not passing in a string.
-		expect(() => floorToPrecision(1.2345, '2')).toThrowError();
+		expect(() => floorToPrecision(1.2345, '2')).toThrow();
 	});
 });

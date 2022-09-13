@@ -3,6 +3,7 @@ import ms from 'ms';
 import os from 'os';
 import path from 'path';
 
+import { assertType } from '~/utils/assertType';
 import { getRandomCharacters } from '~/utils/getRandomCharacters';
 
 /**
@@ -13,7 +14,7 @@ import { getRandomCharacters } from '~/utils/getRandomCharacters';
  * @returns an absolute path to the file location
  */
 export async function temporarySave(data: string) {
-	if (typeof data !== 'string') throw new Error(`@lawlzer/helpers - temporarySave - data must be a string, but was typeof data: ${typeof data}  data: ${data}`);
+	assertType({ data }, 'string');
 
 	const tempFilePath = os.tmpdir();
 

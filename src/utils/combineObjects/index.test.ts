@@ -48,12 +48,12 @@ describe(folderName, () => {
 	it('will throw an error if two objects have the same property, with different types (non-number)', () => {
 		const obj1 = { a: { b: 1 } };
 		const obj2 = { a: { b: '2' } };
-		expect(() => combineObjects(obj1, obj2)).toThrowError();
+		expect(() => combineObjects(obj1, obj2)).toThrow();
 	});
 
 	it('will throw an error if two objects have the same property, with different values (same-type)', () => {
 		const obj1 = { a: { b: 'value1' } };
 		const obj2 = { a: { b: 'value2' } };
-		expect(() => combineObjects(obj1, obj2)).toThrowError();
+		expect(() => combineObjects(obj1, obj2)).toThrow();
 	});
 });

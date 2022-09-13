@@ -18,7 +18,10 @@ describe(folderName, () => {
 	});
 
 	it('will throw an error if the data is not a string', async () => {
-		// @ts-expect-error We are passing in a number, instead of a string.
-		await expect(temporarySave(100)).rejects.toThrowError();
+		try {
+			// @ts-expect-error We are passing in a number, instead of a string.
+			await temporarySave(100);
+			expect(true).toBe(false); // TemporarySave should have crashed.
+		} catch (e) {}
 	});
 });

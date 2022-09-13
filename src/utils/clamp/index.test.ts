@@ -21,20 +21,20 @@ describe(folderName, () => {
 		expect(() => {
 			// @ts-expect-error We are not passing in a number.
 			clamp('a', 0, 5);
-		}).toThrowError(`@lawlzer/helpers - clamp - value is not a number. value: a`);
+		}).toThrow();
 	});
 
 	it('will throw an error if min is not a number', () => {
 		expect(() => {
 			// @ts-expect-error We are not passing in a number.
 			clamp(0, 'a', 5);
-		}).toThrowError(`@lawlzer/helpers - clamp - min is not a number. min: a`);
+		}).toThrow();
 	});
 
 	it('will throw an error if max is not a number', () => {
 		expect(() => {
 			// @ts-expect-error We are not passing in a number.
 			clamp(0, 0, 'a');
-		}).toThrowError(`@lawlzer/helpers - clamp - max is not a number. max: a`);
+		}).toThrow();
 	});
 });

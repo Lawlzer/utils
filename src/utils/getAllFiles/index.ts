@@ -1,6 +1,8 @@
 import fs from 'fs-extra';
 import path from 'path';
 
+import { throwError } from '~/utils/throwError';
+
 /**
  * Recursively get every file in a directory
  */
@@ -17,6 +19,6 @@ export async function getAllFiles(pathToFolder: string): Promise<string[]> {
 		);
 		return output.flat(1);
 	} catch (e) {
-		throw new Error('@lawlzer/helpers: getAllFiles crashed.  The path to the folder ' + pathToFolder + ' is invalid.');
+		throwError('We crashed attempting to read a directory');
 	}
 }

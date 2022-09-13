@@ -6,7 +6,7 @@
 // Secondly, it would be great to use absolute imports at all, but I haven't found a package that will modify the *.d.ts file absolute imports.
 // If we have .d.ts files with absolute imports, BUILDING other projects (that use this package) will error!
 
-export * from '~/utils/asssertType';
+export * from '~/utils/assertType';
 export * from '~/utils/clamp'; // If I do this (absolute import from src/dist), there is no intellisense.
 export * from '~/utils/clone';
 export * from '~/utils/combineObjects';
@@ -32,7 +32,6 @@ export * from '~/utils/returnRandomWeightedObject';
 export * from '~/utils/shuffleArray';
 export * from '~/utils/sleep';
 export * from '~/utils/temporarySave';
-export * from '~/utils/throwError';
 export * from '~/utils/throwError';
 export * from '~/utils/types';
 export * from '~/utils/UwU';

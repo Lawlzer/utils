@@ -16,6 +16,9 @@ describe(folderName, () => {
 	});
 
 	it('will crash if given an invalid path', async () => {
-		await expect(getAllFiles('invalid path')).rejects.toThrowError();
+		try {
+			await getAllFiles('invalid path');
+			expect(true).toBe(false); // getAllFiles should have crashed.
+		} catch (e) {}
 	});
 });

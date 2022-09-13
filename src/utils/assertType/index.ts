@@ -26,11 +26,11 @@ export function assertType<I extends KeyValuePair>(variable: I, expectedType: Al
 	const isCorrectType = expectedType === typeof value;
 	if (isCorrectType) return;
 
-	const { stackTrace, functionName, fileName } = createError(true);
+	const { stackTrace, functionName, filePath, packageName } = createError(true);
 
-	logger.color('red').bold().log('\n\n@lawlzer/helpers - assertType');
-	logger.log('You called the @lawlzer/helpers function: ').joint().color('blue').log(functionName);
-	logger.log('Function called from your file: ').joint().color('blue').log(fileName);
+	logger.color('red').bold().log(`\n\n${packageName} - ${functionName}`);
+	logger.log('You called the function: ').joint().color('blue').log(functionName);
+	logger.log('Function called from your file: ').joint().color('blue').log(filePath);
 
 	console.log(); // newline
 	logger.log('Variable name: ').joint().color('green').log(key);

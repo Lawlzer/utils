@@ -3,7 +3,7 @@ const folderName = __dirname.split('\\').pop()!;
 
 describe(folderName, () => {
 	it('will not throw an error without a second argument', async () => {
-		expect(() => getRandomCharacters(50)).not.toThrowError();
+		expect(() => getRandomCharacters(50)).not.toThrow();
 	});
 
 	it('will generate different random characters', async () => {
@@ -48,6 +48,6 @@ describe(folderName, () => {
 		}
 	});
 	it('will throw an error if there is an empty second argument', async () => {
-		expect(() => getRandomCharacters(50, {})).toThrowError();
+		expect(() => getRandomCharacters(50, {})).toThrow();
 	});
 });

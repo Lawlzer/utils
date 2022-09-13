@@ -1,6 +1,6 @@
-// import { objectMap } from '~/utils/objectMap';
-
+import { assertType } from '~/utils/assertType';
 import { objectMap } from '~/utils/objectMap';
+import { throwError } from '~/utils/throwError';
 import { Dictionary, U2I } from '~/utils/types/index';
 import { UnknownObject } from '~/utils/types/index';
 
@@ -21,9 +21,9 @@ export function combineObjects<T extends object[]>(...args: T): U2I<T[number]> {
 
 	for (const obj of args) {
 		// For every object passed in
-		if (typeof obj !== 'object') throw new Error('combineObjects: input is not an object');
-		if (Array.isArray(obj)) throw new Error('combineObjects: input is an array');
-		if (obj === null) throw new Error('combineObjects: input is null');
+		if (typeof obj !== 'object') throwError('Input is not an object. Input: ', obj);
+		if (Array.isArray(obj)) throwError('Input is an array. Input: ', JSON.stringify(obj, null, 2));
+		if (obj === null) throwError('Input is null. Input: ', obj);
 
 		for (const key in obj) {
 			const value = obj[key as keyof typeof obj];
