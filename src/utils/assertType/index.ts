@@ -1,6 +1,7 @@
 import logger from 'node-color-log';
 
-import { createError, throwError } from '~/utils/throwError';
+import { createError } from '~/utils/createError';
+import { throwError } from '~/utils/throwError';
 import { AllTypesUnion } from '~/utils/types';
 
 interface KeyValuePair {

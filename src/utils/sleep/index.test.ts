@@ -14,7 +14,7 @@ describe(folderName, () => {
 		await sleep(1000);
 		let end = Date.now();
 		expect(end - start).toBeGreaterThan(800);
-		expect(end - start).toBeLessThan(1200);
+		expect(end - start).toBeLessThan(2000); // It may take awhile if the system lags...
 	});
 
 	it('will work for strings that represent numbers (ms)', async () => {
