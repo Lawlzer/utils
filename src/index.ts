@@ -20,6 +20,7 @@ export * from '~/utils/getAmountOfTimesInArray';
 export * from '~/utils/getFlag';
 export * from '~/utils/getRandomCharacters';
 export * from '~/utils/getUniques';
+export * from '~/utils/initDotenv';
 export * from '~/utils/keys';
 export * from '~/utils/lowerCaseObjectKeys';
 export * from '~/utils/multiSort';
