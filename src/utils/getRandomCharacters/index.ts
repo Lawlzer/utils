@@ -1,37 +1,21 @@
 import { throwError } from '~/utils/throwError';
 
-interface Options {
-	upperCase?: boolean;
-	lowerCase?: boolean;
-	numbers?: boolean;
-	symbols?: boolean;
-}
-
 /**
  * Generates a random string of characters.
  *
- * If no options are provided, it will generate a random string of characters that are uppercase, lowercase, numbers, and symbols.
+ * If no options are provided, it will generate a random string of characters that are characters, numbers, and symbols.
  *
  * If at least ONE option is provided, it will use THOSE parameters, and not the defaults.
  */
-export function getRandomCharacters(length: number, userOptions?: Options): string {
-	// if no userOptions were passed in, all options should be true.
-	if (!userOptions)
-		userOptions = {
-			upperCase: true,
-			lowerCase: true,
-			numbers: true,
-			symbols: true,
-		};
 
+export function getRandomCharacters(length: number, { letters = false, numbers = false, symbols = false }: { letters?: boolean; numbers?: boolean; symbols?: boolean }): string {
 	// if every option is false, throw an error
-	if (!userOptions.upperCase && !userOptions.lowerCase && !userOptions.numbers && !userOptions.symbols) throwError(`@lawlzer/helpers: userOptions was passed in, but every value is false: ${userOptions}.`);
+	if (!letters && !numbers && !symbols) throwError(`@lawlzer/helpers: userOptions was passed in, but every value is false.`);
 
 	let validCharacters = '';
-	validCharacters += userOptions.upperCase ? 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' : '';
-	validCharacters += userOptions.lowerCase ? 'abcdefghijklmnopqrstuvwxyz' : '';
-	validCharacters += userOptions.numbers ? '0123456789' : '';
-	validCharacters += userOptions.symbols ? '!@#$%^&*()_+-=[]{};:|,./<>?' : '';
+	if (letters) validCharacters += 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	if (numbers) validCharacters += '0123456789';
+	if (symbols) validCharacters += '!@#$%^&*()_+-=[]{};:|,./<>?';
 
 	let result = '';
 	for (let i = 0; i < length; i++) {

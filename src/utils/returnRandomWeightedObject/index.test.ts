@@ -7,7 +7,7 @@ describe(folderName, () => {
 	it('will return one object from an array of objects', () => {
 		const array: { a: string; weight: number }[] = [];
 		for (let i = 0; i < 1000; i++) {
-			array.push({ a: getRandomCharacters(50, { lowerCase: true }), weight: 1 });
+			array.push({ a: getRandomCharacters(50, { letters: true }), weight: 1 });
 		}
 
 		const result1 = returnRandomWeightedObject(array);

@@ -18,7 +18,7 @@ export async function temporarySave(data: string) {
 
 	const tempFilePath = os.tmpdir();
 
-	const fileName = getRandomCharacters(100, { upperCase: true, lowerCase: true });
+	const fileName = getRandomCharacters(100, { letters: true });
 
 	const filePath = path.join(tempFilePath, `LawlzerTemp_${fileName}`); // Generate a random file name that includes the date to delete it at
 
