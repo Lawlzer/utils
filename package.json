@@ -22,12 +22,12 @@
 		"lint:prettier": "prettier . --write --config ./config/.prettierrc.js",
 		"lint:prettier:debug": "prettier . --write --config ./config/.prettierc.js",
 		"nuke": "cli-confirm \"Do you really want to blow **** up?\" && npm run nuke:confirmed",
-		"nuke:confirmed": "npm install -g npm@latest && npm audit fix && rimraf node_modules && rimraf package-lock.json && rimraf ./temp && npm cache clean --force && npm i",
+		"nuke:confirmed": "npm install -g npm@latest && jest --clearCache && npm audit fix && rimraf node_modules && rimraf package-lock.json && rimraf ./temp && npm cache clean --force && npm i",
 		"pre-commit": "lint-staged -c ./config/lint-staged.config.js",
 		"prepare": "husky install",
 		"start": "cross-env NODE_ENV=development ts-node-dev --respawn --watch * --ignore-watch node_modules --transpile-only -r tsconfig-paths/register src/index.ts",
 		"start:production": "cross-env NODE_ENV=production node dist/index",
-		"test": "cross-env NODE_ENV=test jest --clearCache && jest --config ./config/jest.config.ts"
+		"test": "jest --config ./config/jest.config.ts"
 	},
 	"prettier": "./config/.prettierrc.js",
 	"dependencies": {
