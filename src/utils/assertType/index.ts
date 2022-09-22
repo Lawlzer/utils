@@ -1,4 +1,4 @@
-import logger from 'node-color-log';
+import colors from '@colors/colors';
 
 import { createError } from '~/utils/createError';
 import { throwError } from '~/utils/throwError';
@@ -29,22 +29,16 @@ export function assertType<I extends KeyValuePair>(variable: I, expectedType: Al
 
 	const { stackTrace, functionName, filePath, packageName } = createError(true);
 
-	logger.color('red').bold().log(`\n\n${packageName} - ${functionName}`);
-	logger.log('You called the function: ').joint().color('blue').log(functionName);
-	logger.log('Function called from your file: ').joint().color('blue').log(filePath);
+	let output = '';
+	output += '\n' + colors.bold.red(packageName);
+	output += '\n' + colors.white(`Function called from the file: ${colors.red(filePath)}`);
+	output += '\n' + colors.white(`Function called: ${colors.yellow(functionName)}`);
+	output += '\n' + colors.white(`Variable name: ${colors.green(key)}`);
+	output += '\n' + colors.white(`Variable value: ${colors.blue(String(value))}`);
+	output += '\n' + colors.white(`Variable type: ${colors.cyan(typeof value)}`);
+	output += '\n' + colors.white(`Expected type: ${colors.magenta(expectedType)}`);
+	output += '\n\n' + colors.gray(stackTrace);
+	output += '\n\n' + colors.gray('This error was thrown by the assertType() function from @lawlzer/helpers.');
 
-	console.log(); // newline
-	logger.log('Variable name: ').joint().color('green').log(key);
-	logger.log('Variable value: ').joint().color('cyan').log(value);
-	logger
-		.log('Variable type: ')
-		.joint()
-		.color('magenta')
-		.log(typeof value);
-
-	logger.log('Expected type: ').joint().color('magenta').log(expectedType);
-
-	console.log(); // newline
-	logger.log('Stack trace: ', stackTrace);
-	throw '';
+	throw output;
 }
