@@ -23,46 +23,31 @@ describe(folderName, () => {
 		}).toThrow();
 	});
 
-	it('will throw if passed a boolean, expecting a string', () => {
-		expect(() => {
-			const aString = true;
-			assertType({ aString }, 'string');
-		}).toThrow();
-	});
-
-	it('will log a message with the name of the variable', () => {
-		const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+	it('will throw a message that includes the name of the variable', () => {
 		expect(() => {
 			const aString = 'hi';
 			assertType({ aString }, 'number');
-		}).toThrow();
-		expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('aString'));
+		}).toThrow('aString');
 	});
 
-	it('will log a message with the value of the variable', () => {
-		const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+	it('will throw a message that includes the value of the variable', () => {
 		expect(() => {
 			const aString = 'hi';
 			assertType({ aString }, 'number');
-		}).toThrow();
-		expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('hi'));
+		}).toThrow('hi');
 	});
 
-	it('will log a message with the expected type', () => {
-		const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+	it('will throw a message that includes the expected variable type', () => {
 		expect(() => {
 			const aString = 'hi';
 			assertType({ aString }, 'number');
-		}).toThrow();
-		expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('number'));
+		}).toThrow('number');
 	});
 
-	it('will log a message with file your code runs from', () => {
-		const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+	it('will throw a message that includes the file the code runs from', () => {
 		expect(() => {
 			const aString = 'hi';
 			assertType({ aString }, 'number');
-		}).toThrow();
-		expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('index.test.ts'));
+		}).toThrow('index.test.ts');
 	});
 });

@@ -8,28 +8,23 @@ describe(folderName, () => {
 		expect(() => throwError('test')).toThrow();
 	});
 
-	it('will log something', () => {
+	it('will throw an error with a message that includes the file name', () => {
+		expect(() => throwError('test')).toThrow('index.test.ts');
+	});
+
+	it('will throw an error with a message that includes the message passed in', () => {
+		expect(() => throwError('AAAAAAAAAAAAAAA')).toThrow('AAAAAAAAAAAAAAA');
+	});
+
+	it('will throw an error with a message that includes the stack trace', () => {
+		expect(() => throwError('test')).toThrow('at ');
+	});
+
+	// If we console.log anything, it will not be try-catchable.
+	it('will not console.log anything', () => {
 		const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
 		expect(() => throwError('test')).toThrow();
-		expect(consoleSpy).toHaveBeenCalled();
+		expect(consoleSpy).not.toHaveBeenCalled();
 		consoleSpy.mockRestore();
-	});
-
-	it('will log a stack trace', () => {
-		const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
-		expect(() => throwError('test')).toThrow();
-		expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('  at '));
-	});
-
-	it('will log the file the code runs from', () => {
-		const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
-		expect(() => throwError('test')).toThrow();
-		expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('index.test.ts'));
-	});
-
-	it('will log the message passed in', () => {
-		const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
-		expect(() => throwError('test')).toThrow();
-		expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('test'));
 	});
 });
