@@ -26,6 +26,7 @@ export * from '~/utils/lowerCaseObjectKeys';
 export * from '~/utils/multiSort';
 export * from '~/utils/objectHasKeysWithType';
 export * from '~/utils/objectMap';
+export * from '~/utils/pathToFileName';
 export * from '~/utils/pluck';
 export * from '~/utils/racePromises';
 export * from '~/utils/replaceAll';
