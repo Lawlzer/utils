@@ -10,3 +10,7 @@ export type ForceSimplify<T> = T extends Record<string, unknown> ? { [P in keyof
 
 // from the TypeScript Discord server
 export type U2I<U> = (U extends U ? (u: U) => 0 : never) extends (i: infer I) => 0 ? Extract<I, U> : never;
+
+export interface NonEmptyArray<T> extends Array<T> {
+	0: T;
+}
