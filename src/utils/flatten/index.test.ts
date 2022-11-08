@@ -46,7 +46,6 @@ describe('flattenObject', () => {
 			},
 		};
 		const output = flattenObject(input);
-		console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoutput: ', output);
 		expect(output).toEqual({
 			'a-b-c': 'value',
 			'a-b-d': 'value2',

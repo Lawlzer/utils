@@ -31,7 +31,7 @@ export default {
 	// ],
 
 	// Indicates which provider should be used to instrument code for coverage
-	coverageProvider: 'babel', // 'v8'?
+	// coverageProvider: 'babel', // 'v8'?
 
 	// A list of reporter names that Jest uses when writing coverage reports
 	// coverageReporters: [
@@ -100,7 +100,7 @@ export default {
 	// notifyMode: "failure-change",
 
 	// A preset that is used as a base for Jest's configuration
-	preset: 'ts-jest',
+	// preset: 'ts-jest',
 
 	// Run tests from one or more projects
 	// projects: undefined,
@@ -138,7 +138,7 @@ export default {
 	// setupFilesAfterEnv: [],
 
 	// The number of seconds after which a test is considered as slow and reported as such in the results.
-	slowTestThreshold: 30,
+	slowTestThreshold: 5,
 
 	// A list of paths to snapshot serializer modules Jest should use for snapshot testing
 	// snapshotSerializers: [],
@@ -190,6 +190,12 @@ export default {
 	// transform: {
 	// 	// 'node_modules/variables/.+\\.(j|t)sx?$': 'ts-jest',
 	// },
+
+	// transform: {
+	// 	'^.+\\.(t|j)sx?$': ['@swc/jest'],
+	// },
+	transform: { '\\.(js|jsx|ts|tsx)$': '@sucrase/jest-plugin' },
+
 	// transformIgnorePatterns: ['node_modules/(?!variables/.*)'],
 	// moduleDirectories: ['node_modules', 'src', __dirname],
 

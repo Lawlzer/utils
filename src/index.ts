@@ -1,10 +1,10 @@
-// If we export * from '~/place', then .d.ts files aren't generated for the functions.  It *works*, but there's no intellisense.
+// Ideally, we would dynamically export every function without referencing them here.
+// I didn't figure out a way to do that (with intellisense).
 
-// Ideally, we would dynamically export every function without referencing them here, but that seemed to be impossible.
-// If you know a better way to do this with TypeScript (that offers intellisense), I'd love to know :p
+import path from 'path';
 
-// Secondly, it would be great to use absolute imports at all, but I haven't found a package that will modify the *.d.ts file absolute imports.
-// If we have .d.ts files with absolute imports, BUILDING other projects (that use this package) will error!
+// Transform paths in realtime for Sucrase (only used when running locally)
+if (process.env.__RUNNING_LOCALLY__) require('better-module-alias')(path.resolve(__dirname, '../'));
 
 export * from '~/utils/assertType';
 export * from '~/utils/clamp'; // If I do this (absolute import from src/dist), there is no intellisense.

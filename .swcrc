@@ -1,0 +1,37 @@
+// SWC does not support .js
+// It also does not support --config (so it must be in root)
+
+[
+	{
+		// "exclude": [".*\\.test."],
+		"test": ".*\\.ts$",
+		"sourceMaps": true,
+		"jsc": {
+			// "externalHelpers": false,
+			"parser": {
+				"syntax": "typescript",
+				"tsx": true,
+				"decorators": true
+			},
+			"transform": {
+				"optimizer": {
+					"simplify": true,
+					"globals": {
+						"vars": {
+							"__RUNNING_LOCALLY__": "false"
+						}
+					}
+				}
+			},
+			"baseUrl": "./",
+			"paths": {
+				"~/*": ["dist/*"]
+				// "@test-utils/*": ["test-utils/*"] // this isn't built
+			}
+		},
+		"minify": true,
+		"module": {
+			"type": "commonjs"
+		}
+	}
+]
