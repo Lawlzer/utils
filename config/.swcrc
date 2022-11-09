@@ -13,16 +13,16 @@
 				"tsx": true,
 				"decorators": true
 			},
-			"transform": {
-				"optimizer": {
-					"simplify": true,
-					"globals": {
-						"vars": {
-							"__RUNNING_LOCALLY__": "false"
-						}
-					}
-				}
-			},
+			// "transform": { 
+			// 	"optimizer": {
+			// 		"simplify": true,
+			// 		"globals": {
+			// 			"vars": {
+			// 				"__RUNNING_LOCALLY__": "false"
+			// 			}
+			// 		}
+			// 	}
+			// },
 			"baseUrl": "./",
 			"paths": {
 				"~/*": ["dist/*"]
