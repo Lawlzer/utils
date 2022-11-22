@@ -1,4 +1,4 @@
-import colors from '@colors/colors';
+import pc from 'picocolors';
 
 import { createError } from '~/utils/createError';
 import { throwError } from '~/utils/throwError';
@@ -30,15 +30,15 @@ export function assertType<I extends KeyValuePair>(variable: I, expectedType: Al
 	const { stackTrace, functionName, filePath, packageName } = createError(true);
 
 	let output = '';
-	output += '\n' + colors.bold.red(packageName);
-	output += '\n' + colors.white(`Function called from the file: ${colors.red(filePath)}`);
-	output += '\n' + colors.white(`Function called: ${colors.yellow(functionName)}`);
-	output += '\n' + colors.white(`Variable name: ${colors.green(key)}`);
-	output += '\n' + colors.white(`Variable value: ${colors.blue(String(value))}`);
-	output += '\n' + colors.white(`Variable type: ${colors.cyan(typeof value)}`);
-	output += '\n' + colors.white(`Expected type: ${colors.magenta(expectedType)}`);
-	output += '\n\n' + colors.gray(stackTrace);
-	output += '\n\n' + colors.gray('This error was thrown by the assertType() function from @lawlzer/helpers.');
+	output += `\n ${pc.white(pc.bold(packageName))}`;
+	output += `\n ${pc.white(`Function called from the file: ${pc.red(filePath)}`)}`;
+	output += `\n ${pc.white(`Function called: ${pc.yellow(functionName)}`)}`;
+	output += `\n ${pc.white(`Variable name: ${pc.green(key)}`)}`;
+	output += `\n ${pc.white(`Variable value: ${pc.blue(String(value))}`)}`;
+	output += `\n ${pc.white(`Variable type: ${pc.cyan(typeof value)}`)}`;
+	output += `\n ${pc.white(`Expected type: ${pc.magenta(expectedType)}`)}`;
+	output += `\n\n' ${pc.gray(stackTrace)}`;
+	output += `\n\n' ${pc.gray('This error was thrown by the assertType() function from @lawlzer/helpers.')}`;
 
 	throw output;
 }

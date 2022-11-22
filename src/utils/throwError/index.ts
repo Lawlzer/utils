@@ -1,8 +1,8 @@
-import colors from '@colors/colors';
 import fs from 'fs-extra';
 import ms from 'ms';
 import os from 'os';
 import path from 'path';
+import pc from 'picocolors';
 
 import { findPackageJsonPathFromInside } from '~/dev-utils/findPackageJson';
 import { createError } from '~/utils/createError';
@@ -17,12 +17,12 @@ export function throwError(...message: string[]): never {
 	stackTrace.split('\n').splice(1, 5); // Remove these lines, as they are for createError()
 
 	let output = '';
-	output += '\n' + colors.bold.red(packageName);
-	output += '\n' + colors.white(`Function called from the file: ${colors.blue(filePath)}`);
-	output += '\n' + colors.white(`Function called: ${colors.cyan(functionName)}`);
-	output += '\n' + colors.white(`You made the mistake: ${colors.magenta(message.join(' '))}`);
-	output += '\n\n' + colors.gray(stackTrace);
-	output += '\n\n' + colors.gray('This error was thrown by the throwError() function from @lawlzer/helpers.');
+	output += '\n' + pc.red(pc.bold(packageName));
+	output += '\n' + pc.white(`Function called from the file: ${pc.blue(filePath)}`);
+	output += '\n' + pc.white(`Function called: ${pc.cyan(functionName)}`);
+	output += '\n' + pc.white(`You made the mistake: ${pc.magenta(message.join(' '))}`);
+	output += '\n\n' + pc.gray(stackTrace);
+	output += '\n\n' + pc.gray('This error was thrown by the throwError() function from @lawlzer/helpers.');
 
 	throw output;
 }
