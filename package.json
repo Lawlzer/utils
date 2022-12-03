@@ -1,6 +1,6 @@
 {
 	"name": "@lawlzer/helpers",
-	"version": "3.2.9",
+	"version": "3.2.10",
 	"description": "The default Helpers file for any of Lawlzer's coding projects. ",
 	"license": "ISC",
 	"author": "Lawlzer",
@@ -24,7 +24,7 @@
 		"nuke:confirmed": "npm install -g npm@latest && jest --clearCache && npm audit fix && rimraf node_modules && rimraf package-lock.json && rimraf ./temp && npm cache clean --force && npm i",
 		"pre-commit": "lint-staged -c ./config/lint-staged.config.js",
 		"prepare": "husky install",
-		"publish": "npm run build && npm run test && npm publish --access=public && echo \"Successfully published to NPM!\"",
+		"publish:all": "npm run build && npm run test && npm publish --access=public && echo \"Successfully published to NPM!\"",
 		"start": "cross-env __RUNNING_LOCALLY__=true node -r sucrase/register src/index.ts",
 		"start:production": "node dist/index",
 		"test": "jest --config ./config/jest.config.ts"
