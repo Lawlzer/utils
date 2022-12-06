@@ -29,7 +29,7 @@ export function getFlag(flagInput: string): string | boolean | undefined {
 		if (arg.toLowerCase().startsWith(`${flagLowercase}=`) || arg === flagLowercase) return true;
 		return false;
 	});
-	console.log('flag: ', flag);
+
 	if (!flag) return undefined;
 
 	// flagValue should be everything after the first =
