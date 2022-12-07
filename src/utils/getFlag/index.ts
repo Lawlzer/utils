@@ -49,7 +49,3 @@ export function getFlag(flagInput: string): string | boolean | undefined {
 
 	return flagValue;
 }
-
-process.argv[2] = '-test2';
-const flag = getFlag('test2');
-console.log(flag);
