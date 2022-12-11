@@ -1,5 +1,12 @@
 import { throwError } from '~/utils/throwError';
 
+function parseFlagValue(value: string): string | boolean {
+	if (value.toLowerCase() === 'true') return true;
+	if (value.toLowerCase() === 'false') return false;
+
+	return value;
+}
+
 /**
  * Find a CLI flag, and return the result.
  *
@@ -9,13 +16,13 @@ import { throwError } from '~/utils/throwError';
  */
 export function getFlag(flagInput: string): string | boolean | undefined {
 	const flagLowercase = flagInput.toLowerCase();
-	// The flags are not truly "flags", they are simple argv.  For example, "--foo=foo" will be "--foo=foo" as an argv.
+	// The flags are not truly "flags", they are simple argv (or ENV variables)  For example, "--foo=foo" will be "--foo=foo" as an argv.
 	// So we will find the relevant flag (either find "foo", "-foo", or "--foo"), and return the value (or, if no value, true)
 
 	// Handle .env variables
 	// .env variables are always lowercase, so capitalization does not matter whatsoever.
 	const envValue = process.env[flagLowercase];
-	if (envValue !== undefined) return envValue;
+	if (envValue !== undefined) return parseFlagValue(envValue);
 
 	// Handle process.argv (CLI) variables
 	// Find the flag we are referencing here
@@ -44,8 +51,5 @@ export function getFlag(flagInput: string): string | boolean | undefined {
 
 	const flagValue = flag.slice(equalsIndex + 1);
 
-	if (flagValue === 'true') return true;
-	if (flagValue === 'false') return false;
-
-	return flagValue;
+	return parseFlagValue(flagValue);
 }

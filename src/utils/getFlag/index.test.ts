@@ -128,4 +128,10 @@ describe(folderName, () => {
 		const flag = getFlag('flAg17');
 		expect(flag).toBe('foo');
 	});
+
+	it('will parse env variables with a value of "true" to true', () => {
+		process.env.flag18 = 'true';
+		const flag = getFlag('flag18');
+		expect(flag).toBe(true);
+	});
 });
