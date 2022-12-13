@@ -1,21 +1,13 @@
 import fs from 'fs-extra';
 import path, { extname } from 'path';
+import util from 'util';
 
 /**
- * If the path provided does not have an extension, it will create a directory.
+ * @deprecated
  *
- * If the path provided has an extension, it will be created as a file.
+ * This function has been deprecated in favour of ensureFileExists and ensureDirectoryExists. Please use one of those two instead.
  */
 
 export async function ensureExists(path: string, initialFileContent = '') {
-	// Handle directories
-	const extension = extname(path);
-	if (!extension) {
-		return await fs.mkdir(path, { recursive: true });
-	}
-
-	const fileExists = await fs.pathExists(path);
-	if (fileExists) return;
-
-	await fs.writeFile(path, initialFileContent);
+	util.deprecate(() => {}, 'ensureExists is deprecated. Use ensureFileExists or ensureDirectoryExists instead.')();
 }

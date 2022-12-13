@@ -12,11 +12,14 @@ export * from '~/utils/clone';
 export * from '~/utils/combineObjects';
 export * from '~/utils/createError';
 export * from '~/utils/deepCompare';
+export * from '~/utils/ensureDirectoryExists';
 export * from '~/utils/ensureExists';
+export * from '~/utils/ensureFileExists';
 export * from '~/utils/flatten';
 export * from '~/utils/floorToPrecision';
 export * from '~/utils/getAllFiles'; // If I do this (relative import), there is intellisense :/
 export * from '~/utils/getAmountOfTimesInArray';
+export * from '~/utils/getDirectory';
 export * from '~/utils/getFlag';
 export * from '~/utils/getRandomCharacters';
 export * from '~/utils/getUniques';
