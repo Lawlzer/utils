@@ -1,8 +1,8 @@
 import fs from 'fs-extra';
 import path, { extname } from 'path';
 
-import { assertType } from '~/utils/assertType';
-import { throwError } from '~/utils/throwError/index';
+import { assertType } from '../assertType';
+import { throwError } from '../throwError/index';
 
 /**
  * If the path provided does not have an extension, it will create a directory.

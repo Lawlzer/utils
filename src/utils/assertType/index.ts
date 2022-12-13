@@ -1,8 +1,8 @@
 import pc from 'picocolors';
 
-import { createError } from '~/utils/createError';
-import { throwError } from '~/utils/throwError';
-import { AllTypesUnion } from '~/utils/types';
+import { createError } from '../createError';
+import { throwError } from '../throwError';
+import { AllTypesUnion } from '../types';
 
 interface KeyValuePair {
 	[key: string]: unknown;

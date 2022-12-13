@@ -1,6 +1,6 @@
 import fs from 'fs-extra';
 
-import { getDirectory } from '~/utils/getDirectory';
+import { getDirectory } from '../getDirectory';
 
 /**
  * Ensure a given directory exists. It will be created if it does not exist.

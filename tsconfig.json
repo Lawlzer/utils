@@ -92,13 +92,7 @@
 		// "rootDir": "./src"                                /* Specify the root folder within your source files. */,
 		// "rootDirs": ["./src", "./tests"] /* Allow multiple folders to be treated as one when resolving modules. */, // todo maybe add back?
 
-		"baseUrl": "." /* Specify the base directory to resolve non-relative module names. */,
-
-		"paths": {
-			// If edited here, you must also edit jest.config.ts, and babel.config.js
-			"~/*": ["src/*"],
-			"@test-utils/*": ["test-utils/*"]
-		}
+		"baseUrl": "." /* Specify the base directory to resolve non-relative module names. */
 	},
 	"exports": ["./src/index.ts"],
 	"include": ["src"],

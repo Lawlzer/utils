@@ -1,4 +1,4 @@
-import { throwError } from '~/utils/throwError';
+import { throwError } from '../throwError';
 
 export function returnRandomWeightedObject<T extends { weight: number; [key: string]: unknown }>(allObjects: T[]): T {
 	let totalWeight = 0;

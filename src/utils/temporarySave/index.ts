@@ -3,8 +3,8 @@ import ms from 'ms';
 import os from 'os';
 import path from 'path';
 
-import { assertType } from '~/utils/assertType';
-import { getRandomCharacters } from '~/utils/getRandomCharacters';
+import { assertType } from '../assertType';
+import { getRandomCharacters } from '../getRandomCharacters';
 
 /**
  * Save data to a temporary file

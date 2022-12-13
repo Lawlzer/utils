@@ -1,4 +1,4 @@
-import { throwError } from '~/utils/throwError';
+import { throwError } from '../throwError';
 
 /**
  * Returns how often a value occurs in an array.

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { Dictionary, U2I, UnionToIntersection } from '~/utils/types';
+import { Dictionary, U2I, UnionToIntersection } from '../../types';
 
 /**
  * Take multiple Zod schemas (atleast one), and return a fully merged Schema, with all of the types combined.

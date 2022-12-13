@@ -1,4 +1,4 @@
-import { throwError } from '~/utils/throwError';
+import { throwError } from '../throwError';
 
 /**
  * Return a random element from an array

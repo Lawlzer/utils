@@ -1,6 +1,6 @@
-import { objectMap } from '~/utils/objectMap';
-import { throwError } from '~/utils/throwError';
-import { UnknownObject } from '~/utils/types/index';
+import { objectMap } from '../objectMap';
+import { throwError } from '../throwError';
+import { UnknownObject } from '../types/index';
 
 /**
  * Will not modify the initial object

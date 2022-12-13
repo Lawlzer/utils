@@ -13,7 +13,7 @@
 				"tsx": true,
 				"decorators": true
 			},
-			// "transform": { 
+			// "transform": {
 			// 	"optimizer": {
 			// 		"simplify": true,
 			// 		"globals": {
@@ -23,11 +23,11 @@
 			// 		}
 			// 	}
 			// },
-			"baseUrl": "./",
-			"paths": {
-				"~/*": ["dist/*"]
-				// "@test-utils/*": ["test-utils/*"] // this isn't built
-			}
+			"baseUrl": "./"
+			// "paths": {
+			// 	"../*": ["dist/*"]
+			// 	// "@test-utils/*": ["test-utils/*"] // this isn't built
+			// }
 		},
 		"minify": true,
 		"module": {

@@ -1,4 +1,4 @@
-import { UnknownObject } from '~/utils/types';
+import { UnknownObject } from '../types';
 
 export function deepCompare(x: unknown, y: unknown) {
 	if (x === y) return true;

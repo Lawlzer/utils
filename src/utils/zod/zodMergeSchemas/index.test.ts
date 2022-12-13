@@ -1,7 +1,6 @@
 import { z } from 'zod';
 
-import { clone } from '~/utils/clone';
-
+import { clone } from '../../clone';
 import { zodMergeSchemas } from './index';
 const folderName = __dirname.split('\\').pop()!;
 

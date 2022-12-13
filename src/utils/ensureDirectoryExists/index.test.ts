@@ -1,8 +1,7 @@
 import fs from 'fs-extra';
 import path from 'path';
 
-import { getRandomCharacters } from '~/utils/getRandomCharacters/index';
-
+import { getRandomCharacters } from '../getRandomCharacters/index';
 import { ensureDirectoryExists } from './index';
 
 const folderName = process.cwd().split('\\').pop()!;

@@ -1,6 +1,6 @@
 import ms from 'ms';
 
-import { throwError } from '~/utils/throwError';
+import { throwError } from '../throwError';
 
 export async function sleep(inputTime: string | number): Promise<void> {
 	if (typeof inputTime !== 'number' && typeof inputTime !== 'string') throwError('inputTime must be a number or a string representing a number.');

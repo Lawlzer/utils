@@ -1,4 +1,4 @@
-import { assertType } from '~/utils/assertType/index';
+import { assertType } from '../assertType/index';
 /**
  * Force a number to be between a min and max value.
  */

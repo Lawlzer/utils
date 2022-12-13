@@ -1,4 +1,4 @@
-import { throwError } from '~/utils/throwError';
+import { throwError } from '../throwError';
 
 /**
  * Generates a random string of characters.

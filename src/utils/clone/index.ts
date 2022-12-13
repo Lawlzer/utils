@@ -1,4 +1,4 @@
-import { objectMap } from '~/utils/objectMap';
+import { objectMap } from '../objectMap';
 
 /**
  * Supports nested arrays and objects.

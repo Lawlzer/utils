@@ -1,8 +1,8 @@
-import { assertType } from '~/utils/assertType';
-import { objectMap } from '~/utils/objectMap';
-import { throwError } from '~/utils/throwError';
-import { Dictionary, U2I } from '~/utils/types/index';
-import { UnknownObject } from '~/utils/types/index';
+import { assertType } from '../assertType';
+import { objectMap } from '../objectMap';
+import { throwError } from '../throwError';
+import { Dictionary, U2I } from '../types/index';
+import { UnknownObject } from '../types/index';
 
 /**
  * Will not modify the initial object

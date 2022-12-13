@@ -1,7 +1,7 @@
 import fs from 'fs-extra';
 import path from 'path';
 
-import { throwError } from '~/utils/throwError';
+import { throwError } from '../throwError';
 
 /**
  * Recursively get every file in a directory

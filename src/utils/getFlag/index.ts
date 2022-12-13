@@ -1,4 +1,4 @@
-import { throwError } from '~/utils/throwError';
+import { throwError } from '../throwError';
 
 function parseFlagValue(value: string): string | boolean {
 	if (value.toLowerCase() === 'true') return true;

@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import fs from 'fs-extra';
 import path from 'path';
 
-import { throwError } from '~/utils/throwError';
+import { throwError } from '../throwError';
 
 /**
  * Will initialize the nearest .env file

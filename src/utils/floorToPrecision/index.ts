@@ -2,7 +2,7 @@
  * Floor a number to a specific decimal place
  */
 
-import { assertType } from '~/utils/assertType';
+import { assertType } from '../assertType';
 
 export function floorToPrecision(numberToFloor: number, precision: number): number {
 	assertType({ numberToFloor }, 'number');
