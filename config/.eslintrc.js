@@ -10,6 +10,110 @@ module.exports = {
 		'simple-import-sort/imports': 'error',
 		'simple-import-sort/exports': 'error',
 
+		// This will disable variables and types from sharing a name
+		// I don't know what else it does
+		'no-redeclare': 'off', // The base one can cause errors with TypeScript
+		'@typescript-eslint/no-redeclare': 'error',
+
+		// Overloads must be ordered from most -> least specific
+		'@typescript-eslint/adjacent-overload-signatures': 'error',
+
+		// Require T[], instead of Array<T>
+		'@typescript-eslint/array-type': 'error',
+
+		// Disallow the bad default types, like "String", "Boolean", "Number", "Function", etc
+		'@typescript-eslint/ban-types': 'error',
+
+		// Require records, instead of interfaces, or vice versa
+		// '@typescript-eslint/consistent-indexed-object-style': 'error',
+
+		// Disallow interfaces -> only use types, or always use interfaces when possible
+		// '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
+
+		// Require import type { ... } from '...' when possible
+		// This fixes bugs with types that are removed post-build
+		'@typescript-eslint/consistent-type-imports': 'error',
+
+		// Require functions to explicitly define the return types
+		// '@typescript-eslint/explicit-module-boundary-types': 'error',
+
+		// Disallow null assertion next to math or functions ( if (a! + 2) )
+		'@typescript-eslint/no-confusing-non-null-assertion': 'error',
+
+		// Don't allow var!!!!!.maybeExists
+		'@typescript-eslint/no-extra-non-null-assertion': 'error',
+
+		// ? Something about classes
+		'@typescript-eslint/no-extraneous-class': 'error',
+
+		// Don't use explicit types when they can be inferred
+		// '@typescript-eslint/no-inferrable-types': 'error',
+
+		// Don't mix up "new" and "constructor" keywords
+		'@typescript-eslint/no-misused-new': 'error',
+
+		// Don't use ! and ?? together a! ?? b
+		'@typescript-eslint/no-non-null-asserted-nullish-coalescing': 'error',
+
+		// Don't use ? then !, a?.b!
+		'@typescript-eslint/no-non-null-asserted-optional-chain': 'error',
+
+		// Use imports, not require
+		// '@typescript-eslint/no-require-imports': 'error',
+
+		// Don't assign "this" to variables
+		// '@typescript-eslint/no-this-alias': 'error',
+
+		// Don't extend *any* types (explicit <T> already extends any)
+		// '@typescript-eslint/no-unnecessary-type-constraint': 'error',
+
+		// Don't define a type twice, prefer const instead
+		// let foo = <'bar'>'bar';
+		'@typescript-eslint/prefer-as-const': 'error',
+
+		// Enums must have an explicit value, not implicit
+		'@typescript-eslint/prefer-enum-initializers': 'error',
+
+		// Don't use for (let i = ) loops, use for (const i of ) instead
+		// UNLESS the index is used -- if the index is used, it won't error.
+		'@typescript-eslint/prefer-for-of': 'error',
+
+		// Require more explicit function declarations (function foo(example: () => number): number {
+		'@typescript-eslint/prefer-function-type': 'error',
+
+		// Enums must use literal values
+		// Enums use their own scope, which can make the result unexpected
+		'@typescript-eslint/prefer-literal-enum-member': 'error',
+
+		// Use @ts-expect-error instead of @ts-ignore
+		'@typescript-eslint/prefer-ts-expect-error': 'error',
+
+		// These require "project" settings (which make ESLint extremely slow)
+		// '@typescript-eslint/no-confusing-void-expression': 'error',
+		// '@typescript-eslint/no-meaningless-void-operator': 'error',
+		// '@typescript-eslint/no-misused-promises': 'error',
+		// '@typescript-eslint/no-redundant-type-constituents': 'error',
+		// '@typescript-eslint/no-unnecessary-boolean-literal-compare': 'error',
+		// '@typescript-eslint/no-unnecessary-type-arguments': 'error',
+		// '@typescript-eslint/no-unnecessary-type-assertion': 'error',
+		// '@typescript-eslint/non-nullable-type-assertion-style': 'error',
+		// '@typescript-eslint/prefer-includes': 'error',
+		// '@typescript-eslint/prefer-readonly': 'error',
+		// '@typescript-eslint/prefer-reduce-type-parameter': 'error',
+		// '@typescript-eslint/prefer-string-starts-ends-with': 'error',
+		// '@typescript-eslint/promise-function-async': 'error',
+		// '@typescript-eslint/require-array-sort-compare': 'error',
+		// '@typescript-eslint/restrict-plus-operands': 'error',
+		// '@typescript-eslint/switch-exhaustiveness-check': 'error',
+		// '@typescript-eslint/unbound-method': 'error',
+
+		// '@typescript-eslint/no-misused-promises': [
+		//     'error',
+		//     {
+		//         checksVoidReturn: false,
+		//     },
+		// ],
+
 		// Prettier should handle all of this
 		// 'semi': [2, 'always'],
 		// 'quotes': [
@@ -40,7 +144,7 @@ module.exports = {
 		// No using functions without code inside them -- Simply unnecessary and annoying.
 		'@typescript-eslint/no-empty-function': 'off',
 
-		// If we specify "let unusedVariable = 'foo'", it will error - Again, simply unnecessary and annoying.
+		// Disallow unused variables -- Very annoying
 		'no-unused-vars': 'off',
 		'@typescript-eslint/no-unused-vars': 'off',
 
@@ -51,7 +155,7 @@ module.exports = {
 		'no-var-requires': 'off', // Forces you to use weird JS imports
 		'@typescript-eslint/no-var-requires': 'off',
 
-		// @ts-ignore  -- If we want to ignore an ESLint error, we have a reason for it.
+		// @ts-expect-error  -- If we want to ignore an ESLint error, we have a reason for it.
 		'@typescript-eslint/ban-ts-comment': 'off',
 
 		// Will complain if you use "let" and don't reassign the value.
@@ -63,13 +167,9 @@ module.exports = {
 		// const notNull = maybeNull!
 		'@typescript-eslint/no-non-null-assertion': 'off',
 
-		// no-misused-promises are cool, but they require the "parserOptions.project" setting
-		// '@typescript-eslint/no-misused-promises': [
-		//     'error',
-		//     {
-		//         checksVoidReturn: false,
-		//     },
-		// ],
+		// Disable ALL var usage
+		'no-var': 'off',
+		'@typescript/no-var': 'off',
 	},
 	extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended'],
 	parserOptions: {
@@ -77,8 +177,11 @@ module.exports = {
 		ecmaVersion: 2022,
 		sourceType: 'module',
 		ecmaFeatures: {},
-		// project: ['./tsconfig.json', './src/**/*.ts'], // Disabled because it's EXTREMELY slow (~5x slower)
+		// project: ['../tsconfig.json', '../src/**/*.ts', '../test-utils/**/*.ts'], // Disabled because it's EXTREMELY slow (~5x slower)
 		extraFileExtensions: ['.json'],
+		// ts: '@typescript-eslint/parser',
+		// js: '@typescript-eslint/parser',
+		// '<template>': 'espree',
 	},
 
 	env: {

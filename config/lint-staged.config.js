@@ -1,5 +1,6 @@
-// We don't want to use the global "npm run lint" because those run on EVERY file. We want to run on commited files, only.
+// This file will run on commit. It will also run on "npm run pre-commit".
+// This will *only look at commited files* :)
 
 module.exports = {
-	'**/*.{ts,tsx,js,jsx,json,jsonc}': ['eslint --fix --ignore-path ./.gitignore --config ./config/.eslintrc.js', 'prettier --write --config ./config/.prettierrc.js', 'jest --bail --findRelatedTests --pass-with-no-tests --config=./config/jest.config.ts'],
+	'**/*.{ts,tsx,js,jsx,json,jsonc}': ['npm run lint:eslint:commit --', 'npm run lint:prettier --', 'jest --bail --findRelatedTests --pass-with-no-tests --config=./config/jest.config.ts'],
 };
