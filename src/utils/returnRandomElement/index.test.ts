@@ -1,4 +1,5 @@
 import { returnRandomElement } from './index';
+
 const folderName = __dirname.split('\\').pop()!;
 
 describe(folderName, () => {
@@ -9,7 +10,7 @@ describe(folderName, () => {
 	});
 
 	it('will return different random results', async () => {
-		let array = [];
+		const array = [];
 		for (let i = 0; i < 10000; i++) {
 			array.push(i);
 		}
@@ -31,8 +32,8 @@ describe(folderName, () => {
 	});
 
 	it('will return the element, not a clone of the object', async () => {
-		let inputArray: { a: number | null }[] = [{ a: 1 }];
-		let randomElement = returnRandomElement(inputArray);
+		const inputArray: { a: number | null }[] = [{ a: 1 }];
+		const randomElement = returnRandomElement(inputArray);
 		randomElement.a = null;
 
 		expect(inputArray[0].a).toBe(null);

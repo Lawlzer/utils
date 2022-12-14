@@ -1,6 +1,3 @@
-import fs from 'fs-extra';
-import path, { extname } from 'path';
-
 import { assertType } from '../assertType';
 import { throwError } from '../throwError/index';
 

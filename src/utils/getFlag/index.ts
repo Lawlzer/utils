@@ -1,5 +1,3 @@
-import { throwError } from '../throwError';
-
 function parseFlagValue(value: string): string | boolean {
 	if (value.toLowerCase() === 'true') return true;
 	if (value.toLowerCase() === 'false') return false;
@@ -26,7 +24,7 @@ export function getFlag(flagInput: string): string | boolean | undefined {
 
 	// Handle process.argv (CLI) variables
 	// Find the flag we are referencing here
-	let flag = process.argv.find((argv) => {
+	const flag = process.argv.find((argv) => {
 		if (!argv) return false; // if the argv have been deleted, or set to null/undefined
 
 		let arg = argv.toLowerCase();

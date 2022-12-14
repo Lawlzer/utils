@@ -1,4 +1,4 @@
-import { Dictionary } from '../types';
+import type { Dictionary } from '../types';
 
 /**
  * Map over the keys of an object, and return a new object with the same keys, but with the transformed values.

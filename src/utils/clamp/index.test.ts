@@ -1,4 +1,5 @@
 import { clamp } from './index';
+
 const folderName = __dirname.split('\\').pop()!;
 
 describe(folderName, () => {

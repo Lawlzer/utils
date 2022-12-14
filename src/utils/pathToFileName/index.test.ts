@@ -1,6 +1,3 @@
-import fs from 'fs-extra';
-import path from 'path';
-
 import { pathToFileName } from './index';
 
 const folderName = __dirname.split('\\').pop()!;

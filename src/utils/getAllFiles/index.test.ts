@@ -19,6 +19,8 @@ describe(folderName, () => {
 		try {
 			await getAllFiles('invalid path');
 			expect(true).toBe(false); // getAllFiles should have crashed.
-		} catch (e) {}
+		} catch (e) {
+			expect(true).toBe(true);
+		}
 	});
 });

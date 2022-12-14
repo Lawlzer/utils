@@ -1,8 +1,5 @@
-import { assertType } from '../assertType';
-import { objectMap } from '../objectMap';
 import { throwError } from '../throwError';
-import { Dictionary, U2I } from '../types/index';
-import { UnknownObject } from '../types/index';
+import type { U2I } from '../types/index';
 
 /**
  * Will not modify the initial object
@@ -17,7 +14,7 @@ import { UnknownObject } from '../types/index';
  */
 
 export function combineObjects<T extends object[]>(...args: T): U2I<T[number]> {
-	let result: { [key: string]: any } = {};
+	const result: { [key: string]: any } = {};
 
 	for (const obj of args) {
 		// For every object passed in

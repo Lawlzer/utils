@@ -3,7 +3,7 @@ import fs from 'fs-extra';
 import { findPackageJsonPathFromInside } from '../../dev-utils/findPackageJson';
 
 // We want to cache the package name, so we don't readJsonSync multiple times (since it's sync).
-let packageNames: { [key: string]: string } = {};
+const packageNames: { [key: string]: string } = {};
 function getPackageName(filePath: string): string {
 	if (packageNames[filePath]) return packageNames[filePath];
 

@@ -1,6 +1,5 @@
-import { objectMap } from '../objectMap';
 import { throwError } from '../throwError';
-import { UnknownObject } from '../types/index';
+import type { UnknownObject } from '../types/index';
 
 /**
  * Will not modify the initial object
@@ -42,7 +41,7 @@ export function flattenObject(input: unknown, separator = '-', output?: UnknownO
  */
 
 export function unflattenObject<T extends object>(input: T, separator = '-') {
-	let output: UnknownObject = {};
+	const output: UnknownObject = {};
 	for (const [key, value] of Object.entries(input)) {
 		// Build the "parts" ("a.b.c" => ["a", "b", "c"]) to re-build the object
 		const parts = key.split(separator);

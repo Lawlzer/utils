@@ -1,4 +1,5 @@
 import { objectHasKeysWithType } from './index';
+
 const folderName = __dirname.split('\\').pop()!;
 
 describe('objectHasKeysWithType', () => {

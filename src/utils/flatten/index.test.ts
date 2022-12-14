@@ -1,5 +1,3 @@
-import path from 'path';
-
 import { flattenObject, unflattenObject } from './index';
 
 describe('flattenObject', () => {

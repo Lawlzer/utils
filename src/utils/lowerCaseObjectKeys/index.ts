@@ -2,7 +2,7 @@
  * Recursively turn every key in a JSON object to lowercase
  */
 
-import { UnknownObject } from '../types';
+import type { UnknownObject } from '../types';
 
 export function lowerCaseObjectKeys(input: UnknownObject | UnknownObject[]): UnknownObject | UnknownObject[] {
 	if (typeof input !== 'object' || input === null) return input;

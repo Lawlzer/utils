@@ -1,5 +1,3 @@
-import path from 'path';
-
 import { deepCompare } from './index';
 
 const folderName = __dirname.split('\\').pop()!;

@@ -2,7 +2,6 @@ import pc from 'picocolors';
 
 import { createError } from '../createError';
 import { throwError } from '../throwError';
-import { AllTypesUnion } from '../types';
 
 interface KeyValuePair {
 	[key: string]: unknown;
@@ -19,7 +18,7 @@ type AllowedTypes = 'string' | 'number' | 'boolean' | 'object';
 
 // This was a lot of work, just to have a pretty error message...
 export function assertType<I extends KeyValuePair>(variable: I, expectedType: AllowedTypes) {
-	let text = Object.keys(variable);
+	const text = Object.keys(variable);
 	const key = text[0];
 	if (text.length !== 1) throwError(`You can only assert one value at a time. You passed in ${text.length} values. Variable name: ${text.join(', ')}`);
 	const value = variable[key];

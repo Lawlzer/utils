@@ -6,6 +6,8 @@
 // 	console.log('beforeAll called!');
 // });
 
-export default async function () {}
+export default async function () {
+	return true;
+}
 
 // https://mswjs.io/

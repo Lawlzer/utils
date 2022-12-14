@@ -1,4 +1,5 @@
 import { getAmountOfTimesInArray } from './index';
+
 const folderName = __dirname.split('\\').pop()!;
 
 describe(folderName, () => {
@@ -17,7 +18,7 @@ describe(folderName, () => {
 	});
 
 	it('will return 25 if the item is in the array 25 times', () => {
-		let array = [];
+		const array = [];
 		for (let i = 0; i < 25; i++) {
 			array.push(1);
 		}

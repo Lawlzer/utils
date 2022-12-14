@@ -1,5 +1,3 @@
-import path from 'path';
-
 import { getFlag } from './index';
 
 const folderName = __dirname.split('\\').pop()!;

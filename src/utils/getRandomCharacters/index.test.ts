@@ -1,4 +1,5 @@
 import { getRandomCharacters } from './index';
+
 const folderName = __dirname.split('\\').pop()!;
 
 describe(folderName, () => {
@@ -25,8 +26,8 @@ describe(folderName, () => {
 		expect(randomCharacters.length).toBe(50);
 
 		// Every character should be an uppercase, or lowercase character
-		let numbers = '0123456789';
-		let letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		const numbers = '0123456789';
+		const letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 		let numbersFound = false;
 		let lettersFound = false;
 		for (const character of randomCharacters) {
@@ -42,7 +43,7 @@ describe(folderName, () => {
 		expect(randomCharacters.length).toBe(50);
 		// Every character should be a symbol
 		for (const character of randomCharacters) {
-			let validCharacters = '!@#$%^&*()_+-=[]{};:|,./<>?';
+			const validCharacters = '!@#$%^&*()_+-=[]{};:|,./<>?';
 			expect(validCharacters.includes(character)).toBe(true);
 		}
 	});

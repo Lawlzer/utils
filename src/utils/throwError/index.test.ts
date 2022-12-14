@@ -1,6 +1,5 @@
-import fs from 'fs-extra';
-
 import { throwError } from './index';
+
 const folderName = __dirname.split('\\').pop()!;
 
 describe(folderName, () => {
@@ -22,7 +21,7 @@ describe(folderName, () => {
 
 	// If we console.log anything, it will not be try-catchable.
 	it('will not console.log anything', () => {
-		const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+		const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
 		expect(() => throwError('test')).toThrow();
 		expect(consoleSpy).not.toHaveBeenCalled();
 		consoleSpy.mockRestore();

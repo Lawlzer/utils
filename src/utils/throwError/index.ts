@@ -1,13 +1,6 @@
-import fs from 'fs-extra';
-import ms from 'ms';
-import os from 'os';
-import path from 'path';
 import pc from 'picocolors';
 
 import { createError } from '../createError';
-import { findPackageJsonPathFromInside } from '../dev-utils/findPackageJson';
-import { getRandomCharacters } from '../getRandomCharacters';
-import { AllTypesUnion } from '../types';
 
 /**
  * Will throw an error that logs the file, function name, and error message.

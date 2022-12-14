@@ -1,5 +1,3 @@
-import { UnknownObject } from '../types';
-
 export function deepCompare(x: unknown, y: unknown) {
 	if (x === y) return true;
 	// if both x and y are null or undefined and exactly the same
