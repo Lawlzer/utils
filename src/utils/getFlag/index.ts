@@ -8,7 +8,7 @@ function parseFlagValue(value: string): string | boolean {
 /**
  * Find a CLI flag, and return the result.
  *
- * Will always return a string, or undefined. WILL ONLY PARSE BOOLEANS, will NOT parse --value=12.
+ * Capitalization does not matter (helloworld is the same as helloWORLD)
  *
  * Will also read process.env variables.
  */

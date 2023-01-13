@@ -3,19 +3,19 @@ import { sleep } from './index';
 const folderName = __dirname.split('\\').pop()!;
 
 describe(folderName, () => {
-	it('will not do anything if called without async', async () => {
+	it('will not sleep if called syncronously', async () => {
 		const start = Date.now();
 		sleep(1000);
 		const end = Date.now();
 		expect(end - start).toBeLessThan(100);
 	});
 
-	it('will sleep for the specified amount of time', async () => {
+	it('will sleep for approximately the specified amount of time', async () => {
 		const start = Date.now();
 		await sleep(1000);
 		const end = Date.now();
 		expect(end - start).toBeGreaterThan(800);
-		expect(end - start).toBeLessThan(2000); // It may take awhile if the system lags...
+		expect(end - start).toBeLessThan(2000); // It may take awhile if the system lags
 	});
 
 	it('will work for strings that represent numbers (ms)', async () => {

@@ -27,7 +27,7 @@ export function initDotenv() {
 			const fileExists = fs.existsSync(dotenvPath);
 			if (fileExists) {
 				dotenv.config({ path: dotenvPath });
-				return console.info(`We are using the .env file ${dotenvName} in the directory ${directory}`);
+				return console.info(`We are using the .env file located at ${dotenvPath}`);
 			}
 		}
 		directory = path.dirname(directory); // Go back up one directory
