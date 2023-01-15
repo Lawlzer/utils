@@ -2,9 +2,7 @@ import { assertType } from '../assertType';
 import { throwError } from '../throwError/index';
 
 /**
- * If the path provided does not have an extension, it will create a directory.
- *
- * If the path provided has an extension, it will be created as a file.
+ * Returns the file name from a path.
  */
 
 export function pathToFileName(path: string): string {

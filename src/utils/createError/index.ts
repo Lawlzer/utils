@@ -32,7 +32,7 @@ export function createError(removeRecentFunction = false) {
 
 	if (removeRecentFunction) errorArray = errorArray.filter((line: string) => !line.includes(`at ${callerFunction}`)); // Remove references to the most recent function called
 
-	// Get the packageJson of the file that called this function -> package name.
+	// Get the package.json of the file that called this function -> the package name
 	const lineThreeSplit = errorArray[1].trim().split(' ');
 	const filePath: string | undefined = lineThreeSplit[lineThreeSplit.length - 1].replace('(', '').replace(')', '');
 	const packageName = filePath ? getPackageName(filePath) : 'unknown package path';
