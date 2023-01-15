@@ -9,12 +9,12 @@ import { throwError } from '../throwError';
  */
 
 export function initDotenv() {
-	const environmentName = process.env.NODE_ENV;
-	if (environmentName !== 'production' && environmentName !== 'development') throwError('process.env.NODE_ENV is not "development" or "production".');
+	// const environmentName = process.env.NODE_ENV;
+	// if (environmentName !== 'production' && environmentName !== 'development') throwError('process.env.NODE_ENV is not "development" or "production".');
 
 	const allowedDotenvs: string[] = ['.env'];
-	if (environmentName === 'development') allowedDotenvs.push('.env.development');
-	if (environmentName === 'production') allowedDotenvs.push('.env.production');
+	// if (environmentName === 'development') allowedDotenvs.push('.env.development');
+	// if (environmentName === 'production') allowedDotenvs.push('.env.production');
 
 	let directory = process.cwd();
 	let lastDirectory;
