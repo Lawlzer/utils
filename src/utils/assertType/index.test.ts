@@ -51,4 +51,29 @@ describe(folderName, () => {
 			assertType({ aString }, 'number');
 		}).toThrow('index.test.ts');
 	});
+
+	it('will have colour if the --no-color flag is <NOT> passed', () => {
+		try {
+			const aString = 'hi';
+			assertType({ aString }, 'number');
+			expect(true).toBe(false);
+		} catch (e: any) {
+			expect(e.includes('\u001b')).toBe(true);
+		}
+	});
+
+	// // We cannot actually test this (without spawning a new Node process), because the --no-color flag is cached in the Node process
+	// it('will not have colour if the --no-color flag is passed', () => {
+	// 	process.env['no-color'] = 'true';
+	// 	try {
+	// 		const aString = 'hi';
+	// 		assertType({ aString }, 'number');
+	// 		expect(true).toBe(false);
+	// 	} catch (e: any) {
+	// 		// it should throw, and include a colour code in the message
+
+	// 		expect(e.includes('[37m')).toBe(false);
+	// 	}
+	// 	process.env['no-color'] = undefined;
+	// });
 });

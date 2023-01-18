@@ -26,7 +26,7 @@
 		"pre-commit": "lint-staged -c ./config/lint-staged.config.js",
 		"prepare": "husky install",
 		"publish:all": "npm run build && npm run test && npm publish --access=public && echo \"Successfully published to NPM!\"",
-		"start": "cross-env __RUNNING_LOCALLY__=true node -r sucrase/register src/index.ts",
+		"start": "cross-env node -r sucrase/register src/index.ts",
 		"start:production": "node dist/index",
 		"test": "jest --config ./config/jest.config.ts"
 	},

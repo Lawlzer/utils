@@ -29,6 +29,7 @@ export function assertType<I extends KeyValuePair>(variable: I, expectedType: Al
 	const { stackTrace, functionName, filePath, packageName } = createError(true);
 
 	let output = '';
+
 	output += `\n ${pc.white(pc.bold(packageName))}`;
 	output += `\n ${pc.white(`Function called from the file: ${pc.red(filePath)}`)}`;
 	output += `\n ${pc.white(`Function called: ${pc.yellow(functionName)}`)}`;
