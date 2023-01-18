@@ -1,3 +1,5 @@
+import { throwError } from '../throwError/index';
+
 function parseFlagValue(value: string): string | boolean {
 	if (value.toLowerCase() === 'true') return true;
 	if (value.toLowerCase() === 'false') return false;
@@ -8,7 +10,7 @@ function parseFlagValue(value: string): string | boolean {
 /**
  * Find a CLI flag, and return the result.
  *
- * Capitalization does not matter (helloworld is the same as helloWORLD)
+ * Capitalization does not matter (hello_world is the same as HELLO_WORLD)
  *
  * Will also read process.env variables.
  */
@@ -18,9 +20,14 @@ export function getFlag(flagInput: string): string | boolean | undefined {
 	// So we will find the relevant flag (either find "foo", "-foo", or "--foo"), and return the value (or, if no value, true)
 
 	// Handle .env variables
-	// .env variables are always lowercase, so capitalization does not matter whatsoever.
-	const envValue = process.env[flagLowercase];
-	if (envValue !== undefined) return parseFlagValue(envValue);
+	// Fun fact: .env variables on Windows are case-insensitive, but on Linux they are case-sensitive.
+	for (const envVar in process.env) {
+		// We must lowercase the ENVvar first, because Linux is case-sensitive
+		if (envVar.toLowerCase() !== flagLowercase) continue;
+
+		if (!process.env[envVar]) throwError(`The process.env variable "${envVar}" is set, but we could not find the value. This should not be possible, and is certainly a bug in @lawlzer/helpers`);
+		return parseFlagValue(process.env[envVar]!);
+	}
 
 	// Handle process.argv (CLI) variables
 	// Find the flag we are referencing here

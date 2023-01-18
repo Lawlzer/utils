@@ -1,7 +1,7 @@
 import { dirname, extname } from 'path';
 
 /**
- * Return the directory path of a path. Will "remove" files (if there is a file extension)
+ * Return the directory path of a path. Will "ignore" a file at the end, and return the directory path
  */
 export function getDirectory(path: string) {
 	const extension = extname(path);

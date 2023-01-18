@@ -8,7 +8,7 @@ import { getRandomCharacters } from '../getRandomCharacters';
 /**
  * Save data to a temporary file
  *
- * Will be saved to the OS temporary folder.
+ * Will be saved to the OS temporary folder. (Should not be relied on, as the OS may delete it at any time)
  *
  * @returns an absolute path to the file location
  */
