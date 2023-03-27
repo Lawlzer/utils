@@ -43,4 +43,17 @@ describe(folderName, () => {
 
 		await fs.remove(directory);
 	});
+
+	it('will create a file in a directory, in a directory, that does not exist (recursive)', async () => {
+		const filePath = path.join(process.cwd(), 'temp', 'test', 'test 2', 'test 3', getRandomCharacters(50, { letters: true }), 'file.txt');
+		await ensureFileExists(filePath, 'test');
+
+		const fileExists = await fs.pathExists(filePath);
+		expect(fileExists).toBe(true);
+
+		const fileContent = await fs.readFile(filePath);
+		expect(fileContent.toString()).toBe('test');
+
+		await fs.remove(path.join(process.cwd(), 'temp', 'test'));
+	});
 });

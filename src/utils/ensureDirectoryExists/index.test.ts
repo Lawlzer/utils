@@ -28,8 +28,16 @@ describe(folderName, () => {
 
 	it('will create a directory if a file extension is provided', async () => {
 		const directory = path.join(process.cwd(), 'temp', 'test', getRandomCharacters(50, { letters: true }));
-		const file = path.join(directory, 'test.txt');
-		await ensureDirectoryExists(file);
+		await ensureDirectoryExists(directory);
+		const directoryExists = await fs.pathExists(directory);
+		expect(directoryExists).toBe(true);
+
+		await fs.remove(directory);
+	});
+
+	it('will create a directory to create the directory (recursive)', async () => {
+		const directory = path.join(process.cwd(), 'temp', 'test', 'test 2', 'test 3', getRandomCharacters(50, { letters: true }));
+		await ensureDirectoryExists(directory);
 		const directoryExists = await fs.pathExists(directory);
 		expect(directoryExists).toBe(true);
 
