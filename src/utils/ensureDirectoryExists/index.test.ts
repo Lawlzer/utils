@@ -17,8 +17,9 @@ describe(folderName, () => {
 	});
 
 	it('will not do anything if the directory already exists', async () => {
+		await fs.ensureDir(path.resolve(process.cwd(), 'temp'));
+		await fs.ensureDir(path.resolve(process.cwd(), 'temp', 'test'));
 		const directory = path.join(process.cwd(), 'temp', 'test', getRandomCharacters(50, { letters: true }));
-		await fs.ensureDir(directory);
 		await ensureDirectoryExists(directory);
 		const directoryExists = await fs.pathExists(directory);
 		expect(directoryExists).toBe(true);

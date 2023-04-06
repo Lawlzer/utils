@@ -1,7 +1,7 @@
 {
-	"name": "@lawlzer/helpers",
+	"name": "@lawlzer/utils",
 	"version": "3.2.19",
-	"description": "The default Helpers file for any of Lawlzer's coding projects. ",
+	"description": "A collection of utilities used to streamline common programming tasks/useful utilities, to help improve code readability and maintainability.",
 	"license": "ISC",
 	"author": "Lawlzer",
 	"main": "./dist/index.js",
