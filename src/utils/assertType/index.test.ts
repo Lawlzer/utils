@@ -1,4 +1,8 @@
 import { assertType } from './index';
+import { exec, execSync } from 'child_process';
+import { promisify } from 'util';
+
+const execAsync = promisify(exec);
 
 const folderName = __dirname.split('\\').pop()!;
 
@@ -62,18 +66,13 @@ describe(folderName, () => {
 		}
 	});
 
-	// // We cannot actually test this (without spawning a new Node process), because the --no-color flag is cached in the Node process
-	// it('will not have colour if the --no-color flag is passed', () => {
-	// 	process.env['no-color'] = 'true';
-	// 	try {
-	// 		const aString = 'hi';
-	// 		assertType({ aString }, 'number');
-	// 		expect(true).toBe(false);
-	// 	} catch (e: any) {
-	// 		// it should throw, and include a colour code in the message
+	// it('will not have colour if the --no-color flag is passed', async () => {
+	// 	// Launch a new Node process with the "no-color" flag set
+	// 	// const command = `console.log('hi');`;
+	// 	const command = `const { assertType } = require('./index'); const aString ='hi'; assertType({aString}, 'number')`;
+	// 	const result = await execSync(`node -e ${command}`, { encoding: 'utf8', env: { ...process.env, no_color: '1' } });
 
-	// 		expect(e.includes('[37m')).toBe(false);
-	// 	}
-	// 	process.env['no-color'] = undefined;
+	// 	// console.log('result: ', result);
+	// 	// expect(stdout.trim()).toMatch(/^v\d+\.\d+\.\d+$/); // check if output matches expected format
 	// });
 });

@@ -12,7 +12,7 @@ export function flattenObject(input: unknown, separator = '-', output?: UnknownO
 	if (!currentPath) currentPath = '';
 
 	// Handle Arrays (Arrays work normally OK, but nested objects inside of arrays would be a problem)
-	if (Array.isArray(input)) throwError('@lawlzer/helpers - flattenObject - Arrays are not supported.');
+	if (Array.isArray(input)) throwError('@lawlzer/utils - flattenObject - Arrays are not supported.');
 	// let outputArray: unknown[] = [];
 	// for (const currentItem of input) {
 	// 	const newPath = `${currentPath}${separator}${outputArray.length}`;  // This uses the array index as the key... which is kinda weird...

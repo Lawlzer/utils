@@ -25,7 +25,7 @@ export function getFlag(flagInput: string): string | boolean | undefined {
 		// We must lowercase the ENVvar first, because Linux is case-sensitive
 		if (envVar.toLowerCase() !== flagLowercase) continue;
 
-		if (!process.env[envVar]) throwError(`The process.env variable "${envVar}" is set, but we could not find the value. This should not be possible, and is certainly a bug in @lawlzer/helpers`);
+		if (!process.env[envVar]) throwError(`The process.env variable "${envVar}" is set, but we could not find the value. This should not be possible, and is certainly a bug in @lawlzer/utils`);
 		return parseFlagValue(process.env[envVar]!);
 	}
 

@@ -22,7 +22,7 @@ function getPackageName(filePath: string): string {
  */
 export function createError(removeRecentFunction = false) {
 	const errorStack = new Error().stack;
-	if (!errorStack) throw '@lawlzer/helpers - throwError - error.stack is undefined... We errored, in the throwError function. Wow. Here is your error, however: ' + errorStack;
+	if (!errorStack) throw '@lawlzer/utils - throwError - error.stack is undefined... We errored, in the throwError function. Wow. Here is your error, however: ' + errorStack;
 
 	let errorArray = errorStack.split('\n');
 

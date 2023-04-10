@@ -38,7 +38,7 @@ export function assertType<I extends KeyValuePair>(variable: I, expectedType: Al
 	output += `\n ${pc.white(`Variable type: ${pc.cyan(typeof value)}`)}`;
 	output += `\n ${pc.white(`Expected type: ${pc.magenta(expectedType)}`)}`;
 	output += `\n\n' ${pc.gray(stackTrace)}`;
-	output += `\n\n' ${pc.gray('This error was thrown by the assertType() function from @lawlzer/helpers.')}`;
+	output += `\n\n' ${pc.gray('This error was thrown by the assertType() function from @lawlzer/utils.')}`;
 
 	throw output;
 }

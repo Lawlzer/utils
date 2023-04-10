@@ -38,10 +38,10 @@ export function combineObjects<T extends object[]>(...args: T): U2I<T[number]> {
 			}
 
 			const isDifferentType = typeof result[key] !== typeof value && typeof result[key] !== 'undefined';
-			if (isDifferentType) throw new Error(`@lawlzer/helpers - combineOptions: property "${key}" is different between objects`);
+			if (isDifferentType) throw new Error(`@lawlzer/utils - combineOptions: property "${key}" is different between objects`);
 
 			const isDifferentValue = result[key] !== value && typeof result[key] !== 'undefined';
-			if (isDifferentValue) throw new Error(`@lawlzer/helpers - combineOptions: "${key}" is different between objects`);
+			if (isDifferentValue) throw new Error(`@lawlzer/utils - combineOptions: "${key}" is different between objects`);
 
 			result[key] = value;
 		}
