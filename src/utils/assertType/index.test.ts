@@ -1,6 +1,7 @@
-import { assertType } from './index';
 import { exec, execSync } from 'child_process';
 import { promisify } from 'util';
+
+import { assertType } from './index';
 
 const execAsync = promisify(exec);
 
