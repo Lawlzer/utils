@@ -1,6 +1,11 @@
-// This file will run on commit. It will also run on "npm run pre-commit".
-// This will *only look at commited files* :)
+// Husky will run "npm run pre-commit" on commit
+// This file is ran from "npm run pre-commit"
 
 module.exports = {
-	'**/*.{ts,tsx,js,jsx,json,jsonc}': ['npm run lint:eslint:commit --', 'npm run lint:prettier --', 'jest --bail --findRelatedTests --pass-with-no-tests --config=./config/jest.config.ts'],
+	'**/*.{ts,tsx,js,jsx,json,jsonc}': [
+		//
+		'jest --bail --findRelatedTests --pass-with-no-tests --config=./config/jest.config.ts',
+		'npm run lint:eslint:commit --',
+		'npm run lint:prettier --',
+	],
 };
