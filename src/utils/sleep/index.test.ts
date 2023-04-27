@@ -5,7 +5,7 @@ const folderName = __dirname.split('\\').pop()!;
 describe(folderName, () => {
 	it('will not sleep if called syncronously', async () => {
 		const start = Date.now();
-		sleep(1000);
+		void sleep(1000);
 		const end = Date.now();
 		expect(end - start).toBeLessThan(100);
 	});

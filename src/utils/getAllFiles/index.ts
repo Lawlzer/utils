@@ -11,8 +11,8 @@ export async function getAllFiles(pathToFolder: string): Promise<string[]> {
 	const output = await Promise.all(
 		allFiles.map(async (file) => {
 			const filePath = path.join(pathToFolder, file);
-			const isDirectory = (await fs.lstat(filePath))?.isDirectory();
-			if (isDirectory) return await getAllFiles(filePath);
+			const isDirectory = (await fs.lstat(filePath)).isDirectory();
+			if (isDirectory) return getAllFiles(filePath);
 			return filePath;
 		})
 	);

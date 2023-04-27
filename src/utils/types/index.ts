@@ -1,7 +1,7 @@
 export interface UnknownObject {
 	[key: string]: unknown;
 }
-export type AllTypesUnion = 'string' | 'number' | 'boolean' | 'symbol' | 'bigint' | 'undefined' | 'object' | 'function' | 'null' | 'array';
+export type AllTypesUnion = 'array' | 'bigint' | 'boolean' | 'function' | 'null' | 'number' | 'object' | 'string' | 'symbol' | 'undefined';
 export interface Dictionary<T> {
 	[key: string]: T;
 }
@@ -18,5 +18,6 @@ export type UnionToIntersection<U> = (U extends U ? (u: U) => 0 : never) extends
 export type ArrayToIntersection<T extends readonly any[]> = UnionToIntersection<T[number]>;
 
 export interface NonEmptyArray<T> extends Array<T> {
+	// eslint-disable-next-line @typescript-eslint/naming-convention
 	0: T;
 }

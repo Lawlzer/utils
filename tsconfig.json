@@ -95,6 +95,14 @@
 		"baseUrl": "." /* Specify the base directory to resolve non-relative module names. */
 	},
 	"exports": ["./src/index.ts"],
-	"include": ["src"],
+	"include": [
+		"src", //
+		"./**/*.json",
+		"./config",
+		"./test-utils",
+		"./config/.eslintrc.js",
+		"./config/jest.config.ts",
+		"./config/lint-staged.config.js"
+	],
 	"exclude": ["node_modules", "scripts", "tools", "webpack", "jest", "legacy", "temp", "dist", ".env"]
 }

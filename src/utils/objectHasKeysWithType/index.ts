@@ -1,6 +1,6 @@
 import type { AllTypesUnion } from '../types';
 
-export function objectHasKeysWithType<T, K extends string>(inputObject: T, keys: K[], type: AllTypesUnion): inputObject is T & object & Record<K, unknown> {
+export function objectHasKeysWithType<T, K extends string>(inputObject: T, keys: K[], type: AllTypesUnion): inputObject is Record<K, unknown> & T & object {
 	// @ts-expect-error - We cannot index by K.
 	return typeof inputObject === 'object' && inputObject !== null && keys.every((key) => key in inputObject && typeof inputObject[key] === type);
 }

@@ -6,7 +6,7 @@ import { throwError } from '../throwError';
 interface KeyValuePair {
 	[key: string]: unknown;
 }
-type AllowedTypes = 'string' | 'number' | 'boolean' | 'object';
+type AllowedTypes = 'boolean' | 'number' | 'object' | 'string';
 
 /**
  * Input should be a deconstructed string, aka:

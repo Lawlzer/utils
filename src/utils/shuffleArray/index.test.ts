@@ -21,12 +21,14 @@ describe(folderName, () => {
 			arrayShuffled.push(i);
 		}
 
+		// eslint-disable-next-line @typescript-eslint/no-confusing-void-expression
 		const result = shuffleArray(arrayShuffled);
 		expect(result).toBeUndefined();
 	});
 
 	it('will do nothing if given an empty array', async () => {
 		const arrayShuffled: number[] = [];
+		// eslint-disable-next-line @typescript-eslint/no-confusing-void-expression
 		const result = shuffleArray(arrayShuffled);
 		expect(result).toBeUndefined();
 	});

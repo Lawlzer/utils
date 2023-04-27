@@ -1,6 +1,6 @@
 import { throwError } from '../throwError/index';
 
-function parseFlagValue(value: string): string | boolean {
+function parseFlagValue(value: string): boolean | string {
 	if (value.toLowerCase() === 'true') return true;
 	if (value.toLowerCase() === 'false') return false;
 
@@ -14,7 +14,7 @@ function parseFlagValue(value: string): string | boolean {
  *
  * Will also read process.env variables.
  */
-export function getFlag(flagInput: string): string | boolean | undefined {
+export function getFlag(flagInput: string): boolean | string | undefined {
 	const flagLowercase = flagInput.toLowerCase();
 	// The flags are not truly "flags", they are simple argv (or ENV variables)  For example, "--foo=foo" will be "--foo=foo" as an argv.
 	// So we will find the relevant flag (either find "foo", "-foo", or "--foo"), and return the value (or, if no value, true)

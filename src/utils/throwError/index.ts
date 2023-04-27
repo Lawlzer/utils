@@ -5,7 +5,7 @@ import { createError } from '../createError';
 /**
  * Will throw an error that logs the file, function name, and error message.
  */
-export function throwError(...message: string[]): never {
+export function throwError(...message: readonly string[]): never {
 	const { packageName, stackTrace, functionName, filePath } = createError(true);
 	stackTrace.split('\n').splice(1, 5); // Remove these lines, as they are for createError()
 
@@ -17,5 +17,6 @@ export function throwError(...message: string[]): never {
 	output += '\n\n' + pc.gray(stackTrace);
 	output += '\n\n' + pc.gray('This error was thrown by the throwError() function from @lawlzer/helpers.');
 
+	// eslint-disable-next-line @typescript-eslint/no-throw-literal
 	throw output;
 }
