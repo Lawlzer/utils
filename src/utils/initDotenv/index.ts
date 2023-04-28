@@ -17,7 +17,7 @@ export function initDotenv() {
 	// if (environmentName === 'production') allowedDotenvs.push('.env.production');
 
 	let directory = process.cwd();
-	let lastDirectory;
+	let lastDirectory = '';
 
 	while (lastDirectory !== directory) {
 		lastDirectory = directory;
@@ -27,7 +27,8 @@ export function initDotenv() {
 			const fileExists = fs.existsSync(dotenvPath);
 			if (fileExists) {
 				dotenv.config({ path: dotenvPath });
-				console.info(`We are using the .env file located at ${dotenvPath}`); return;
+				console.info(`We are using the .env file located at ${dotenvPath}`);
+				return;
 			}
 		}
 		directory = path.dirname(directory); // Go back up one directory

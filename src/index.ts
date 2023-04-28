@@ -21,6 +21,7 @@ export * from './utils/getNextOutputPath';
 export * from './utils/getRandomCharacters';
 export * from './utils/getUniques';
 export * from './utils/initDotenv';
+export * from './utils/isObject';
 export * from './utils/keys';
 export * from './utils/lowerCaseObjectKeys';
 export * from './utils/multiSort';

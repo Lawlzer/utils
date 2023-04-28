@@ -5,16 +5,14 @@
 import type { UnknownObject } from '../types';
 
 export function lowerCaseObjectKeys(input: UnknownObject | UnknownObject[]): UnknownObject | UnknownObject[] {
-	if (typeof input !== 'object' || input === null) return input;
+	if (typeof input !== 'object') return input;
 	const output: { [key: string]: unknown } = {};
 
 	// Arrays
 	if (Array.isArray(input)) {
 		const result = input
 			.map((item) => {
-				item;
-				const result = lowerCaseObjectKeys(item);
-				return result;
+				return lowerCaseObjectKeys(item);
 			})
 			.flat(99);
 		return result;

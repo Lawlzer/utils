@@ -40,5 +40,6 @@ export function assertType<I extends KeyValuePair>(variable: I, expectedType: Al
 	output += `\n\n' ${pc.gray(stackTrace)}`;
 	output += `\n\n' ${pc.gray('This error was thrown by the assertType() function from @lawlzer/utils.')}`;
 
+	// eslint-disable-next-line @typescript-eslint/no-throw-literal
 	throw output;
 }

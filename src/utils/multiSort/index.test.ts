@@ -3,15 +3,11 @@ import { multiSort } from './index';
 const folderName = __dirname.split('\\').pop()!;
 
 describe(folderName, () => {
-	it('will sort an array of objects with numbers by one key', () => {
+	it('will return undefined', () => {
 		const arr = [{ a: 3 }, { a: 1 }, { a: 2 }];
-		expect(multiSort(arr, 'a')).toEqual([{ a: 1 }, { a: 2 }, { a: 3 }]);
-	});
-
-	it('will return the sorted array', () => {
-		const arr = [{ a: 3 }, { a: 1 }, { a: 2 }];
+		// eslint-disable-next-line @typescript-eslint/no-confusing-void-expression
 		const result = multiSort(arr, 'a');
-		expect(result).toEqual([{ a: 1 }, { a: 2 }, { a: 3 }]);
+		expect(result).toEqual(undefined);
 	});
 
 	it('will sort in-place', () => {
@@ -26,7 +22,8 @@ describe(folderName, () => {
 			{ a: 1, b: 2 },
 			{ a: 2, b: 3 },
 		];
-		expect(multiSort(arr, 'a', 'b')).toEqual([
+		multiSort(arr, 'a', 'b');
+		expect(arr).toEqual([
 			{ a: 1, b: 2 },
 			{ a: 2, b: 3 },
 			{ a: 3, b: 1 },

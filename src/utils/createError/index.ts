@@ -8,7 +8,7 @@ function getPackageName(filePath: string): string {
 	if (packageNames[filePath]) return packageNames[filePath];
 
 	const packageJsonPath = findPackageJsonPathFromInside(filePath);
-	if (!packageJsonPath) return 'unknown package name';
+	if (packageJsonPath === null) return 'unknown package name';
 
 	const packageJson = fs.readJsonSync(packageJsonPath);
 	packageNames[filePath] = packageJson.name;
@@ -22,7 +22,7 @@ function getPackageName(filePath: string): string {
  */
 export function createError(removeRecentFunction = false) {
 	const errorStack = new Error().stack;
-	if (!errorStack) throw '@lawlzer/utils - throwError - error.stack is undefined... We errored, in the throwError function. Wow. Here is your error, however: ' + errorStack;
+	if (errorStack === undefined) throw new Error('@lawlzer/utils - throwError - error.stack is undefined... We errored, in the throwError/createError function. Wow.');
 
 	let errorArray = errorStack.split('\n');
 

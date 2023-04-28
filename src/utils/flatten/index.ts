@@ -9,7 +9,7 @@ import type { UnknownObject } from '../types/index';
 
 export function flattenObject(input: unknown, separator = '-', output?: UnknownObject, currentPath?: string) {
 	if (!output) output = {};
-	if (!currentPath) currentPath = '';
+	if (currentPath === undefined) currentPath = '';
 
 	// Handle Arrays (Arrays work normally OK, but nested objects inside of arrays would be a problem)
 	if (Array.isArray(input)) throwError('@lawlzer/utils - flattenObject - Arrays are not supported.');
@@ -50,7 +50,7 @@ export function unflattenObject<T extends object>(input: T, separator = '-') {
 		let current = output; // The current "object" (parts) we are looking at
 		for (let index = 0; index < parts.length; index++) {
 			const part = parts[index];
-			if (!current[part]) current[part] = {}; // Make sure we don't override when looping over parts we've already started
+			if (current[part] === undefined) current[part] = {}; // Make sure we don't override when looping over parts we've already started
 			if (index === parts.length - 1) {
 				current[part] = value;
 				continue;

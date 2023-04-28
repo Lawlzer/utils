@@ -101,6 +101,7 @@
 		"./config",
 		"./test-utils",
 		"./config/.eslintrc.js",
+		"./config/.eslintrc.commit.js",
 		"./config/jest.config.ts",
 		"./config/lint-staged.config.js"
 	],

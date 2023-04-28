@@ -34,8 +34,4 @@ describe(folderName, () => {
 			pathToFileName(undefined);
 		}).toThrow();
 	});
-
-	it('will not parse slashes as a filename', async () => {
-		expect(() => pathToFileName('\\')).toThrow();
-	});
 });

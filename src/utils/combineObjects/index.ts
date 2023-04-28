@@ -1,25 +1,24 @@
 import { throwError } from '../throwError';
-import type { U2I } from '../types/index';
+import type { U2I, UnknownObject } from '../types/index';
 
 /**
  * Will not modify the initial object
  *
- * Will add numbers, if they are both integers.
+ * Will add numbers, if they are both numbers.
  *
- * If two objects have the same property, but they are different (non-number), it will throw an error.
+ * If two objects have the same property, but they are different types, this will throw an error.
  *
- * Will also throw an error if the same property has different types.
- *
- * DOES NOT currently handle arrays.
+ * DOES NOT handle arrays.
  */
 
-export function combineObjects<T extends object[]>(...args: T): U2I<T[number]> {
+export function combineObjects<T extends UnknownObject[]>(...args: T): U2I<T[number]> {
 	const result: { [key: string]: any } = {};
 
 	for (const obj of args) {
 		// For every object passed in
 		if (typeof obj !== 'object') throwError('Input is not an object. Input: ', obj);
 		if (Array.isArray(obj)) throwError('Input is an array. Input: ', JSON.stringify(obj, null, 2));
+		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 		if (obj === null) throwError('Input is null. Input: ', obj);
 
 		for (const key in obj) {
@@ -33,7 +32,8 @@ export function combineObjects<T extends object[]>(...args: T): U2I<T[number]> {
 
 			const isNumber = typeof value === 'number';
 			if (isNumber) {
-				result[key] = (result[key] || 0) + value;
+				if (typeof result[key] !== 'number' && typeof result[key] !== 'undefined') throwError(`@lawlzer/utils - combineOptions: property "${key}" is different between objects`);
+				result[key] = ((result[key] as number | undefined) ?? 0) + value;
 				continue;
 			}
 

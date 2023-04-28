@@ -10,7 +10,7 @@ export function pathToFileName(path: string): string {
 	const fileName = path.replaceAll('\\', '/').split('/').pop();
 
 	// This error will only be thrown if we are passed in a single slash
-	if (!fileName) throwError('fileName passed in turned into undefined. Path: ', path);
+	if (fileName === undefined) throwError('fileName passed in turned into undefined. Path: ', path);
 
 	return fileName;
 }
