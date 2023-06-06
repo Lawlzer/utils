@@ -3,9 +3,7 @@ import pc from 'picocolors';
 import { createError } from '../createError';
 import { throwError } from '../throwError';
 
-interface KeyValuePair {
-	[key: string]: unknown;
-}
+type KeyValuePair = Record<string, unknown>;
 type AllowedTypes = 'boolean' | 'number' | 'object' | 'string';
 
 /**

@@ -3,15 +3,23 @@ import fs from 'fs-extra';
 import { findPackageJsonPathFromInside } from '../../dev-utils/findPackageJson';
 
 // We want to cache the package name, so we don't readJsonSync multiple times (since it's sync).
-const packageNames: { [key: string]: string } = {};
+const packageNames: Record<string, string> = {};
+
 function getPackageName(filePath: string): string {
-	if (packageNames[filePath]) return packageNames[filePath];
+	if (packageNames[filePath]) {
+		return packageNames[filePath];
+	}
 
 	const packageJsonPath = findPackageJsonPathFromInside(filePath);
-	if (packageJsonPath === null) return 'unknown package name';
+
+	if (packageJsonPath === null) {
+		return 'unknown package name';
+	}
 
 	const packageJson = fs.readJsonSync(packageJsonPath);
+
 	packageNames[filePath] = packageJson.name;
+
 	return packageJson.name;
 }
 
@@ -22,27 +30,36 @@ function getPackageName(filePath: string): string {
  */
 export function createError(removeRecentFunction = false) {
 	const errorStack = new Error().stack;
-	if (errorStack === undefined) throw new Error('@lawlzer/utils - throwError - error.stack is undefined... We errored, in the throwError/createError function. Wow.');
+
+	if (errorStack === undefined) {
+		throw new Error('@lawlzer/utils - throwError - error.stack is undefined... We errored, in the throwError/createError function. Wow.');
+	}
 
 	let errorArray = errorStack.split('\n');
 
 	const callerFunction = errorArray[2].trim().split(' ')[1];
 
-	errorArray.splice(1, 1); // remove references to createError
+	errorArray.splice(1, 1); // Remove references to createError
 
-	if (removeRecentFunction) errorArray = errorArray.filter((line: string) => !line.includes(`at ${callerFunction}`)); // Remove references to the most recent function called
+	if (removeRecentFunction) {
+		errorArray = errorArray.filter((line: string) => !line.includes(`at ${callerFunction}`));
+	} // Remove references to the most recent function called
 
 	// Get the package.json of the file that called this function -> the package name
-	const lineThreeSplit = errorArray[1].trim().split(' ');
-	const filePath: string | undefined = lineThreeSplit[lineThreeSplit.length - 1].replace('(', '').replace(')', '');
-	const packageName = filePath ? getPackageName(filePath) : 'unknown package path';
+	const lineThreeSplit = errorArray[1].trim().split(' '),
+		filePath: string | undefined = lineThreeSplit[lineThreeSplit.length - 1].replace('(', '').replace(')', ''),
+		packageName = filePath ? getPackageName(filePath) : 'unknown package path';
 
 	let functionName = errorArray[1].trim().split(' ')[1];
-	if (functionName === 'Object.<anonymous>') functionName += ' (this is an anonymous function)';
+
+	if (functionName === 'Object.<anonymous>') {
+		functionName += ' (this is an anonymous function)';
+	}
+
 	return {
-		packageName: packageName,
+		packageName,
 		stackTrace: errorArray.join('\n'),
-		functionName: functionName,
-		filePath: filePath,
+		functionName,
+		filePath,
 	};
 }

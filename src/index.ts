@@ -1,7 +1,10 @@
-// Ideally, we would dynamically export every function without referencing them here.
-// I didn't figure out a way to do that (with intellisense).
+/*
+ * Ideally, we would dynamically export every function without referencing them here.
+ * I didn't figure out a way to do that (with intellisense).
+ */
 
 export * from './utils/assertType';
+export * from './utils/block';
 export * from './utils/clamp';
 export * from './utils/clone';
 export * from './utils/combineObjects';
@@ -31,6 +34,7 @@ export * from './utils/pathToFileName';
 export * from './utils/pluck';
 export * from './utils/racePromises';
 export * from './utils/replaceAll';
+export * from './utils/retry';
 export * from './utils/returnRandomElement';
 export * from './utils/returnRandomWeightedObject';
 export * from './utils/shuffleArray';

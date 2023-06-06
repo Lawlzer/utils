@@ -1,6 +1,10 @@
 // This is the tsconfig used for building
-// If we used one, we would be forced to build .test.ts files, or we would have errors (not exported) in .d.ts files
+// If we used a single tsconfig file, we would be forced to build .test.ts files, or we would have errors in .d.ts files in development
 {
 	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"skipDefaultLibCheck": true /* Skip type checking .d.ts files that are included with TypeScript. */,
+		"skipLibCheck": true /* Skip type checking all .d.ts files. */
+	},
 	"exclude": ["**/*.test.ts"]
 }

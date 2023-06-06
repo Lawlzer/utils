@@ -6,7 +6,7 @@ import type { UnknownObject } from '../types';
 
 export function lowerCaseObjectKeys(input: UnknownObject | UnknownObject[]): UnknownObject | UnknownObject[] {
 	if (typeof input !== 'object') return input;
-	const output: { [key: string]: unknown } = {};
+	const output: Record<string, unknown> = {};
 
 	// Arrays
 	if (Array.isArray(input)) {
@@ -21,7 +21,7 @@ export function lowerCaseObjectKeys(input: UnknownObject | UnknownObject[]): Unk
 	// Objects
 	for (const key in input) {
 		// I'm too bad with TypeScript to figure out why it doesn't work without the as :/
-		output[key.toLowerCase() as keyof typeof output] = lowerCaseObjectKeys(input[key] as UnknownObject);
+		output[key.toLowerCase()] = lowerCaseObjectKeys(input[key] as UnknownObject);
 	}
 	return output;
 }

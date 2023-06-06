@@ -30,7 +30,7 @@ describe(folderName, () => {
 
 	it('will throw an error if the path is undefined', async () => {
 		expect(() => {
-			// @ts-expect-error
+			// @ts-expect-error It's a test
 			pathToFileName(undefined);
 		}).toThrow();
 	});

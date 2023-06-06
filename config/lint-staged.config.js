@@ -1,5 +1,7 @@
-// Husky will run "npm run pre-commit" on commit
-// This file is ran from "npm run pre-commit"
+/*
+ * Husky will run "npm run pre-commit" on commit
+ * This file is ran from "npm run pre-commit"
+ */
 
 module.exports = {
 	'**/*.{ts,tsx,js,jsx,json,jsonc}': [

@@ -1,10 +1,6 @@
-export interface UnknownObject {
-	[key: string]: unknown;
-}
+export type UnknownObject = Record<string, unknown>;
 export type AllTypesUnion = 'array' | 'bigint' | 'boolean' | 'function' | 'null' | 'number' | 'object' | 'string' | 'symbol' | 'undefined';
-export interface Dictionary<T> {
-	[key: string]: T;
-}
+export type Dictionary<T> = Record<string, T>;
 
 export type ForceSimplify<T> = T extends Record<string, unknown> ? { [P in keyof T]: ForceSimplify<T[P]> } : T;
 

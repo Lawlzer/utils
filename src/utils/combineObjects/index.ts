@@ -12,7 +12,7 @@ import type { U2I, UnknownObject } from '../types/index';
  */
 
 export function combineObjects<T extends UnknownObject[]>(...args: T): U2I<T[number]> {
-	const result: { [key: string]: any } = {};
+	const result: Record<string, any> = {};
 
 	for (const obj of args) {
 		// For every object passed in
@@ -22,7 +22,7 @@ export function combineObjects<T extends UnknownObject[]>(...args: T): U2I<T[num
 		if (obj === null) throwError('Input is null. Input: ', obj);
 
 		for (const key in obj) {
-			const value = obj[key as keyof typeof obj];
+			const value = obj[key];
 
 			const isObject = typeof value === 'object' && value !== null;
 			if (isObject) {
