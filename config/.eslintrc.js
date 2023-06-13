@@ -14,7 +14,7 @@ module.exports = {
 		ecmaVersion: 2023,
 		sourceType: 'module',
 		ecmaFeatures: {},
-		project: [path.join(process.cwd(), 'tsconfig.json')],
+		project: [path.join(process.cwd(), 'tsconfig.eslint.json')],
 		extraFileExtensions: ['.json'],
 	},
 

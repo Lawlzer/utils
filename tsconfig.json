@@ -93,7 +93,7 @@
 		// "rootDirs": ["./src", "./tests"] /* Allow multiple folders to be treated as one when resolving modules. */, // todo maybe add back?
 
 		// React does not allow "baseUrl: '.'", or using non-relative paths as ~/ :( So we have to do it this way.
-		"baseUrl": "." /* Specify the base directory to resolve non-relative module names. */,
+		// "baseUrl": "." /* Specify the base directory to resolve non-relative module names. */,
 
 		"paths": {
 			// // If edited here, you must also edit jest.config.ts, and babel.config.js
@@ -105,19 +105,19 @@
 	"plugins": [],
 	"exports": ["./src/index.ts"],
 	"include": [
-		"src", //
-		"tsconfig.json",
-		"tsconfig-build.json",
-		"package.json",
-		"package-lock.json",
-		"config/.eslintrc.commit.js",
-		"config/.eslintrc.js",
-		"config/.prettierrc.js",
-		"config/.swcrc",
-		"config/jest.config.ts",
-		"config/lint-staged.config.js",
-		"test-utils/testSetup.ts",
-		"test-utils/testTeardown.ts"
+		"src" //
 	],
-	"exclude": ["node_modules", "scripts", "tools", "webpack", "jest", "legacy", "temp", "dist", ".env", "scripts", "routeTypes"]
+	"exclude": [
+		"node_modules", //
+		"scripts",
+		"tools",
+		"webpack",
+		"jest",
+		"legacy",
+		"temp",
+		"dist",
+		".env",
+		"scripts",
+		"routeTypes"
+	]
 }
