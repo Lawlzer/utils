@@ -17,6 +17,7 @@ export * from './utils/ensureFileExists';
 export * from './utils/flatten';
 export * from './utils/floorToPrecision';
 export * from './utils/getAllFiles';
+export * from './utils/getAllFilesSync';
 export * from './utils/getAmountOfTimesInArray';
 export * from './utils/getDirectory';
 export * from './utils/getFlag';
