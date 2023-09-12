@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
 	parser: '@typescript-eslint/parser',
-	extends: [path.resolve(process.cwd(), 'node_modules', '@lawlzer', 'eslint', 'commit')], // Todo fix
+	extends: [path.resolve(process.cwd(), 'node_modules', '@lawlzer', 'eslint', 'main')], // Todo fix
 	root: true,
 
 	plugins: [
