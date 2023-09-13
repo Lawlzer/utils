@@ -1,10 +1,45 @@
 import { throwError } from '../throwError/index';
 
-function parseFlagValue(value: string): boolean | string {
-	if (value.toLowerCase() === 'true') return true;
-	if (value.toLowerCase() === 'false') return false;
+// Maybe these can be rewritten to remove the "as" casts.
+// Initially I used overloads instead of generics, which did work without AS casts, but you cannot call a function with overloads, from an overloaded function. So that did not work.
+// This also does not seem to work with Generics, but it may be my lack of knowledge.
 
-	return value;
+interface FlagData {
+	original: string;
+	value: string;
+}
+function getFlagCli(flagInput: string): FlagData | undefined {
+	const flagToFind = flagInput.toLowerCase();
+	const argv = process.argv.slice(2); // Exclude the first two arguments which are node and script path.
+
+	for (const argCurrent of argv) {
+		let arg = argCurrent.toLowerCase();
+		if (arg.startsWith('-')) arg = arg.replace('-', '');
+		if (arg.startsWith('-')) arg = arg.replace('-', '');
+
+		if (arg.startsWith(flagToFind)) {
+			arg = arg.replace(flagToFind, '');
+			if (arg.startsWith('=') && arg.length > 1) arg = arg.replace('=', ''); // && arg.length > 1, because if we have a flag that ends with an equal sign, we don't want to remove it
+
+			return { original: argCurrent, value: arg };
+		}
+	}
+	return undefined;
+}
+
+function getFlagEnv(flagInput: string): FlagData | undefined {
+	const flagToFind = flagInput.toLowerCase();
+
+	for (const [key, value] of Object.entries(process.env)) {
+		if (typeof value !== 'string') {
+			console.warn(`getFlagEnv found a non-string value: ${value} for the flag: ${key}`);
+			continue;
+		}
+
+		if (key.toLowerCase() === flagToFind) return { original: `${key}=${value}`, value: value }; // this could maybe be handled cleaner?
+	}
+
+	return undefined;
 }
 
 /**
@@ -14,47 +49,36 @@ function parseFlagValue(value: string): boolean | string {
  *
  * Will also read process.env variables.
  */
-export function getFlag(flagInput: string): boolean | string | undefined {
-	const flagLowercase = flagInput.toLowerCase();
-	// The flags are not truly "flags", they are simple argv (or ENV variables)  For example, "--foo=foo" will be "--foo=foo" as an argv.
-	// So we will find the relevant flag (either find "foo", "-foo", or "--foo"), and return the value (or, if no value, true)
+export function getFlag(flagInput: string, flagTypeNecessary: string): string | undefined;
+export function getFlag(flagInput: string, flagTypeNecessary: number): number | undefined;
+export function getFlag(flagInput: string, flagTypeNecessary: boolean): boolean | undefined;
+export function getFlag(flagInput: string, flagTypeNecessary: boolean | number | string): boolean | number | string | undefined {
+	const cliFlag = getFlagCli(flagInput);
+	const envFlag = getFlagEnv(flagInput);
 
-	// Handle .env variables
-	// Fun fact: .env variables on Windows are case-insensitive, but on Linux they are case-sensitive.
-	for (const envVar in process.env) {
-		// We must lowercase the ENVvar first, because Linux is case-sensitive
-		if (envVar.toLowerCase() !== flagLowercase) continue;
+	if (cliFlag !== undefined && envFlag !== undefined) throwError(`Flag "${flagInput}" was found in both process.argv and process.env. This is not allowed.`);
+	if (cliFlag === undefined && envFlag === undefined) return undefined;
+	const flag = cliFlag ?? envFlag;
+	if (!flag) throwError('...?');
 
-		if (process.env[envVar] === undefined) throwError(`The process.env variable "${envVar}" is set, but we could not find the value. This should not be possible, and is certainly a bug in @lawlzer/utils`);
-		return parseFlagValue(process.env[envVar]!);
+	if (flagTypeNecessary === 'boolean') {
+		if (flag.value.toLowerCase() === 'true' || flag.value === '') return true;
+		if (flag.value.toLowerCase() === 'false') return false;
+		throwError(`Flag "${flagInput}" is supposed to be a boolean, but has a value of '${flag.value}'.`);
 	}
 
-	// Handle process.argv (CLI) variables
-	// Find the flag we are referencing here
-	const flag = process.argv.find((argv) => {
-		if (!argv) return false; // if the argv have been deleted, or set to null/undefined
+	if (flagTypeNecessary === 'string') {
+		if (flag.value === '') throwError(`Flag "${flagInput}" is supposed to be a string, but has a value of '${flag.value}'.`);
+		return flag.value;
+	}
 
-		let arg = argv.toLowerCase();
-		if (arg.startsWith('-')) arg = arg.replace('-', '');
-		if (arg.startsWith('-')) arg = arg.replace('-', '');
+	if (flagTypeNecessary === 'number') {
+		if (flag.value === '') throwError(`Flag "${flagInput}" is supposed to be a number, but has a value of '${flag.value}'.`);
+		const valueParsed = parseFloat(flag.value);
+		if (isNaN(valueParsed)) throwError(`Flag "${flagInput}" is supposed to be a number, but has a value of '${flag.value}' when parseFloat is called on it.`);
+		return valueParsed;
+	}
 
-		if (arg.toLowerCase().startsWith(`${flagLowercase}=`) || arg === flagLowercase) return true;
-		return false;
-	});
-
-	if (flag === undefined) return undefined;
-
-	// flagValue should be everything after the first =
-	// If there is no =, it should be true
-	// We should assume there may be multiple =
-	// For example, --foo=bar=baz should be bar=baz
-	if (flag === `${flagLowercase}`) return true; // --foo
-	if (flag === `-${flagLowercase}`) return true; // -foo
-	if (flag === `--${flagLowercase}`) return true; // --foo
-
-	const equalsIndex = flag.indexOf('=');
-
-	const flagValue = flag.slice(equalsIndex + 1);
-
-	return parseFlagValue(flagValue);
+	// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+	throwError(`flagTypeNecessary was most likely invalid: "${flagTypeNecessary}"`);
 }

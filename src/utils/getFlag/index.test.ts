@@ -5,131 +5,199 @@ const folderName = __dirname.split('\\').pop()!;
 describe(folderName, () => {
 	// Resetting the process.argv and process.env this way will actually modify how they work!
 	// As an example, process.env capitalization does not matter. If you reset it to {}, capitalization does matter!
-	// beforeEach(() => {
-	// 	process.argv = [];
-	// 	process.env = {};
-	// });
-
-	it('will parse --flag as true', () => {
-		process.argv[2] = '--test1';
-		const flag = getFlag('test1');
-		expect(flag).toBe(true);
+	// However, this is also how it works on Linux! But.. maybe there are some other side effects? I hope not
+	beforeEach(() => {
+		process.argv[2] = '';
+		delete process.env.flag;
+		// process.env.flag = undefined;
+		// process.argv = [];
+		// process.env = {};
+		// process.env.flag = undefined;
+		// process.env.FLAG = undefined;
+		// delete process.argv[2];
 	});
 
-	it('will parse -flag as true', () => {
-		process.argv[2] = '-test2';
-		const flag = getFlag('test2');
-		expect(flag).toBe(true);
+	it('CLI Boolean: It will parse "--flag" as "true"', () => {
+		process.argv[2] = '--flag';
+		expect(getFlag('flag', 'boolean')).toBe(true);
+	});
+	it('CLI Boolean: It will not care about casing when parsing the [key]', () => {
+		process.argv[2] = '--FLag';
+		expect(getFlag('flaG', 'boolean')).toBe(true);
+	});
+	it('CLI Boolean: It will parse "--flag=true" as "true"', () => {
+		process.argv[2] = '--flag=true';
+		expect(getFlag('flag', 'boolean')).toBe(true);
+	});
+	it('CLI Boolean: It will parse "--flag=false" as "false"', () => {
+		process.argv[2] = '--flag=false';
+		expect(getFlag('flag', 'boolean')).toBe(false);
+	});
+	it('CLI Boolean: It will throw an error if the flag is not a boolean', () => {
+		process.argv[2] = '--flag=not-a-boolean';
+		expect(() => getFlag('flag', 'boolean')).toThrow();
+	});
+	it('CLI Boolean: It will return undefined if the flag is not set', () => {
+		expect(getFlag('flag', 'boolean')).toBe(undefined);
+	});
+	it('CLI Boolean: It will parse "flag" as true', () => {
+		process.argv[2] = 'flag';
+		expect(getFlag('flag', 'boolean')).toBe(true);
 	});
 
-	it('will parse "--flag=value" as value', () => {
-		process.argv[2] = '--test3=value';
-		const flag = getFlag('test3');
-		expect(flag).toBe('value');
+	it('CLI String: It will parse "--flag=hello" as "hello"', () => {
+		process.argv[2] = '--flag=hello';
+		expect(getFlag('flag', 'string')).toBe('hello');
+	});
+	it('CLI String: It will parse "--flag=true" as "true"', () => {
+		process.argv[2] = '--flag=true';
+		expect(getFlag('flag', 'string')).toBe('true');
+	});
+	it('CLI String: It will parse "--flag=false" as "false"', () => {
+		process.argv[2] = '--flag=false';
+		expect(getFlag('flag', 'string')).toBe('false');
+	});
+	it('CLI String: It will parse "--flag=123" as "123"', () => {
+		process.argv[2] = '--flag=123';
+		expect(getFlag('flag', 'string')).toBe('123');
+	});
+	it('CLI String: It will parse "flag=hello" as hello', () => {
+		process.argv[2] = 'flag=hello';
+		expect(getFlag('flag', 'string')).toBe('hello');
+	});
+	it('CLI String: It will parse flags with dashes in them', () => {
+		process.argv[2] = '--flag-with-dashes=hello';
+		expect(getFlag('flag-with-dashes', 'string')).toBe('hello');
+	});
+	it('CLI String: It will parse flags with equal signs in them', () => {
+		process.argv[2] = '--flag=hel=lo';
+		expect(getFlag('flag', 'string')).toBe('hel=lo');
+	});
+	it('CLI String: It will throw an error if it tries to parse "--flag"', () => {
+		process.argv[2] = '--flag';
+		expect(() => getFlag('flag', 'string')).toThrow();
 	});
 
-	it('will parse "-flag=value" as value', () => {
-		process.argv[2] = '-test4=value';
-		const flag = getFlag('test4');
-		expect(flag).toBe('value');
+	it('CLI Number: It will parse "--flag=123" as 123', () => {
+		process.argv[2] = '--flag=123';
+		expect(getFlag('flag', 'number')).toBe(123);
+	});
+	it('CLI Number: It will parse "flag=123" as 123', () => {
+		process.argv[2] = 'flag=123';
+		expect(getFlag('flag', 'number')).toBe(123);
+	});
+	it('CLI Number: It will throw an error if it tries to parse "--flag"', () => {
+		process.argv[2] = '--flag';
+		expect(() => getFlag('flag', 'number')).toThrow();
+	});
+	it('CLI Number: It will throw an error if it tries to parse "--flag=hello"', () => {
+		process.argv[2] = '--flag=hello';
+		expect(() => getFlag('flag', 'number')).toThrow();
+	});
+	it('CLI Number: It will throw an error if it tries to parse "--flag=true"', () => {
+		process.argv[2] = '--flag=true';
+		expect(() => getFlag('flag', 'number')).toThrow();
 	});
 
-	it('will parse "flag" as true', () => {
-		process.argv[2] = 'test5';
-		const flag = getFlag('test5');
-		expect(flag).toBe(true);
+	it('ENV Boolean: It will parse "flag=true" as true', () => {
+		process.env.flag = 'true';
+		expect(getFlag('flag', 'boolean')).toBe(true);
+	});
+	it('ENV Boolean: It will parse "flag=false" as false', () => {
+		process.env.flag = 'false';
+		expect(getFlag('flag', 'boolean')).toBe(false);
+	});
+	it('ENV Boolean: It will parse "flag" as true', () => {
+		process.env.flag = '';
+		expect(getFlag('flag', 'boolean')).toBe(true);
+	});
+	it('ENV Boolean: It will throw if parsing "flag=hello"', () => {
+		process.env.flag = 'hello';
+		expect(() => getFlag('flag', 'boolean')).toThrow();
+	});
+	it('ENV Boolean: It will throw if parsing "flag=123"', () => {
+		process.env.flag = '123';
+		expect(() => getFlag('flag', 'boolean')).toThrow();
+	});
+	it('ENV Boolean: It will not care about casing in the [key]', () => {
+		process.env.FLag = 'true';
+		expect(getFlag('flaG', 'boolean')).toBe(true);
+	});
+	it('ENV Boolean: It will not care about casing in the [value]', () => {
+		process.env.flag = 'TrUe';
+		expect(getFlag('flag', 'boolean')).toBe(true);
+	});
+	it('ENV Boolean: It will return undefined if the flag is not set', () => {
+		expect(getFlag('flag', 'boolean')).toBe(undefined);
 	});
 
-	it('will return undefined if the flag is not found', () => {
-		const flag = getFlag('flagThatDoesntExist');
-		expect(flag).toBeUndefined();
+	it('ENV String: It will parse "flag=hello" as hello', () => {
+		process.env.flag = 'hello';
+		expect(getFlag('flag', 'string')).toBe('hello');
+	});
+	it('ENV String: It will parse "flag=true" as true', () => {
+		process.env.flag = 'true';
+		expect(getFlag('flag', 'string')).toBe('true');
+	});
+	it('ENV String: It will parse "flag=false" as false', () => {
+		process.env.flag = 'false';
+		expect(getFlag('flag', 'string')).toBe('false');
+	});
+	it('ENV String: It will parse "flag=123" as 123', () => {
+		process.env.flag = '123';
+		expect(getFlag('flag', 'string')).toBe('123');
+	});
+	it('ENV String: It will throw an error if it tries to parse "flag"', () => {
+		process.env.flag = '';
+		expect(() => getFlag('flag', 'string')).toThrow();
+	});
+	it('ENV String: It will not throw an error if it tries to parse "flag="', () => {
+		process.env.flag = '=';
+		expect(() => getFlag('flag', 'string')).not.toThrow();
+	});
+	it('ENV String: It will not care about casing in the [key]', () => {
+		process.env.FLag = 'hello';
+		expect(getFlag('flaG', 'string')).toBe('hello');
+	});
+	it('ENV String: It will not care about casing in the [value]', () => {
+		process.env.flag = 'HeLlO';
+		expect(getFlag('flag', 'string')).toBe('HeLlO');
+	});
+	it('ENV String: It will return undefined if the flag is not set', () => {
+		expect(getFlag('flag', 'string')).toBe(undefined);
 	});
 
-	it('will not parse a number', () => {
-		process.argv[2] = '--test6=12';
-		const flag = getFlag('test6');
-		expect(flag).toBe('12');
+	it('ENV Number: It will parse "flag=123" as 123', () => {
+		process.env.flag = '123';
+		expect(getFlag('flag', 'number')).toBe(123);
+	});
+	it('ENV Number: It will throw an error if it tries to parse "flag"', () => {
+		process.env.flag = '';
+		expect(() => getFlag('flag', 'number')).toThrow();
+	});
+	it('ENV Number: It will throw an error if it tries to parse "flag=hello"', () => {
+		process.env.flag = 'hello';
+		expect(() => getFlag('flag', 'number')).toThrow();
+	});
+	it('ENV Number: It will throw an error if it tries to parse "flag=true"', () => {
+		process.env.flag = 'true';
+		expect(() => getFlag('flag', 'number')).toThrow();
+	});
+	it('ENV Number: It will not care about casing in the [key]', () => {
+		process.env.FLag = '123';
+		expect(getFlag('flaG', 'number')).toBe(123);
+	});
+	it('ENV Number: It will not care about casing in the [value]', () => {
+		process.env.flag = '123';
+		expect(getFlag('flag', 'number')).toBe(123);
+	});
+	it('ENV Number: It will return undefined if the flag is not set', () => {
+		expect(getFlag('flag', 'number')).toBe(undefined);
 	});
 
-	it('will parse --flag=true as true', () => {
-		process.argv[2] = '--test7=true';
-		const flag = getFlag('test7');
-		expect(flag).toBe(true);
-	});
-
-	it('will parse --flag=false as false', () => {
-		process.argv[2] = '--test8=false';
-		const flag = getFlag('test8');
-		expect(flag).toBe(false);
-	});
-
-	it('will parse flags with dashes', () => {
-		process.argv[2] = '--flag-with-dashes1=foo';
-		const flag = getFlag('flag-with-dashes1');
-		expect(flag).toBe('foo');
-	});
-
-	it('will not mis-parse part of a flag', () => {
-		process.argv[2] = '--flag9-with-dashes2';
-		const flag1 = getFlag('flag9');
-		expect(flag1).toBeUndefined();
-
-		const flag2 = getFlag('flag9-with');
-		expect(flag2).toBeUndefined();
-
-		const flag3 = getFlag('dashes');
-		expect(flag3).toBeUndefined();
-	});
-
-	it('will not incorrectly parse a flag that starts with the string', () => {
-		process.argv[2] = '--flagTricked';
-		const flag1 = getFlag('flag10');
-		expect(flag1).toBeUndefined();
-	});
-
-	it('will parse multiple flags', () => {
-		process.argv[2] = '--flag11=foo';
-		process.argv[3] = '--flag12=bar';
-		const flag1 = getFlag('flag11');
-		expect(flag1).toBe('foo');
-
-		const flag2 = getFlag('flag12');
-		expect(flag2).toBe('bar');
-	});
-
-	it('will parse differently capitalized flags', () => {
-		process.argv[2] = '--flAG13=foo';
-		const flag = getFlag('fLag13');
-		expect(flag).toBe('foo');
-	});
-
-	it('will not lowercase the flag value', () => {
-		process.argv[2] = '--flag14=FOO';
-		const flag = getFlag('flag14');
-		expect(flag).toBe('FOO');
-	});
-
-	it('will parse env variables', () => {
-		process.env.flag15 = 'foo';
-		const flag = getFlag('flag15');
-		expect(flag).toBe('foo');
-	});
-
-	it('will parse env variables with dashes', () => {
-		process.env['FLAG16-WITH-DASHES'] = 'foo';
-		const flag = getFlag('FLAG16-WITH-DASHES');
-		expect(flag).toBe('foo');
-	});
-
-	it('will parse env variables with different capitalization', () => {
-		process.env.FLag17 = 'foo';
-		const flag = getFlag('flAg17');
-		expect(flag).toBe('foo');
-	});
-
-	it('will parse env variables with a value of "true" to true', () => {
-		process.env.flag18 = 'true';
-		const flag = getFlag('flag18');
-		expect(flag).toBe(true);
+	it('Will throw an error if there is a CLI variable, and an ENV variable with the same name', () => {
+		process.argv[2] = '--flag=123';
+		process.env.flag = 'hello';
+		expect(() => getFlag('flag', 'number')).toThrow();
 	});
 });
