@@ -73,9 +73,9 @@ describe(folderName, () => {
 		process.argv[2] = '--flag=hel=lo';
 		expect(getFlag('flag', 'string')).toBe('hel=lo');
 	});
-	it('CLI String: It will throw an error if it tries to parse "--flag"', () => {
+	it('CLI String: It will NOT throw an error if it tries to parse "--flag" (but may send a warning)', () => {
 		process.argv[2] = '--flag';
-		expect(() => getFlag('flag', 'string')).toThrow();
+		expect(getFlag('flag', 'string')).toBe('');
 	});
 
 	it('CLI Number: It will parse "--flag=123" as 123', () => {
@@ -147,9 +147,9 @@ describe(folderName, () => {
 		process.env.flag = '123';
 		expect(getFlag('flag', 'string')).toBe('123');
 	});
-	it('ENV String: It will throw an error if it tries to parse "flag"', () => {
+	it('ENV String: It will correctly parse "flag" as \'\'', () => {
 		process.env.flag = '';
-		expect(() => getFlag('flag', 'string')).toThrow();
+		expect(getFlag('flag', 'string')).toBe('');
 	});
 	it('ENV String: It will not throw an error if it tries to parse "flag="', () => {
 		process.env.flag = '=';

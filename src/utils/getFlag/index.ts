@@ -69,7 +69,7 @@ export function getFlag(flagInput: string, flagTypeNecessary: 'boolean' | 'numbe
 	}
 
 	if (flagTypeNecessary === 'string') {
-		if (flag.value === '') throwError(`Flag "${flagInput}" is supposed to be a string, but has a value of '${flag.value}'.`);
+		if (flag.value === '') console.warn(`Flag "${flagInput}" is supposed to be a string, but has a value of '${flag.value}'.`);
 		return flag.value;
 	}
 
