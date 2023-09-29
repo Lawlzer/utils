@@ -49,6 +49,9 @@ function getFlagEnv(flagInput: string): FlagData | undefined {
  *
  * Will also read process.env variables.
  */
+export function getFlag(flagInput: string, flagTypeNecessary: 'string'): string | undefined;
+export function getFlag(flagInput: string, flagTypeNecessary: 'number'): number | undefined;
+export function getFlag(flagInput: string, flagTypeNecessary: 'boolean'): boolean | undefined;
 export function getFlag(flagInput: string, flagTypeNecessary: 'boolean' | 'number' | 'string'): boolean | number | string | undefined {
 	if (typeof flagTypeNecessary !== 'string') throwError('Was not passed in a flagTypeNecessary.');
 	const cliFlag = getFlagCli(flagInput);
