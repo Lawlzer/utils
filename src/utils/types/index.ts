@@ -17,3 +17,6 @@ export interface NonEmptyArray<T> extends Array<T> {
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	0: T;
 }
+
+export type WriteableDeep<T> = { -readonly [P in keyof T]: WriteableDeep<T[P]> };
+export type Writable<T> = { -readonly [P in keyof T]: T[P] };
