@@ -42,6 +42,7 @@ export * from './utils/returnRandomWeightedObject';
 export * from './utils/runInParallel';
 export * from './utils/shuffleArray';
 export * from './utils/sleep';
+export * from './utils/sleepSync';
 export * from './utils/temporarySave';
 export * from './utils/throwError';
 export * from './utils/types';
