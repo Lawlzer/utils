@@ -1,5 +1,5 @@
 import { sleep } from '../sleep';
-import { runInParallel } from './index';
+import { runPromisesInParallel } from './index';
 
 const folderName = __dirname.split('\\').pop()!;
 
@@ -9,8 +9,8 @@ describe(folderName, () => {
 		async function foo() {
 			globalI++;
 		}
-		await runInParallel(100, 10, foo);
-		expect(globalI).toBe(100);
+		await runPromisesInParallel(5, [foo(), foo(), foo(), foo(), foo(), foo(), foo(), foo(), foo(), foo()]);
+		expect(globalI).toBe(10);
 	});
 
 	it('will run in parallel at the expected speed', async () => {
@@ -19,9 +19,9 @@ describe(folderName, () => {
 		}
 		const startTime = Date.now();
 
-		await runInParallel(100, 10, foo);
+		await runPromisesInParallel(2, [foo(), foo(), foo(), foo(), foo(), foo(), foo(), foo(), foo(), foo(), foo(), foo(), foo(), foo(), foo(), foo(), foo(), foo(), foo(), foo()]);
 		const endTime = Date.now();
-		expect(endTime - startTime).toBeLessThan(200);
-		expect(endTime - startTime).toBeGreaterThan(75);
+		expect(endTime - startTime).toBeLessThan(50);
+		expect(endTime - startTime).toBeGreaterThan(19);
 	});
 });

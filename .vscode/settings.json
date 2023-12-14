@@ -45,8 +45,8 @@
 	"eslint.run": "onSave",
 	"eslint.workingDirectories": ["../config", "../**/*"],
 	"editor.codeActionsOnSave": {
-		"source.fixAll.eslint": true,
-		"source.fixAll.format": true
+		"source.fixAll.eslint": "explicit",
+		"source.fixAll.format": "explicit"
 	},
 	//
 	// Prettier settings

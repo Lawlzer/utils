@@ -1,25 +1,19 @@
-import { throwError } from '../throwError';
+export async function runPromisesInParallel(parallelAmount: number, functions: Promise<unknown>[]): Promise<unknown[]> {
+	const results: unknown[] = [];
 
-/**
- * Run a function in parallel, a certain amount of times, with a certain amount of parallelization.
- */
-export async function runInParallel(totalAmount: number, maxParallel: number, func: () => Promise<void>) {
-	let amountHandled = 0;
-
-	if (maxParallel > totalAmount) throwError('maxParallel is greater than totalAmount. The values are likely meant to be swapped.');
-
+	let index = 0;
 	async function runOne(): Promise<void> {
-		amountHandled++;
-		if (amountHandled > totalAmount) return;
+		if (results.length >= functions.length) return;
+		results.push(await functions[index]);
 
-		await func();
 		await runOne();
 	}
 
 	const promises: Promise<void>[] = [];
-	for (let i = 0; i < maxParallel; i++) {
+	for (let i = 0; i < parallelAmount; i++) {
 		promises.push(runOne());
 	}
 
 	await Promise.all(promises);
+	return results;
 }

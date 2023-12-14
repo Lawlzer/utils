@@ -32,6 +32,7 @@ export * from './utils/lowerCaseObjectKeys';
 export * from './utils/multiSort';
 export * from './utils/objectHasKeysWithType';
 export * from './utils/objectMap';
+export * from './utils/parallelize';
 export * from './utils/pathToFileName';
 export * from './utils/pluck';
 export * from './utils/racePromises';
