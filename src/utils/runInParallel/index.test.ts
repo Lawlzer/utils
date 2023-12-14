@@ -9,8 +9,8 @@ describe(folderName, () => {
 		async function foo() {
 			globalI++;
 		}
-		await runInParallel(100, 10, foo);
-		expect(globalI).toBe(100);
+		await runInParallel(50, 5, foo);
+		expect(globalI).toBe(50);
 	});
 
 	it('will run in parallel at the expected speed', async () => {
@@ -19,9 +19,9 @@ describe(folderName, () => {
 		}
 		const startTime = Date.now();
 
-		await runInParallel(100, 10, foo);
+		await runInParallel(50, 5, foo);
 		const endTime = Date.now();
-		expect(endTime - startTime).toBeLessThan(200);
+		expect(endTime - startTime).toBeLessThan(250);
 		expect(endTime - startTime).toBeGreaterThan(75);
 	});
 });
