@@ -10,7 +10,7 @@ import { throwError } from '../throwError';
 
 export function getRandomCharacters(length: number, { letters = false, numbers = false, symbols = false }: { letters?: boolean; numbers?: boolean; symbols?: boolean }): string {
 	// if every option is false, throw an error
-	if (!letters && !numbers && !symbols) throwError(`@lawlzer/helpers: userOptions was passed in, but every value is false.`);
+	if (!letters && !numbers && !symbols) throwError(`@lawlzer/utils: userOptions was passed in, but every value is false.`);
 
 	let validCharacters = '';
 	if (letters) validCharacters += 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';

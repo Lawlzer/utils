@@ -15,7 +15,7 @@ export function throwError(...message: readonly string[]): never {
 	output += '\n' + pc.white(`Function called: ${pc.cyan(functionName)}`);
 	output += '\n' + pc.white(`You made the mistake: ${pc.magenta(message.join(' '))}`);
 	output += '\n\n' + pc.gray(stackTrace);
-	output += '\n\n' + pc.gray('This error was thrown by the throwError() function from @lawlzer/helpers.');
+	output += '\n\n' + pc.gray('This error was thrown by the throwError() function from @lawlzer/utils.');
 
 	// eslint-disable-next-line @typescript-eslint/no-throw-literal
 	throw output;

@@ -5,7 +5,7 @@ const folderName = __dirname.split('\\').pop()!;
 describe(folderName, () => {
 	// it('will return the name of the current package', () => { // This might be impossible, because the code runs from Jest?
 	// 	const error = createError(false);
-	// 	expect(error.packageName).toEqual('@lawlzer/helpers');
+	// 	expect(error.packageName).toEqual('@lawlzer/utils');
 	// });
 
 	it('will return the stack trace', () => {
