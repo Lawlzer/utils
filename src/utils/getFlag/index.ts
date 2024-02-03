@@ -1,46 +1,9 @@
+import { getFlagCli, getFlagEnv } from '../../dev-utils/flagStuff';
 import { throwError } from '../throwError/index';
 
 // Maybe these can be rewritten to remove the "as" casts.
 // Initially I used overloads instead of generics, which did work without AS casts, but you cannot call a function with overloads, from an overloaded function. So that did not work.
 // This also does not seem to work with Generics, but it may be my lack of knowledge.
-
-interface FlagData {
-	original: string;
-	value: string;
-}
-function getFlagCli(flagInput: string): FlagData | undefined {
-	const flagToFind = flagInput.toLowerCase();
-	const argv = process.argv.slice(2); // Exclude the first two arguments which are node and script path.
-
-	for (const argCurrent of argv) {
-		let arg = argCurrent.toLowerCase();
-		if (arg.startsWith('-')) arg = arg.replace('-', '');
-		if (arg.startsWith('-')) arg = arg.replace('-', '');
-
-		if (arg.startsWith(flagToFind)) {
-			arg = arg.replace(flagToFind, '');
-			if (arg.startsWith('=') && arg.length > 1) arg = arg.replace('=', ''); // && arg.length > 1, because if we have a flag that ends with an equal sign, we don't want to remove it
-
-			return { original: argCurrent, value: arg };
-		}
-	}
-	return undefined;
-}
-
-function getFlagEnv(flagInput: string): FlagData | undefined {
-	const flagToFind = flagInput.toLowerCase();
-
-	for (const [key, value] of Object.entries(process.env)) {
-		if (typeof value !== 'string') {
-			console.warn(`getFlagEnv found a non-string value: ${value} for the flag: ${key}`);
-			continue;
-		}
-
-		if (key.toLowerCase() === flagToFind) return { original: `${key}=${value}`, value: value }; // this could maybe be handled cleaner?
-	}
-
-	return undefined;
-}
 
 /**
  * Find a CLI flag, and return the result.
@@ -57,8 +20,12 @@ export function getFlag(flagInput: string, flagTypeNecessary: 'boolean' | 'numbe
 	const cliFlag = getFlagCli(flagInput);
 	const envFlag = getFlagEnv(flagInput);
 
-	if (cliFlag !== undefined && envFlag !== undefined) throwError(`Flag "${flagInput}" was found in both process.argv and process.env. This is not allowed.`);
+	if (cliFlag !== undefined && envFlag !== undefined) {
+		if (cliFlag !== envFlag) throwError(`Flag "${flagInput}" was found in both process.argv and process.env. This is not allowed.`);
+		console.warn(`Flag "${flagInput}" was found in both process.argv and process.env, but they have the same value.`);
+	}
 	if (cliFlag === undefined && envFlag === undefined) return undefined;
+
 	const flag = cliFlag ?? envFlag;
 	if (!flag) throwError('...?');
 

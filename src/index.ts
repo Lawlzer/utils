@@ -25,6 +25,7 @@ export * from './utils/getNextOutputPath';
 export * from './utils/getRandomCharacters';
 export * from './utils/getUniques';
 export * from './utils/indexOfAll';
+export * from './utils/initConfig';
 export * from './utils/initDotenv';
 export * from './utils/isObject';
 export * from './utils/keys';
