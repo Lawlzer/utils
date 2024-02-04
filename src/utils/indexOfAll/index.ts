@@ -6,7 +6,6 @@ export function indexOfAll(wholeString: string, find: string): number[] {
 	let indexes = [];
 	let i = wholeString.indexOf(find);
 	while (i !== -1) {
-		console.log('i: ', i);
 		indexes.push(i);
 		i = wholeString.indexOf(find, ++i);
 	}
