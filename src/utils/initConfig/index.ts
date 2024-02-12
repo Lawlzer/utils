@@ -1,10 +1,6 @@
 import { getFlagCli, getFlagEnv } from '../../dev-utils/flagStuff';
 import { throwError } from '../throwError';
 
-/**
- * Will initialize the nearest .env file (call @lawlzer/utils/initDotenv)
- *
- */
 const types = ['boolean', 'number', 'string'] as const;
 type RequirementTypes = (typeof types)[number];
 
@@ -29,6 +25,23 @@ type Requirements = Record<
 	}
 >;
 
+/**
+ * Will NOT initialize the nearest .env file (call @lawlzer/utils/initDotenv first!)
+ *
+ * Initialize the config, with requirements.
+ *
+ * E.g:
+ *
+ * const config = initConfig({
+ *
+ * field: { type: 'string' },
+ *
+ * field2: { type: 'number' },
+ *
+ * field3: { type: 'boolean' },
+ *
+ * }); // { field: 'string', field2: 123, field3: true }
+ */
 export function initConfig<T extends Requirements>(
 	requirements: T
 ): {
@@ -40,10 +53,10 @@ export function initConfig<T extends Requirements>(
 	for (const [keyName, data] of Object.entries(requirements)) {
 		const { type, default: defaultValue, allowUndefined } = data;
 		if (defaultValue !== undefined) output[keyName as any] = defaultValue;
-		if (!types.includes(type)) errors.push(`key ${keyName} has an invalid type: "${type}". It must be one of: ${types.join(', ')}`);
+		if (!types.includes(type)) errors.push(`The key "${keyName}" has an invalid type: "${type}". It must be one of: ${types.join(', ')}`);
 
 		if (allowUndefined === true && defaultValue === true) {
-			errors.push(`key ${keyName} has allowUndefined set to true, but also has a default value.`);
+			errors.push(`The key "${keyName}" has allowUndefined set to true, but also has a default value.`);
 			continue;
 		}
 
@@ -52,11 +65,10 @@ export function initConfig<T extends Requirements>(
 
 		if (valueEnv !== undefined && valueCli !== undefined) {
 			if (valueEnv !== valueCli) {
-				errors.push(`ENV and CLI flags for ${keyName} are different: ${valueEnv} !== ${valueCli}. Using CLI flag.`);
-
+				errors.push(`ENV and CLI flags for key "${keyName}" are different: ${valueEnv} !== ${valueCli}. Using CLI flag.`);
 				continue;
 			}
-			console.warn(`ENV and CLI flags for ${keyName} are the same: ${valueEnv} === ${valueCli}. We will not throw an error, but this should probably be fixed.`);
+			console.warn(`ENV and CLI flags for key "${keyName}" are the same: ${valueEnv} === ${valueCli}. We will not throw an error, but this should probably be fixed.`);
 		}
 		const value = valueEnv ?? valueCli ?? defaultValue;
 		if (value === undefined) {
