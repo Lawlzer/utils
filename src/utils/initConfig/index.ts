@@ -1,30 +1,4 @@
 import { getFlagCli, getFlagEnv } from '../../dev-utils/flagStuff';
-import { throwError } from '../throwError';
-
-const types = ['boolean', 'number', 'string'] as const;
-type RequirementTypes = (typeof types)[number];
-
-type TypeScriptTypes = {
-	boolean: boolean;
-	number: number;
-	string: string;
-};
-
-// This helper type conditionally includes undefined based on Required flag
-type WithMaybeUndefined<TType, TRequired> = TRequired extends true ? TType : TType | undefined;
-
-type DefaultType<TType, TDefault> = TDefault extends TType ? TDefault : never;
-
-// Updated Requirements type to account for Required
-type Requirements = Record<
-	string,
-	(RequirementTypes extends infer TType ? (TType extends RequirementTypes ? { default?: DefaultType<TypeScriptTypes[TType], boolean | number | string> } : never) : never) & {
-		type: RequirementTypes;
-		default?: boolean | number | string;
-		required?: boolean;
-	}
->;
-
 /**
  * Will NOT initialize the nearest .env file (call @lawlzer/utils/initDotenv first!)
  *
@@ -42,11 +16,30 @@ type Requirements = Record<
  *
  * }); // { field: 'string', field2: 123, field3: true }
  */
-export function initConfig<T extends Requirements>(
-	requirements: T
-): {
-	[P in keyof T]: WithMaybeUndefined<TypeScriptTypes[T[P]['type']], T[P]['required']>;
-} {
+import { throwError } from '../throwError';
+
+const types = ['boolean', 'number', 'string'] as const;
+type RequirementTypes = (typeof types)[number];
+
+type TypeScriptTypes = {
+	boolean: boolean;
+	number: number;
+	string: string;
+};
+
+type WithMaybeUndefined<TType, TRequired extends boolean | undefined> = TRequired extends false ? TType | undefined : TType;
+
+type Requirements = Record<
+	string,
+	{
+		type: RequirementTypes;
+		default?: TypeScriptTypes[RequirementTypes];
+		required?: boolean;
+	}
+>;
+
+// Note: The actual function implementation should include logic to handle the constraints applied by these types.
+export function initConfig<T extends Requirements>(requirements: T): { [P in keyof T]: WithMaybeUndefined<TypeScriptTypes[T[P]['type']], T[P]['required']> } {
 	const errors: string[] = [];
 	const output: Record<keyof Requirements, boolean | number | string | undefined> = {};
 
