@@ -10,18 +10,18 @@ type TypeScriptTypes = {
 	string: string;
 };
 
-// This helper type conditionally includes undefined based on allowUndefined flag
-type WithMaybeUndefined<TType, TAllowUndefined> = TAllowUndefined extends true ? TType | undefined : TType;
+// This helper type conditionally includes undefined based on Required flag
+type WithMaybeUndefined<TType, TRequired> = TRequired extends true ? TType : TType | undefined;
 
 type DefaultType<TType, TDefault> = TDefault extends TType ? TDefault : never;
 
-// Updated Requirements type to account for allowUndefined
+// Updated Requirements type to account for Required
 type Requirements = Record<
 	string,
 	(RequirementTypes extends infer TType ? (TType extends RequirementTypes ? { default?: DefaultType<TypeScriptTypes[TType], boolean | number | string> } : never) : never) & {
 		type: RequirementTypes;
 		default?: boolean | number | string;
-		allowUndefined?: boolean;
+		required?: boolean;
 	}
 >;
 
@@ -45,20 +45,15 @@ type Requirements = Record<
 export function initConfig<T extends Requirements>(
 	requirements: T
 ): {
-	[P in keyof T]: WithMaybeUndefined<TypeScriptTypes[T[P]['type']], T[P]['allowUndefined']>;
+	[P in keyof T]: WithMaybeUndefined<TypeScriptTypes[T[P]['type']], T[P]['required']>;
 } {
 	const errors: string[] = [];
 	const output: Record<keyof Requirements, boolean | number | string | undefined> = {};
 
 	for (const [keyName, data] of Object.entries(requirements)) {
-		const { type, default: defaultValue, allowUndefined } = data;
+		const { type, default: defaultValue, required } = data;
 		if (defaultValue !== undefined) output[keyName as any] = defaultValue;
 		if (!types.includes(type)) errors.push(`The key "${keyName}" has an invalid type: "${type}". It must be one of: ${types.join(', ')}`);
-
-		if (allowUndefined === true && defaultValue === true) {
-			errors.push(`The key "${keyName}" has allowUndefined set to true, but also has a default value.`);
-			continue;
-		}
 
 		const valueEnv = getFlagEnv(keyName)?.value;
 		const valueCli = getFlagCli(keyName)?.value;
@@ -72,7 +67,7 @@ export function initConfig<T extends Requirements>(
 		}
 		const value = valueEnv ?? valueCli ?? defaultValue;
 		if (value === undefined) {
-			if (allowUndefined !== true) errors.push(`Missing ENV flag: ${keyName}`);
+			if (required === true) errors.push(`Missing ENV flag: ${keyName}`);
 			else output[keyName as any] = undefined;
 			continue;
 		}

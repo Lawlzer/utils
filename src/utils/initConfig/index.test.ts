@@ -15,21 +15,21 @@ describe(folderName, () => {
 		(process as any).env.numberNumber = 123; // we'd normally parse CLI args, but we also can't test that
 		process.env.numberString = '123';
 	});
-	it(`will successfully handle the allowUndefined option`, () => {
-		expect(initConfig({ undefined: { type: 'string', allowUndefined: true } })).toEqual({ undefined: undefined });
-		expect(initConfig({ undefined: { type: 'number', allowUndefined: true } })).toEqual({ undefined: undefined });
+	it(`will successfully handle the required option`, () => {
+		expect(initConfig({ undefined: { type: 'string', required: false } })).toEqual({ undefined: undefined });
+		expect(initConfig({ undefined: { type: 'number', required: false } })).toEqual({ undefined: undefined });
 
-		// Invalid values
-		expect(() => initConfig({ true: { type: 'number', allowUndefined: true } })).toThrow();
+		// Incorrect types
+		expect(() => initConfig({ true: { type: 'number', required: false } })).toThrow();
+		expect(() => initConfig({ string: { type: 'number', required: true } })).toThrow();
 
-		expect(() => initConfig({ string: { type: 'number', allowUndefined: true } })).toThrow();
-
-		// Type "allowUndefined" variables as potentially undefined
-		const result = initConfig({ true: { type: 'boolean', allowUndefined: true } });
+		// Ensure "required" variables are typed as potentially undefined
+		const result = initConfig({ true: { type: 'boolean', required: false } });
 		if (result.true === undefined) {
 		}
 
-		expect(initConfig({ true: { type: 'boolean', allowUndefined: true } })).toEqual({ true: true });
+		expect(initConfig({ true: { type: 'boolean', required: false } })).toEqual({ true: true });
+		expect(initConfig({ true: { type: 'boolean', required: true } })).toEqual({ true: true });
 	});
 
 	it(`will successfully handle the default option`, () => {
@@ -54,10 +54,10 @@ describe(folderName, () => {
 		expect(initConfig({ numberString: { type: 'number', default: 123 } })).toEqual({ numberString: 123 });
 	});
 
-	it(`will work when using allowUndefined and default together`, () => {
-		expect(initConfig({ undefined: { type: 'string', allowUndefined: true, default: 'default' } })).toEqual({ undefined: 'default' });
+	it(`will work when using required and default together`, () => {
+		expect(initConfig({ undefined: { type: 'string', required: true, default: 'default' } })).toEqual({ undefined: 'default' });
 
-		expect(() => initConfig({ undefined: { type: 'number', allowUndefined: true, default: 'hello' } })).toThrow();
+		expect(() => initConfig({ undefined: { type: 'number', required: true, default: 'hello' } })).toThrow();
 	});
 
 	it(`will work normally`, () => {
