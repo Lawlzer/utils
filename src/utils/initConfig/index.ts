@@ -1,21 +1,4 @@
 import { getFlagCli, getFlagEnv } from '../../dev-utils/flagStuff';
-/**
- * Will NOT initialize the nearest .env file (call @lawlzer/utils/initDotenv first!)
- *
- * Initialize the config, with requirements.
- *
- * E.g:
- *
- * const config = initConfig({
- *
- * field: { type: 'string' },
- *
- * field2: { type: 'number' },
- *
- * field3: { type: 'boolean' },
- *
- * }); // { field: 'string', field2: 123, field3: true }
- */
 import { throwError } from '../throwError';
 
 const types = ['boolean', 'number', 'string'] as const;
@@ -38,7 +21,23 @@ type Requirements = Record<
 	}
 >;
 
-// Note: The actual function implementation should include logic to handle the constraints applied by these types.
+/**
+ * Will NOT initialize the nearest .env file (call @lawlzer/utils/initDotenv first!)
+ *
+ * Initialize the config, with requirements.
+ *
+ * E.g:
+ *
+ * const config = initConfig({
+ *
+ * field: { type: 'string' },
+ *
+ * field2: { type: 'number' },
+ *
+ * field3: { type: 'boolean' },
+ *
+ * }); // { field: 'string', field2: 123, field3: true }
+ */
 export function initConfig<T extends Requirements>(requirements: T): { [P in keyof T]: WithMaybeUndefined<TypeScriptTypes[T[P]['type']], T[P]['required']> } {
 	const errors: string[] = [];
 	const output: Record<keyof Requirements, boolean | number | string | undefined> = {};
