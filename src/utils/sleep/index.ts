@@ -9,5 +9,6 @@ export async function sleep(inputTime: number | string): Promise<void> {
 	if (typeof inputTime !== 'number') throwError('inputTime must be a string that represents a number.');
 
 	const myNumber = Number(inputTime);
+	if (myNumber >= ms('1d')) console.warn(`@lawlzer/utils: sleep() has been called for 1d or longer.`);
 	return new Promise((resolve) => setTimeout(resolve, myNumber));
 }

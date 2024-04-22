@@ -1,3 +1,8 @@
+/**
+ * An object with string: unknown key-value pairs
+ *
+ * If you need to narrow an UnknownObject, objectHasKeysWithType is a very useful util
+ */
 export type UnknownObject = Record<string, unknown>;
 export type AllTypesUnion = 'array' | 'bigint' | 'boolean' | 'function' | 'null' | 'number' | 'object' | 'string' | 'symbol' | 'undefined';
 export type Dictionary<T> = Record<string, T>;
