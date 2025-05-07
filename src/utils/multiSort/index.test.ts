@@ -5,7 +5,7 @@ const folderName = __dirname.split('\\').pop()!;
 describe(folderName, () => {
 	it('will return undefined', () => {
 		const arr = [{ a: 3 }, { a: 1 }, { a: 2 }];
-		// eslint-disable-next-line @typescript-eslint/no-confusing-void-expression
+
 		const result = multiSort(arr, 'a');
 		expect(result).toEqual(undefined);
 	});

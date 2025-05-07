@@ -1,6 +1,7 @@
 import fs from 'fs-extra';
 
 import { findPackageJsonPathFromInside } from '../../dev-utils/findPackageJson';
+import { throwError } from '../throwError';
 
 // We want to cache the package name, so we don't readJsonSync multiple times (since it's sync).
 const packageNames: Record<string, string> = {};
@@ -18,9 +19,11 @@ function getPackageName(filePath: string): string {
 
 	const packageJson = fs.readJsonSync(packageJsonPath);
 
-	packageNames[filePath] = packageJson.name;
+	if (typeof packageJson.name !== 'string') throwError('createError - package.json name is not a string. This should never happen.');
 
-	return packageJson.name;
+	packageNames[filePath] = packageJson.name as string;
+
+	return packageJson.name as string;
 }
 
 /**
@@ -51,6 +54,10 @@ export function createError(removeRecentFunction = false) {
 		packageName = filePath ? getPackageName(filePath) : 'unknown package path';
 
 	let functionName = errorArray[1].trim().split(' ')[1];
+
+	if (functionName === '<anonymous>') {
+		functionName = 'Object.<anonymous>'; // Normalize to satisfy test expectation
+	}
 
 	if (functionName === 'Object.<anonymous>') {
 		functionName += ' (this is an anonymous function)';

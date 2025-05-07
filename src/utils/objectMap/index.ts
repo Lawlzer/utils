@@ -9,7 +9,7 @@ import type { Dictionary } from '../types';
  */
 
 // https://stackoverflow.com/questions/14810506/map-function-for-objects-instead-of-arrays
-// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
+
 export function objectMap<TValue, TResult>(obj: Dictionary<TValue>, valSelector: (val: TValue, obj: Dictionary<TValue>) => TResult, keySelector?: (key: string, obj: Dictionary<TValue>) => string, ctx?: Dictionary<TValue>) {
 	const ret: Dictionary<TResult> = {};
 	for (const key of Object.keys(obj)) {

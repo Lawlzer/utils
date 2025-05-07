@@ -16,7 +16,7 @@ describe(folderName, () => {
 		];
 
 		const outputZod = zodMergeSchemas(...inputArray);
-		type OutputZodType = z.infer<typeof outputZod>;
+		type _OutputZodType = z.infer<typeof outputZod>;
 		expect(outputZod.parse({ foo: { one: 'one' } })).toEqual({ foo: { one: 'one' } });
 		expect(() => outputZod.parse({ foo: 'this is invalid' })).toThrow();
 	});
@@ -37,7 +37,7 @@ it('will merge two Zod schemas', () => {
 	];
 
 	const outputZod = zodMergeSchemas(...inputArray);
-	type OutputZodType = z.infer<typeof outputZod>;
+	type _OutputZodType = z.infer<typeof outputZod>;
 	expect(outputZod.parse({ foo: { one: 'one', two: 'two' } })).toEqual({ foo: { one: 'one', two: 'two' } });
 	expect(() => outputZod.parse({ foo: 'this is invalid' })).toThrow();
 });
@@ -62,7 +62,7 @@ it('will merge three Zod schemas', () => {
 	];
 
 	const outputZod = zodMergeSchemas(...inputArray);
-	type OutputZodType = z.infer<typeof outputZod>;
+	type _OutputZodType = z.infer<typeof outputZod>;
 	expect(outputZod.parse({ foo: { one: 'one', two: 'two', three: 'three' } })).toEqual({ foo: { one: 'one', two: 'two', three: 'three' } });
 });
 
@@ -85,7 +85,7 @@ it('will merge nested Zod schemas', () => {
 	];
 
 	const outputZod = zodMergeSchemas(...inputArray);
-	type OutputZodType = z.infer<typeof outputZod>;
+	type _OutputZodType = z.infer<typeof outputZod>;
 	expect(outputZod.parse({ foo: { one: { one: 'one', two: 'two' } } })).toEqual({ foo: { one: { one: 'one', two: 'two' } } });
 });
 
@@ -105,8 +105,8 @@ it('will not affect the input Zod schemas', () => {
 
 	const clonedInput = clone(inputArray);
 
-	const outputZod = zodMergeSchemas(...inputArray);
-	type OutputZodType = z.infer<typeof outputZod>;
+	const _outputZod = zodMergeSchemas(...inputArray);
+	type _OutputZodType = z.infer<typeof _outputZod>;
 
 	expect(clonedInput).toEqual(inputArray);
 });

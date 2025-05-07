@@ -46,6 +46,5 @@ export function getFlag(flagInput: string, flagTypeNecessary: 'boolean' | 'numbe
 		return valueParsed;
 	}
 
-	// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-	throwError(`flagTypeNecessary was most likely invalid: "${flagTypeNecessary}"`);
+	throwError(`flagTypeNecessary was most likely invalid: "${String(flagTypeNecessary)}"`);
 }

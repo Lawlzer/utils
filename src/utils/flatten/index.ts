@@ -8,8 +8,8 @@ import type { UnknownObject } from '../types/index';
  */
 
 export function flattenObject(input: unknown, separator = '-', output?: UnknownObject, currentPath?: string) {
-	if (!output) output = {};
-	if (currentPath === undefined) currentPath = '';
+	output ??= {};
+	currentPath ??= '';
 
 	// Handle Arrays (Arrays work normally OK, but nested objects inside of arrays would be a problem)
 	if (Array.isArray(input)) throwError('@lawlzer/utils - flattenObject - Arrays are not supported.');

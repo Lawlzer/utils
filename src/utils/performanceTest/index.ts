@@ -1,4 +1,4 @@
-import { sleep } from '../sleep';
+import { sleep as defaultSleep } from '../sleep';
 
 interface PerformanceTestResult {
 	testName: string;
@@ -16,10 +16,11 @@ interface PerformanceTestResult {
  * @param testName - The name of the test.
  * @param testFn - The asynchronous function to test.
  * @param iterations - The number of times to run the function.
+ * @param sleepFn - Optional sleep function to use between iterations.
  * @returns An object containing the performance results.
  */
-export async function runPerformanceTest(testName: string, testFn: () => Promise<any>, iterations: number): Promise<PerformanceTestResult> {
-	console.log(`Starting performance test: "${testName}" (${iterations} iterations)...`);
+export async function runPerformanceTest(testName: string, testFn: () => Promise<any>, iterations: number, sleepFn: (duration: number) => Promise<void> = defaultSleep): Promise<PerformanceTestResult> {
+	console.info(`Starting performance test: "${testName}" (${iterations} iterations)...`);
 
 	const times: number[] = [];
 	for (let i = 0; i < iterations; i++) {
@@ -28,7 +29,7 @@ export async function runPerformanceTest(testName: string, testFn: () => Promise
 		const end = performance.now();
 		times.push(end - start);
 		if (iterations > 1 && i < iterations - 1) {
-			await sleep(1); // Small delay between iterations unless it's the last one
+			await sleepFn(1); // Use passed or default sleepFn
 		}
 	}
 
@@ -44,7 +45,7 @@ export async function runPerformanceTest(testName: string, testFn: () => Promise
 	};
 
 	if (times.length === 0) {
-		console.log(`Performance test "${testName}" completed with 0 iterations.`);
+		console.info(`Performance test "${testName}" completed with 0 iterations.`);
 		return result;
 	}
 
@@ -62,7 +63,7 @@ export async function runPerformanceTest(testName: string, testFn: () => Promise
 	const variance = times.reduce((sum, time) => sum + Math.pow(time - mean, 2), 0) / times.length;
 	result.stdDev = Math.sqrt(variance);
 
-	console.log(`
+	console.info(`
 Performance results for "${testName}":
   Iterations:   ${result.iterations}
   Min Time:     ${result.minTime.toFixed(3)}ms

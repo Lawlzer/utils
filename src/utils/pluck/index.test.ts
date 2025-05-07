@@ -21,7 +21,7 @@ describe(folderName, () => {
 	it('will throw an error if the input is not an array', () => {
 		const array = 'not an array';
 		// @ts-expect-error We are not passing in an array/object as expected
-		const result = () => pluck(array, a);
+		const result = () => pluck(array, 'a');
 		expect(result).toThrow();
 	});
 });

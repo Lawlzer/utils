@@ -28,12 +28,14 @@ describe(folderName, () => {
 
 	it('will return undefined if passed in an empty array', async () => {
 		const array: never[] = [];
+
 		expect(returnRandomElement(array)).toBeUndefined();
 	});
 
 	it('will return the element, not a clone of the object', async () => {
 		const inputArray: { a: number | null }[] = [{ a: 1 }];
-		const randomElement = returnRandomElement(inputArray);
+		const randomElement = returnRandomElement(inputArray)!;
+
 		randomElement.a = null;
 
 		expect(inputArray[0].a).toBe(null);

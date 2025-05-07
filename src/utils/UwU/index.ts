@@ -10,7 +10,7 @@ export function UwU(text: string, addFaces = false): string {
 	text = text.replace(/N([aeiou])/g, 'Ny$1'); // replace N(vowel) with Ny(vowel)
 	text = text.replace(/N([AEIOU])/g, 'Ny$1'); // replace N(VOWEL) with Ny(VOWEL)
 	text = text.replace(/ove/g, 'uv'); // replace "ove" with "uv"
-	// eslint-disable-next-line
+
 	if (addFaces) text = text.replace(/\!+/g, ' ' + faces[Math.floor(Math.random() * faces.length)] + ' ');
 	return text;
 }

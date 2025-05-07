@@ -1,9 +1,4 @@
-import { exec } from 'child_process';
-import { promisify } from 'util';
-
 import { assertType } from './index';
-
-const execAsync = promisify(exec);
 
 const folderName = __dirname.split('\\').pop()!;
 

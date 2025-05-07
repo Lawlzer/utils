@@ -23,7 +23,7 @@ describe(folderName, () => {
 			// @ts-expect-error We are passing in a number, instead of a string.
 			await temporarySave(100);
 			expect(true).toBe(false); // TemporarySave should have crashed.
-		} catch (e) {
+		} catch (_e) {
 			expect(true).toBe(true);
 		}
 	});

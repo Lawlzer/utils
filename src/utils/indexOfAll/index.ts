@@ -3,7 +3,7 @@
  */
 export function indexOfAll(wholeString: string, find: string): number[] {
 	if (find === '') return []; // remove this to find a really fun error
-	let indexes = [];
+	const indexes = [];
 	let i = wholeString.indexOf(find);
 	while (i !== -1) {
 		indexes.push(i);

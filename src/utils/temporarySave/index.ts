@@ -2,8 +2,8 @@ import fs from 'fs-extra';
 import os from 'os';
 import path from 'path';
 
-import { assertType } from '../assertType';
-import { getRandomCharacters } from '../getRandomCharacters';
+import { assertType } from '../assertType/index';
+import { getRandomCharacters } from '../getRandomCharacters/index';
 
 /**
  * Save data to a temporary file

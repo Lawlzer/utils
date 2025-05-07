@@ -1,6 +1,6 @@
 import { objectHasKeysWithType } from './index';
 
-const folderName = __dirname.split('\\').pop()!;
+const _folderName = __dirname.split('\\').pop()!;
 
 describe('objectHasKeysWithType', () => {
 	it('will return true if the specified types are correct', () => {

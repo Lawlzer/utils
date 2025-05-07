@@ -17,7 +17,6 @@ describe(folderName, () => {
 		expect(isObject('test')).toBe(false);
 		expect(isObject(true)).toBe(false);
 
-		// eslint-disable-next-line @typescript-eslint/no-empty-function
 		expect(isObject(() => {})).toBe(false);
 	});
 });

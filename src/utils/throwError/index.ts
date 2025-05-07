@@ -1,6 +1,6 @@
 import pc from 'picocolors';
 
-import { createError } from '../createError';
+import { createError } from '../createError/index';
 
 /**
  * Will throw an error that logs the file, function name, and error message.
@@ -17,6 +17,5 @@ export function throwError(...message: readonly string[]): never {
 	output += '\n\n' + pc.gray(stackTrace);
 	output += '\n\n' + pc.gray('This error was thrown by the throwError() function from @lawlzer/utils.');
 
-	// eslint-disable-next-line @typescript-eslint/no-throw-literal
 	throw new Error(output);
 }

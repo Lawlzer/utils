@@ -9,8 +9,8 @@ describe('flattenObject', () => {
 				},
 			},
 		};
-		const output = flattenObject(input);
-		expect(output).toEqual({
+		const _output = flattenObject(input);
+		expect(_output).toEqual({
 			'a-b-c': 'value',
 		});
 	});
@@ -23,7 +23,7 @@ describe('flattenObject', () => {
 				},
 			},
 		};
-		const output = flattenObject(input);
+		const _output = flattenObject(input);
 		expect(input).toEqual({
 			a: {
 				b: {
@@ -43,8 +43,8 @@ describe('flattenObject', () => {
 				},
 			},
 		};
-		const output = flattenObject(input);
-		expect(output).toEqual({
+		const _output = flattenObject(input);
+		expect(_output).toEqual({
 			'a-b-c': 'value',
 			'a-b-d': 'value2',
 			'a-b-e': true,
@@ -58,8 +58,8 @@ describe('flattenObject', () => {
 				c: { d: 'value' },
 			},
 		};
-		const output = flattenObject(input);
-		expect(output).toEqual({
+		const _output = flattenObject(input);
+		expect(_output).toEqual({
 			'a-b': true,
 			'a-c-d': 'value',
 		});
@@ -75,8 +75,8 @@ describe('unflattenObject', () => {
 		const input = {
 			'a-b-c': 'value',
 		};
-		const output = unflattenObject(input);
-		expect(output).toEqual({
+		const _output = unflattenObject(input);
+		expect(_output).toEqual({
 			a: {
 				b: {
 					c: 'value',
@@ -93,7 +93,7 @@ describe('unflattenObject', () => {
 				},
 			},
 		};
-		const output = unflattenObject(input);
+		const _output = unflattenObject(input);
 		expect(input).toEqual({
 			a: {
 				b: {
@@ -109,8 +109,8 @@ describe('unflattenObject', () => {
 			'a-b-d': 'value2',
 			'a-b-e': true,
 		};
-		const output = unflattenObject(input);
-		expect(output).toEqual({
+		const _output = unflattenObject(input);
+		expect(_output).toEqual({
 			a: {
 				b: {
 					c: 'value',
@@ -126,8 +126,8 @@ describe('unflattenObject', () => {
 			'a-b': true,
 			'a-c-d': 'value',
 		};
-		const output = unflattenObject(input);
-		expect(output).toEqual({
+		const _output = unflattenObject(input);
+		expect(_output).toEqual({
 			a: {
 				b: true,
 				c: { d: 'value' },

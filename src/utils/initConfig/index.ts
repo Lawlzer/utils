@@ -4,11 +4,11 @@ import { throwError } from '../throwError';
 const types = ['boolean', 'number', 'string'] as const;
 type RequirementTypes = (typeof types)[number];
 
-type TypeScriptTypes = {
+interface TypeScriptTypes {
 	boolean: boolean;
 	number: number;
 	string: string;
-};
+}
 
 type WithMaybeUndefined<TType, TRequired extends boolean | undefined> = TRequired extends false ? TType | undefined : TType;
 
@@ -71,7 +71,7 @@ export function initConfig<T extends Requirements>(requirements: T): { [P in key
 		}
 
 		if (type === 'number') {
-			const valueParsed = parseFloat(value as any);
+			const valueParsed = parseFloat(String(value));
 			if (isNaN(valueParsed)) errors.push(`Invalid type for key: ${keyName}. Value: ${value}. Expected typeof ${type} `);
 			output[keyName] = valueParsed;
 			continue;
@@ -92,11 +92,11 @@ export function initConfig<T extends Requirements>(requirements: T): { [P in key
 			continue;
 		}
 
-		// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-		errors.push(`Invalid type for key: ${keyName}. Value: ${value}. Expected typeof ${type} ype}`);
+		errors.push(`Invalid type for key: ${keyName}. Value: ${value}. Expected typeof ${String(type)}`);
 	}
 
 	if (errors.length > 0) throwError(`\n${errors.join('\n')}`);
 
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 	return output as any;
 }

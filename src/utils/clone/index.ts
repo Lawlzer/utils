@@ -9,15 +9,16 @@ export function clone<T>(input: T): T {
 	const isArray = Array.isArray(input);
 	if (isArray)
 		return input.map((item) => {
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 			return clone(item);
-		}) as any;
+		}) as T;
 
 	const isObject = typeof input === 'object' && input !== null;
 	if (isObject) {
-		const output = objectMap(input as any, (value) => {
+		const output = objectMap(input as Record<string, unknown>, (value) => {
 			return clone(value);
 		});
-		return output as any;
+		return output as T;
 	}
 	return input;
 }

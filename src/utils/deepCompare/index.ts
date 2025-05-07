@@ -10,11 +10,9 @@ export function deepCompare(x: unknown, y: unknown) {
 
 	let p;
 	for (p in x) {
-		// eslint-disable-next-line
 		if (!x.hasOwnProperty(p)) continue;
 		// other properties were tested using x.constructor === y.constructor
 
-		// eslint-disable-next-line
 		if (!y.hasOwnProperty(p)) return false;
 		// allows to compare x[ p ] and y[ p ] when set to undefined
 
@@ -28,7 +26,6 @@ export function deepCompare(x: unknown, y: unknown) {
 		// Objects and Arrays must be tested recursively
 	}
 
-	// eslint-disable-next-line
 	for (p in y) if (y.hasOwnProperty(p) && !x.hasOwnProperty(p)) return false;
 	// allows x[ p ] to be set to undefined
 

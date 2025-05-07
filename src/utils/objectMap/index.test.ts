@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/prefer-readonly-parameter-types */
 import { objectMap } from './index';
 
 const folderName = __dirname.split('\\').pop()!;

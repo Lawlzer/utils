@@ -19,7 +19,7 @@ describe(folderName, () => {
 		try {
 			getAllFilesSync('invalid path');
 			expect(true).toBe(false); // getAllFilesSync should have crashed.
-		} catch (e) {
+		} catch (_e) {
 			expect(true).toBe(true);
 		}
 	});

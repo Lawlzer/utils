@@ -4,21 +4,6 @@
 {
 	"extends": "./tsconfig.json",
 	"compilerOptions": {},
-	"include": [
-		"src", //
-		"tsconfig.json",
-		"tsconfig.eslint.json",
-		"tsconfig.build.json",
-		"package.json",
-		"package-lock.json",
-		"config/.eslintrc.commit.js",
-		"config/.eslintrc.js",
-		"config/.prettierrc.js",
-		"config/.swcrc",
-		"config/jest.config.ts",
-		"config/lint-staged.config.js",
-		"test-utils/testSetup.ts",
-		"test-utils/testTeardown.ts"
-	],
+	"include": ["./src", "./.config", "./test-utils"],
 	"exclude": []
 }

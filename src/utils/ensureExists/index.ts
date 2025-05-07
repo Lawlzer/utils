@@ -6,7 +6,6 @@ import util from 'util';
  * This function has been deprecated in favour of ensureFileExists and ensureDirectoryExists. Please use one of those two instead.
  */
 
-export async function ensureExists(path: string, initialFileContent = '') {
-	// eslint-disable-next-line @typescript-eslint/no-empty-function -- This is a deprecated function, so we don't want to do anything.
+export async function ensureExists(path: string, _initialFileContent = '') {
 	util.deprecate(() => {}, 'ensureExists is deprecated. Use ensureFileExists or ensureDirectoryExists instead.')();
 }
