@@ -18,5 +18,5 @@ export function throwError(...message: readonly string[]): never {
 	output += '\n\n' + pc.gray('This error was thrown by the throwError() function from @lawlzer/utils.');
 
 	// eslint-disable-next-line @typescript-eslint/no-throw-literal
-	throw output;
+	throw new Error(output);
 }

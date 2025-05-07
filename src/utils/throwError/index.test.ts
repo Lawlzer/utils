@@ -31,7 +31,7 @@ describe(folderName, () => {
 		try {
 			throwError('AAAAAAAAAAAAAAA');
 		} catch (e: any) {
-			expect(e.includes('\u001b')).toBe(true);
+			expect(e.message.includes('\u001b')).toBe(true);
 		}
 	});
 

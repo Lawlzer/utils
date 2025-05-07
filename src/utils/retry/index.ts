@@ -4,34 +4,57 @@ import { throwError } from '../throwError';
 /**
  * Continously retry a function until it succeeds, or the timeout is exceeded.
  */
-export async function retry<T>(timeoutMs: number, fn: () => Promise<T>) {
-	/*
-	 * The naive way to do this is to do a while(now - start < timeout) func();
-	 * However, if the function takes 5000ms to error, and we give it a 1000ms timeout, it will take 5000ms to error.
-	 * We use a Promise.race to instantly error after the timeout, instead of waiting for the function to resolve.
-	 * HOWEVER, this means that the function will continue to run in the background! (As I do not believe it's possible to exit() the function)
-	 */
+export async function retry<T>(timeoutMs: number, fn: () => Promise<T>): Promise<T> {
+	const startTime = Date.now();
 
-	return Promise.race([
-		// Instantly error if the timeout is exceeded
-		(async () => {
-			await sleep(timeoutMs);
-			throwError(`Timeout of ${timeoutMs}ms exceeded`);
-		})(),
+	// eslint-disable-next-line no-constant-condition
+	while (true) {
+		const elapsedTime = Date.now() - startTime;
+		if (elapsedTime >= timeoutMs) {
+			// If we've already used up all the time, throw the timeout error.
+			throwError(`Timeout of ${timeoutMs}ms exceeded (loop start)`);
+		}
 
-		// Run the function itself, until it suceeds (or the timeout is exceeded)
-		(async () => {
-			const startTime = Date.now();
-
-			while (Date.now() - startTime < timeoutMs) {
-				try {
-					const result = await fn();
-
-					return result;
-				} catch (e) {}
-				await sleep(10);
+		try {
+			const remainingTime = timeoutMs - elapsedTime;
+			if (remainingTime <= 0) {
+				throwError(`Timeout of ${timeoutMs}ms exceeded (no time left for attempt)`);
 			}
-			throwError(`Timeout of ${timeoutMs}ms exceeded`);
-		})(),
-	]) as T; // It will error if we do not return <T>
+
+			// Create a promise that rejects after remainingTime
+			const timeoutSignalPromise = new Promise<T>((resolve, reject) => {
+				sleep(remainingTime)
+					.then(() => {
+						reject(new Error('fn_internal_timeout_signal'));
+					})
+					.catch(reject); // Propagate any error from sleep itself, though unlikely
+			});
+
+			const result = await Promise.race([fn(), timeoutSignalPromise]);
+
+			return result as T;
+		} catch (e: any) {
+			if (e && e.message === 'fn_internal_timeout_signal') {
+				// fn() was too slow for the remainingTime. The main loop's initial check will handle this.
+				// Or, more directly, throw timeout as we know fn() didn't complete in its allocated slice.
+				throwError(`Timeout of ${timeoutMs}ms exceeded (function call timed out within its slot)`);
+			}
+
+			// Check if overall timeout has been exceeded AFTER the error from fn()
+			if (Date.now() - startTime >= timeoutMs) {
+				throwError(`Timeout of ${timeoutMs}ms exceeded (after function error, no time left)`);
+			}
+
+			// If fn() threw a legitimate error (not our internal signal) and there's still time overall.
+			const retryDelay = 10;
+			// Check if there's time for a delay AND a subsequent attempt (even if brief)
+			if (Date.now() - startTime + retryDelay < timeoutMs) {
+				await sleep(retryDelay);
+			} else {
+				// Not enough time for a meaningful retry after delay.
+				throwError(`Timeout of ${timeoutMs}ms exceeded (insufficient time for retry after error)`);
+			}
+			// Continue to the next iteration of the while loop to retry fn()
+		}
+	}
 }
