@@ -5,30 +5,7 @@
 		// Honestly, not 100% sure what this does
 		"strings": true
 	},
-	"typescript.tsdk": "node_modules\\typescript\\lib", // VSCode should use the same TypeScript version as the project
-	// "emeraldwalk.runonsave": {
-	// 	"commands": [
-	// 		{
-	// 			"match": ".*",
-	// 			"isAsync": true,
-	// 			"cmd": "npm run lint | echo Code automatically linted."
-	// 		},
-	// 		{
-	// 		    "match": "\\package.json$",
-	// 		    "cmd": "npx sort-package-json | echo Package.json automatically sorted.'"
-	// 		},
-	// 		// {
-	// 		//     "match": "\\.js$",
-	// 		//     "cmd": "echo 'I am a .js file ${file}.'"
-	// 		// },
-	// 		// {
-	// 		//     "match": ".*",
-	// 		//     "cmd": "echo 'I am ${env.USERNAME}.'"
-	// 		// }
-	// 	]
-	// },
-
-	//
+	"typescript.tsdk": "node_modules\\typescript\\lib", // VSCode should use the same TypeScript version as the projects
 	// "editor.tabSize": 4, // tabSize should be from local settings, not forced on users.
 
 	// These are used for helping VSCode work nicely with ESLint & Prettier - If removed, code will error a lot, then Prettier will fix it on-save. This just removes the initial errors

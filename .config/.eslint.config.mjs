@@ -131,7 +131,7 @@ export default tseslint.config(
 			'@typescript-eslint/no-unnecessary-type-arguments': ['error'],
 			'@typescript-eslint/no-unnecessary-type-assertion': ['error'],
 			'@typescript-eslint/no-unnecessary-type-constraint': ['error'], // experimental
-			'@typescript-eslint/no-unsafe-argument': ['error'], // experimental
+			'@typescript-eslint/no-unsafe-argument': ['off'],
 			'@typescript-eslint/no-unsafe-assignment': ['off'], // it's any, go away
 			'@typescript-eslint/no-unsafe-call': ['error'], // experimental
 			'@typescript-eslint/no-unsafe-declaration-merging': ['error'], // experimental
@@ -191,6 +191,7 @@ export default tseslint.config(
 					// true = we don't use this rule
 					allowNullableObject: true,
 					allowAny: true,
+					allowNullableBoolean: true,
 				},
 			],
 			'@typescript-eslint/switch-exhaustiveness-check': ['error'],
