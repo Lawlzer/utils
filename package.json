@@ -46,6 +46,7 @@
 	},
 	"prettier": "./.config/.prettierrc.mjs",
 	"dependencies": {
+		"@lawlzer/utils": "^4.0.1",
 		"@types/jest": "^29.5.14",
 		"dotenv": "^16.5.0",
 		"fs-extra": "^11.3.0",
