@@ -4,6 +4,6 @@
 {
 	"extends": "./tsconfig.json",
 	"compilerOptions": {},
-	"include": ["./src", "./.config", "./test-utils"],
+	"include": ["./src", "./.config", "./test-utils", "build.ts", "./test/integration/consumer-project/src/index.ts"],
 	"exclude": []
 }

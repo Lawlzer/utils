@@ -1,0 +1,18 @@
+{
+	"name": "consumer-project-test",
+	"version": "1.0.0",
+	"description": "A test project to consume @lawlzer/utils",
+	"type": "module",
+	"scripts": {
+		"build:esm": "esbuild src/index.ts --bundle --outfile=dist/bundle.mjs --platform=node --format=esm --external:fs --external:path --external:os --external:crypto --external:graceful-fs --external:fs-extra --external:dotenv",
+		"start:esm": "node dist/bundle.mjs",
+		"test:consumer:esm": "npm install && npm run build:esm && npm run start:esm"
+	},
+	"dependencies": {
+		"@lawlzer/utils": "file:../../.."
+	},
+	"devDependencies": {
+		"@types/node": "^20.12.0",
+		"esbuild": "^0.23.0"
+	}
+}

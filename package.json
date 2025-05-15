@@ -12,25 +12,25 @@
 	"type": "module",
 	"exports": {
 		".": {
-			"import": "./dist/esm/index.js",
-			"require": "./dist/cjs/index.js",
-			"types": "./dist/types/index.d.ts"
+			"types": "./dist/index.d.ts",
+			"import": "./dist/esm.js",
+			"require": "./dist/cjs.js"
 		}
 	},
-	"main": "./dist/cjs/index.js",
-	"module": "./dist/esm/index.js",
-	"types": "./dist/types/index.d.ts",
+	"main": "./dist/cjs.js",
+	"module": "./dist/esm.js",
+	"types": "./dist/index.d.ts",
 	"files": [
 		"src",
 		"dist"
 	],
 	"scripts": {
-		"build": "npm run clean && npm run build:types && npm run build:js",
-		"build:js": "bun build ./src/index.ts --outdir ./dist/esm --target node --format esm --sourcemap=linked && bun build ./src/index.ts --outfile ./dist/cjs/index.js --target node --format cjs --sourcemap=linked",
-		"build:types": "tsc --project tsconfig.build.json --outDir ./dist/types --declarationMap",
+		"build": "bun run clean && bun run build:types && bun run build:js",
+		"build:js": "bun run build.ts",
+		"build:types": "tsc --emitDeclarationOnly --declaration --declarationMap --declarationDir ./dist --rootDir ./src",
 		"clean": "rimraf ./dist",
 		"lint": "lint-staged",
-		"lint:all": "npm run lint:eslint && npm run lint:prettier",
+		"lint:all": "bun run lint:eslint && bun run lint:prettier",
 		"lint:eslint": "eslint --fix --config ./.config/.eslint.config.mjs",
 		"lint:eslint:commit": "cross-env LINT_STAGED_COMMIT=true eslint --fix --config ./.config/.eslint.config.mjs",
 		"lint:eslint:debug": "cross-env TIMING=1 eslint --config ./.config/.eslint.config.mjs",
@@ -39,14 +39,12 @@
 		"lint:prettier:debug": "prettier --write --config ./.config/.prettierrc.js --ignore-path ./.gitignore",
 		"pre-commit": "cross-env LINT_STAGED_COMMIT=true lint-staged -c ./.config/lint-staged.config.mjs",
 		"prepare": "husky install",
-		"publish:all": "npm run build && npm run test && npm publish --access=public && echo \"Successfully published to NPM!\"",
-		"start": "cross-env node -r sucrase/register src/index.ts",
-		"start:production": "node dist/index",
-		"test": "bun test"
+		"publish:all": "bun run build && bun run test && npm publish --access=public && echo \"Successfully published to NPM!\"",
+		"test": "bun run test:integration:consumer && bun test",
+		"test:integration:consumer": "bun run build; cd test/integration/consumer-project && bun run test:consumer:esm && cd ../../.."
 	},
 	"prettier": "./.config/.prettierrc.mjs",
 	"dependencies": {
-		"@lawlzer/utils": "^4.0.1",
 		"@types/jest": "^29.5.14",
 		"dotenv": "^16.5.0",
 		"fs-extra": "^11.3.0",
@@ -56,21 +54,23 @@
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.26.0",
-		"@types/bun": "^1.2.12",
+		"@types/bun": "^1.2.13",
 		"@types/fs-extra": "^11.0.4",
 		"@types/ms": "^2.1.0",
-		"@types/node": "^22.15.14",
-		"@typescript-eslint/parser": "^8.32.0",
+		"@types/node": "^22.15.18",
+		"@typescript-eslint/parser": "^8.32.1",
+		"bun-plugin-dts": "^0.3.0",
 		"cross-env": "^7.0.3",
+		"esbuild": "^0.23.0",
 		"eslint": "^9.26.0",
 		"eslint-plugin-import": "^2.31.0",
 		"husky": "^9.1.7",
-		"lint-staged": "^15.5.2",
+		"lint-staged": "^16.0.0",
 		"prettier": "^3.5.3",
-		"prettier-plugin-packagejson": "^2.5.11",
+		"prettier-plugin-packagejson": "^2.5.12",
 		"rimraf": "^6.0.1",
 		"typescript": "^5.8.3",
-		"typescript-eslint": "^8.32.0"
+		"typescript-eslint": "^8.32.1"
 	},
 	"publishConfig": {
 		"@YOUR-USERNAME:registry": "https://npm.pkg.github.com"
