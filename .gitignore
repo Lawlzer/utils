@@ -44,6 +44,8 @@ debug
 todo
 todo.txt
 
+backup
+
 volume
 volumes
 
@@ -61,4 +63,3 @@ feature_cache
 # Questionable
 package-lock.json
 bun.lock
-

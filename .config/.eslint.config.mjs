@@ -22,27 +22,26 @@ export default tseslint.config(
 			},
 		},
 		rules: {
-			'@typescript-eslint/no-unused-vars': [
-				'error',
-				{
-					argsIgnorePattern: '^_',
-					varsIgnorePattern: '^_',
-					caughtErrorsIgnorePattern: '^_',
-					destructuredArrayIgnorePattern: '^_',
-					ignoreRestSiblings: true,
-				},
-			],
+			// Misc
+			'@typescript-eslint/no-unused-vars': commit
+				? [
+						'error',
+						{
+							argsIgnorePattern: '^_',
+							varsIgnorePattern: '^_',
+							caughtErrorsIgnorePattern: '^_',
+							destructuredArrayIgnorePattern: '^_',
+							ignoreRestSiblings: true,
+						},
+					]
+				: ['off'],
 
 			'@typescript-eslint/adjacent-overload-signatures': ['error'],
-			'@typescript-eslint/allowIndentationTabs': ['off'],
 			'@typescript-eslint/array-type': ['error'],
 			'@typescript-eslint/await-thenable': ['off'],
 			'@typescript-eslint/ban-ts-comment': ['off'], // if we have a comment, it's for a reason
 			'@typescript-eslint/ban-tslint-comment': ['error'],
-			'@typescript-eslint/block-spacing': ['off'],
 			'@typescript-eslint/class-literal-property-style': ['error'],
-			'@typescript-eslint/comma-dangle': ['off'],
-			'@typescript-eslint/comma-spacing': ['off'],
 			'@typescript-eslint/consistent-generic-constructors': ['error'],
 			'@typescript-eslint/consistent-indexed-object-style': commit ? ['error'] : ['off'],
 
@@ -60,14 +59,7 @@ export default tseslint.config(
 			'@typescript-eslint/default-param-last': ['error'],
 			'@typescript-eslint/dot-notation': ['error'],
 			'@typescript-eslint/explicit-member-accessibility': ['error'],
-			'@typescript-eslint/func-call-spacing': ['off'],
-			'@typescript-eslint/indent': ['off'],
 			'@typescript-eslint/init-declarations': ['off'],
-			'@typescript-eslint/key-spacing': ['off'],
-			'@typescript-eslint/keyword-spacing': ['off'],
-			'@typescript-eslint/lines-around-comment': ['off'],
-			'@typescript-eslint/lines-between-class-members': ['off'],
-			'@typescript-eslint/member-delimiter-style': ['off'],
 			'@typescript-eslint/member-ordering': ['error'],
 			'@typescript-eslint/method-signature-style': ['error'],
 			'@typescript-eslint/naming-convention': ['off'],
@@ -77,7 +69,6 @@ export default tseslint.config(
 			'@typescript-eslint/no-confusing-non-null-assertion': ['error'],
 			'@typescript-eslint/no-confusing-void-expression': ['error'],
 			'@typescript-eslint/no-dupe-class-members': ['error'],
-			'@typescript-eslint/no-duplicate-enum-values': ['error'], // experimental
 			'@typescript-eslint/no-duplicate-imports': ['off'],
 			'@typescript-eslint/no-duplicate-type-constituents': ['error'],
 			'@typescript-eslint/no-dynamic-delete': ['error'],
@@ -87,9 +78,7 @@ export default tseslint.config(
 			'@typescript-eslint/no-empty-object-type': ['error'],
 			'@typescript-eslint/no-explicit-any': ['off'], // if we have an any, it's for a reason
 			'@typescript-eslint/no-extra-non-null-assertion': ['error'],
-			'@typescript-eslint/no-extra-parens': ['off'],
-			'@typescript-eslint/no-extra-semi': ['off'],
-			'@typescript-eslint/no-extraneous-class': ['error'],
+			'@typescript-eslint/no-extraneous-class': ['off'], // Classes with only static methods are useful for organization
 			'@typescript-eslint/no-floating-promises': [
 				'error',
 				{
@@ -112,7 +101,6 @@ export default tseslint.config(
 			'@typescript-eslint/no-misused-new': ['error'],
 			'@typescript-eslint/no-misused-promises': ['error'],
 			'@typescript-eslint/no-mixed-enums': ['error'],
-			'@typescript-eslint/no-mixed-spaces-and-tabs': ['off'],
 			'@typescript-eslint/no-namespace': commit ? ['error'] : ['off'],
 			'@typescript-eslint/no-non-null-asserted-nullish-coalescing': ['error'],
 			'@typescript-eslint/no-non-null-asserted-optional-chain': ['error'],
@@ -123,18 +111,15 @@ export default tseslint.config(
 			'@typescript-eslint/no-require-imports': ['error'],
 			'@typescript-eslint/no-shadow': ['error'],
 			'@typescript-eslint/no-this-alias': ['error'],
-			'@typescript-eslint/no-trailing-spaces': ['off'],
 			'@typescript-eslint/no-type-alias': ['off'],
 			'@typescript-eslint/no-unnecessary-boolean-literal-compare': ['error'],
 			'@typescript-eslint/no-unnecessary-condition': ['off'],
 			'@typescript-eslint/no-unnecessary-qualifier': ['error'],
 			'@typescript-eslint/no-unnecessary-type-arguments': ['error'],
 			'@typescript-eslint/no-unnecessary-type-assertion': ['error'],
-			'@typescript-eslint/no-unnecessary-type-constraint': ['error'], // experimental
 			'@typescript-eslint/no-unsafe-argument': ['off'],
 			'@typescript-eslint/no-unsafe-assignment': ['off'], // it's any, go away
-			'@typescript-eslint/no-unsafe-call': ['error'], // experimental
-			'@typescript-eslint/no-unsafe-declaration-merging': ['error'], // experimental
+			'@typescript-eslint/no-unsafe-call': ['off'], // it's any, let us do whatever we want
 			'@typescript-eslint/no-unsafe-enum-comparison': ['error'],
 			'@typescript-eslint/no-unsafe-function-type': ['error'],
 			'@typescript-eslint/no-unsafe-member-access': ['off'], // no (any).foo -- because it's any. it's any, let us do what we want.
@@ -147,9 +132,7 @@ export default tseslint.config(
 			'@typescript-eslint/no-var-requires': commit ? ['error'] : ['off'],
 			'@typescript-eslint/no-wrapper-object-types': ['error'],
 			'@typescript-eslint/non-nullable-type-assertion-style': ['error'],
-			'@typescript-eslint/object-curly-spacing': ['off'],
 			'@typescript-eslint/only-throw-error': ['off'],
-			'@typescript-eslint/padding-line-between-statements': ['off'],
 			'@typescript-eslint/parameter-properties': ['error'],
 			'@typescript-eslint/prefer-as-const': ['error'],
 			'@typescript-eslint/prefer-const': ['off'],
@@ -160,7 +143,7 @@ export default tseslint.config(
 			'@typescript-eslint/prefer-includes': ['error'],
 			'@typescript-eslint/prefer-literal-enum-member': ['error'],
 			'@typescript-eslint/prefer-namespace-keyword': ['error'],
-			'@typescript-eslint/prefer-nullish-coalescing': ['error'],
+			'@typescript-eslint/prefer-nullish-coalescing': ['off'], // Technically should be on, but it's unnecessary and just annoying for AI...
 			'@typescript-eslint/prefer-optional-chain': ['error'],
 			'@typescript-eslint/prefer-promise-reject-errors': ['error'],
 			'@typescript-eslint/prefer-readonly': ['error'],
@@ -171,34 +154,31 @@ export default tseslint.config(
 			'@typescript-eslint/prefer-string-starts-ends-with': ['error'],
 			'@typescript-eslint/prefer-ts-expect-error': ['error'],
 			'@typescript-eslint/promise-function-async': ['error'],
-			'@typescript-eslint/quotes': ['off'],
 			'@typescript-eslint/require-array-sort-compare': ['error', { ignoreStringArrays: true }],
 			'@typescript-eslint/require-await': ['off'], // If a function is not REQUIRED to be async, it must not be async. just annoying.
 			'@typescript-eslint/restrict-plus-operands': ['error'],
 			'@typescript-eslint/restrict-template-expressions': ['error', { allowAny: true, allowNumber: true, allowBoolean: true, allowNullish: true }], // Seems to be same as above, but for template literals
 			'@typescript-eslint/return-await': ['error'],
-			'@typescript-eslint/semi': ['off'],
 			'@typescript-eslint/sort-type-constituents': ['error'],
 			'@typescript-eslint/sort-type-union-intersection-members': ['off'], // Renamed to "sort-type-constituents"
-			'@typescript-eslint/space-before-blocks': ['off'],
-			'@typescript-eslint/space-before-function-paren': ['off'],
-			'@typescript-eslint/space-infix-ops': ['off'],
 
 			'@typescript-eslint/strict-boolean-expressions': [
-				// Because 0 == false, if we have a number "if (num)", it can be false if the number is 0.
 				'error',
 				{
-					// true = we don't use this rule
-					allowNullableObject: true,
-					allowAny: true,
-					allowNullableBoolean: true,
+					allowString: true, // Disables `if (myString is truthy)`
+					allowNumber: false, // Disables `if (myNumber is truthy)`
+					allowNullableObject: true, // Enables `if (myObject)` for nullable objects
+					allowNullableBoolean: true, // Enables `if (myNullableBool)` for nullable booleans
+					allowNullableString: false, // Disables `if (myNullableString)`
+					allowNullableNumber: false, // Disables `if (myNullableNumber)`
+					allowNullableEnum: false, // Disables `if (myNullableEnum)`
+					allowAny: true, // Enables `if (my: any)`
+					allowRuleToRunWithoutStrictNullChecksIKnowWhatIAmDoing: false,
 				},
 			],
 			'@typescript-eslint/switch-exhaustiveness-check': ['error'],
 			'@typescript-eslint/triple-slash-reference': ['error'],
-			'@typescript-eslint/type-annotation-spacing': ['off'],
 			'@typescript-eslint/typedef': ['error'],
-			'@typescript-eslint/unbound-method': ['error'], // experimental
 			'@typescript-eslint/unified-signatures': ['error'],
 			'constructor-super': ['off'],
 			'getter-return': ['off'],
@@ -232,6 +212,37 @@ export default tseslint.config(
 			'prefer-rest-params': ['error'],
 			'prefer-spread': ['error'],
 			'require-await': ['off'],
+
+			// Experimental, may change
+			'@typescript-eslint/no-duplicate-enum-values': ['error'], // experimental
+			'@typescript-eslint/no-unnecessary-type-constraint': ['error'], // experimental
+			'@typescript-eslint/no-unsafe-declaration-merging': ['error'], // experimental
+			'@typescript-eslint/unbound-method': ['error'], // experimental
+
+			// These are done in Prettier
+			'@typescript-eslint/allowIndentationTabs': ['off'],
+			'@typescript-eslint/block-spacing': ['off'],
+			'@typescript-eslint/comma-dangle': ['off'],
+			'@typescript-eslint/comma-spacing': ['off'],
+			'@typescript-eslint/func-call-spacing': ['off'],
+			'@typescript-eslint/indent': ['off'],
+			'@typescript-eslint/key-spacing': ['off'],
+			'@typescript-eslint/keyword-spacing': ['off'],
+			'@typescript-eslint/lines-around-comment': ['off'],
+			'@typescript-eslint/lines-between-class-members': ['off'],
+			'@typescript-eslint/member-delimiter-style': ['off'],
+			'@typescript-eslint/no-extra-parens': ['off'],
+			'@typescript-eslint/no-extra-semi': ['off'],
+			'@typescript-eslint/no-mixed-spaces-and-tabs': ['off'],
+			'@typescript-eslint/no-trailing-spaces': ['off'],
+			'@typescript-eslint/object-curly-spacing': ['off'],
+			'@typescript-eslint/padding-line-between-statements': ['off'],
+			'@typescript-eslint/quotes': ['off'],
+			'@typescript-eslint/semi': ['off'],
+			'@typescript-eslint/space-before-blocks': ['off'],
+			'@typescript-eslint/space-before-function-paren': ['off'],
+			'@typescript-eslint/space-infix-ops': ['off'],
+			'@typescript-eslint/type-annotation-spacing': ['off'],
 		},
 	},
 
