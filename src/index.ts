@@ -14,6 +14,7 @@ export * from './utils/deepCompare';
 export * from './utils/ensureDirectoryExists';
 export * from './utils/ensureExists';
 export * from './utils/ensureFileExists';
+export * from './utils/exec';
 export * from './utils/flatten';
 export * from './utils/floorToPrecision';
 export * from './utils/getAllFiles';

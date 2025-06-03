@@ -17,21 +17,31 @@ function getPackageName(filePath: string): string {
 		return 'unknown package name';
 	}
 
-	const packageJson = fs.readJsonSync(packageJsonPath);
+	const packageJson = fs.readJsonSync(packageJsonPath) as { name?: unknown };
 
-	if (typeof packageJson.name !== 'string') throwError('createError - package.json name is not a string. This should never happen.');
+	if (typeof packageJson.name !== 'string') {
+		throwError('createError - package.json name is not a string. This should never happen.');
+	}
 
-	packageNames[filePath] = packageJson.name as string;
+	packageNames[filePath] = packageJson.name;
 
-	return packageJson.name as string;
+	return packageJson.name;
+}
+
+export interface ErrorInfo {
+	packageName: string;
+	stackTrace: string;
+	functionName: string;
+	filePath: string | undefined;
 }
 
 /**
  * Will create an error, and return data about the error.
  *
  * @param removeRecentFunction Remove any references to the most recent function called (used if you want an assert function, but don't want to show references to that assertion function)
+ * @returns Information about the error including package name, stack trace, function name, and file path
  */
-export function createError(removeRecentFunction = false) {
+export function createError(removeRecentFunction = false): ErrorInfo {
 	const errorStack = new Error().stack;
 
 	if (errorStack === undefined) {
@@ -45,13 +55,13 @@ export function createError(removeRecentFunction = false) {
 	errorArray.splice(1, 1); // Remove references to createError
 
 	if (removeRecentFunction) {
-		errorArray = errorArray.filter((line: string) => !line.includes(`at ${callerFunction}`));
+		errorArray = errorArray.filter((line) => !line.includes(`at ${callerFunction}`));
 	} // Remove references to the most recent function called
 
 	// Get the package.json of the file that called this function -> the package name
-	const lineThreeSplit = errorArray[1].trim().split(' '),
-		filePath: string | undefined = lineThreeSplit[lineThreeSplit.length - 1].replace('(', '').replace(')', ''),
-		packageName = filePath ? getPackageName(filePath) : 'unknown package path';
+	const lineThreeSplit = errorArray[1].trim().split(' ');
+	const filePath: string | undefined = lineThreeSplit[lineThreeSplit.length - 1].replace('(', '').replace(')', '');
+	const packageName = filePath ? getPackageName(filePath) : 'unknown package path';
 
 	let functionName = errorArray[1].trim().split(' ')[1];
 
