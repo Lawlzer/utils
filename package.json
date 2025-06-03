@@ -13,21 +13,20 @@
 	"exports": {
 		".": {
 			"types": "./dist/index.d.ts",
-			"import": "./dist/esm.js",
-			"require": "./dist/cjs.js"
+			"import": "./dist/index.js",
+			"require": "./dist/index.cjs"
 		}
 	},
-	"main": "./dist/cjs.js",
-	"module": "./dist/esm.js",
+	"main": "./dist/index.cjs",
+	"module": "./dist/index.js",
 	"types": "./dist/index.d.ts",
 	"files": [
 		"src",
 		"dist"
 	],
 	"scripts": {
-		"build": "npm run clean && npm run build:types && npm run build:js",
-		"build:js": "npm run build.ts",
-		"build:types": "tsc --emitDeclarationOnly --declaration --declarationMap --outDir ./dist --rootDir ./src",
+		"build": "tsup --config ./.config/tsup.config.ts",
+		"build:watch": "tsup --config ./.config/tsup.config.ts --watch",
 		"clean": "rimraf ./dist",
 		"lint": "lint-staged",
 		"lint:all": "npm run lint:eslint && npm run lint:prettier",
@@ -41,7 +40,7 @@
 		"prepare": "husky",
 		"publish:all": "npm run build && npm run test && npm publish --access=public && echo \"Successfully published to NPM!\"",
 		"test": "bun test",
-		"test:integration:consumer": "npm run build; cd test/integration/consumer-project && npm run test:consumer:esm && cd ../../.."
+		"test:integration:consumer": "npm run build && cd test/integration/consumer-project && npm run test:consumer:esm && cd ../../.."
 	},
 	"prettier": "./.config/.prettierrc.mjs",
 	"dependencies": {
@@ -60,9 +59,7 @@
 		"@types/ms": "^2.1.0",
 		"@types/node": "^22.15.18",
 		"@typescript-eslint/parser": "^8.32.1",
-		"bun-plugin-dts": "^0.3.0",
 		"cross-env": "^7.0.3",
-		"esbuild": "^0.25.4",
 		"eslint": "^9.26.0",
 		"eslint-plugin-import": "^2.31.0",
 		"husky": "^9.1.7",
@@ -70,6 +67,7 @@
 		"prettier": "^3.5.3",
 		"prettier-plugin-packagejson": "^2.5.13",
 		"rimraf": "^6.0.1",
+		"tsup": "^8.3.5",
 		"typescript": "^5.8.3",
 		"typescript-eslint": "^8.32.1"
 	},

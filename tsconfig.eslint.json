@@ -3,7 +3,9 @@
 // I hate ESLint >.>
 {
 	"extends": "./tsconfig.json",
-	"compilerOptions": {},
-	"include": ["./src", "./.config", "./test-utils", "build.ts", "./test/integration/consumer-project/src/index.ts"],
-	"exclude": []
+	"compilerOptions": {
+		"rootDir": "."
+	},
+	"include": ["./src/**/*", "./.config/**/*", "./test-utils/**/*", "./test/integration/consumer-project/src/index.ts"],
+	"exclude": ["node_modules", "dist"]
 }
