@@ -12,9 +12,17 @@
 	"type": "module",
 	"exports": {
 		".": {
+			"source": "./src/index.ts",
 			"types": "./dist/index.d.ts",
 			"import": "./dist/index.js",
 			"require": "./dist/index.cjs"
+		},
+		"./package.json": "./package.json",
+		"./*": {
+			"source": "./src/*.ts",
+			"types": "./dist/*.d.ts",
+			"import": "./dist/*.js",
+			"require": "./dist/*.cjs"
 		}
 	},
 	"main": "./dist/index.cjs",
@@ -25,7 +33,7 @@
 		"dist"
 	],
 	"scripts": {
-		"build": "tsup --config ./.config/tsup.config.ts",
+		"build": "tsup --config ./.config/tsup.config.ts && tsc -p tsconfig.build.json --emitDeclarationOnly --declarationMap",
 		"build:watch": "tsup --config ./.config/tsup.config.ts --watch",
 		"clean": "rimraf ./dist",
 		"lint": "lint-staged",

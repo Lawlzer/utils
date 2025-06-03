@@ -10,10 +10,7 @@ const config: Options = {
 	format: ['esm', 'cjs'],
 
 	// Generate TypeScript declarations
-	dts: {
-		// Single .d.ts file for better tree-shaking
-		resolve: true,
-	},
+	dts: false,
 
 	// Output directory
 	outDir: 'dist',
@@ -38,6 +35,10 @@ const config: Options = {
 
 	// Keep names readable in development
 	keepNames: true,
+
+	// Tell tsup to use the TypeScript compiler options from tsconfig.json
+	// This ensures declarationMap is properly used
+	tsconfig: 'tsconfig.build.json',
 
 	// Output file naming
 	outExtension({ format }) {
