@@ -2,7 +2,9 @@
 
 import eslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
-import path from 'node:path';
+import prettierConfig from 'eslint-config-prettier';
+import unusedImports from 'eslint-plugin-unused-imports';
+import simpleImportSort from 'eslint-plugin-simple-import-sort';
 
 const commit = process.env.LINT_STAGED_COMMIT === 'true';
 
@@ -14,11 +16,13 @@ export default tseslint.config(
 		files: ['**/*.ts', '**/*.tsx'],
 		plugins: {
 			'@typescript-eslint': tseslint.plugin,
+			'unused-imports': unusedImports,
+			'simple-import-sort': simpleImportSort,
 		},
 		languageOptions: {
 			parser: tseslint.parser,
 			parserOptions: {
-				project: path.resolve(import.meta.dirname, '..', 'tsconfig.eslint.json'),
+				project: './tsconfig.eslint.json',
 			},
 		},
 		rules: {
@@ -27,14 +31,42 @@ export default tseslint.config(
 				? [
 						'error',
 						{
-							argsIgnorePattern: '^_',
-							varsIgnorePattern: '^_',
-							caughtErrorsIgnorePattern: '^_',
+							argsIgnorePattern: '^_|^error$|^errors$',
+							varsIgnorePattern: '^_|^error$|^errors$',
+							caughtErrorsIgnorePattern: '^_|^error$|^errors$',
 							destructuredArrayIgnorePattern: '^_',
 							ignoreRestSiblings: true,
 						},
 					]
 				: ['off'],
+
+			// Import sorting - automatically sorts imports
+			'simple-import-sort/imports': [
+				'error',
+				{
+					groups: [
+						// Node.js builtins prefixed with `node:`
+						['^node:'],
+						// Packages starting with @, then other packages
+						['^@?\\w'],
+						// Internal packages (your own @company packages)
+						['^@company'],
+						// Side effect imports
+						['^\\u0000'],
+						// Parent imports. Put `..` last
+						['^\\.\\.(?!/?$)', '^\\.\\./?$'],
+						// Other relative imports. Put same-folder imports and `.` last
+						['^\\./(?=.*/)(?!/?$)', '^\\.(?!/?$)', '^\\./?$'],
+						// Style imports
+						['^.+\\.s?css$'],
+					],
+				},
+			],
+			'simple-import-sort/exports': 'error',
+
+			// Unused imports configuration - automatically removes unused imports when commit=true
+			'unused-imports/no-unused-imports': commit ? ['error'] : ['off'], // Auto-fix removes unused imports
+			'unused-imports/no-unused-vars': ['off'], // We'll let the TypeScript rule handle unused variables
 
 			'@typescript-eslint/adjacent-overload-signatures': ['error'],
 			'@typescript-eslint/array-type': ['error'],
@@ -75,7 +107,7 @@ export default tseslint.config(
 			'@typescript-eslint/no-empty': ['off'],
 			'@typescript-eslint/no-empty-function': ['off'], // useful for templating
 			'@typescript-eslint/no-empty-interface': ['off'], // useful for templating
-			'@typescript-eslint/no-empty-object-type': ['error'],
+			'@typescript-eslint/no-empty-object-type': ['off'], // empty interfaces are useful for templating
 			'@typescript-eslint/no-explicit-any': ['off'], // if we have an any, it's for a reason
 			'@typescript-eslint/no-extra-non-null-assertion': ['error'],
 			'@typescript-eslint/no-extraneous-class': ['off'], // Classes with only static methods are useful for organization
@@ -213,44 +245,48 @@ export default tseslint.config(
 			'prefer-spread': ['error'],
 			'require-await': ['off'],
 
+			// Enhanced general rules for better code quality
+			'arrow-body-style': ['error', 'as-needed'],
+			curly: ['error', 'multi-line', 'consistent'],
+			eqeqeq: ['error', 'always', { null: 'ignore' }],
+			'no-constant-binary-expression': 'error',
+			'no-constructor-return': 'error',
+			'no-lonely-if': 'error',
+			'no-promise-executor-return': 'error',
+			'no-self-compare': 'error',
+			'no-template-curly-in-string': 'error',
+			'no-unmodified-loop-condition': 'error',
+			'no-unreachable-loop': 'error',
+			'no-unused-private-class-members': 'error',
+			'no-use-before-define': ['error', { functions: false, classes: true, variables: true }],
+			'no-unneeded-ternary': ['error', { defaultAssignment: false }],
+			'operator-assignment': ['error', 'always'],
+			'prefer-arrow-callback': ['error', { allowNamedFunctions: false, allowUnboundThis: true }],
+			'prefer-destructuring': [
+				'error',
+				{
+					VariableDeclarator: { array: false, object: true },
+					AssignmentExpression: { array: false, object: false },
+				},
+			],
+			'prefer-template': 'error',
+			'require-atomic-updates': 'error',
+			yoda: ['error', 'never'],
+
 			// Experimental, may change
 			'@typescript-eslint/no-duplicate-enum-values': ['error'], // experimental
 			'@typescript-eslint/no-unnecessary-type-constraint': ['error'], // experimental
 			'@typescript-eslint/no-unsafe-declaration-merging': ['error'], // experimental
 			'@typescript-eslint/unbound-method': ['error'], // experimental
-
-			// These are done in Prettier
-			'@typescript-eslint/allowIndentationTabs': ['off'],
-			'@typescript-eslint/block-spacing': ['off'],
-			'@typescript-eslint/comma-dangle': ['off'],
-			'@typescript-eslint/comma-spacing': ['off'],
-			'@typescript-eslint/func-call-spacing': ['off'],
-			'@typescript-eslint/indent': ['off'],
-			'@typescript-eslint/key-spacing': ['off'],
-			'@typescript-eslint/keyword-spacing': ['off'],
-			'@typescript-eslint/lines-around-comment': ['off'],
-			'@typescript-eslint/lines-between-class-members': ['off'],
-			'@typescript-eslint/member-delimiter-style': ['off'],
-			'@typescript-eslint/no-extra-parens': ['off'],
-			'@typescript-eslint/no-extra-semi': ['off'],
-			'@typescript-eslint/no-mixed-spaces-and-tabs': ['off'],
-			'@typescript-eslint/no-trailing-spaces': ['off'],
-			'@typescript-eslint/object-curly-spacing': ['off'],
-			'@typescript-eslint/padding-line-between-statements': ['off'],
-			'@typescript-eslint/quotes': ['off'],
-			'@typescript-eslint/semi': ['off'],
-			'@typescript-eslint/space-before-blocks': ['off'],
-			'@typescript-eslint/space-before-function-paren': ['off'],
-			'@typescript-eslint/space-infix-ops': ['off'],
-			'@typescript-eslint/type-annotation-spacing': ['off'],
 		},
 	},
 
 	{
-		files: ['**/*.test.ts'],
+		files: ['**/*.test.ts', '**/*.test.tsx'],
 		rules: {
 			'@typescript-eslint/no-unsafe-call': ['off'],
 			'@typescript-eslint/no-confusing-void-expression': ['off'],
+			'react/jsx-no-bind': ['off'], // More flexibility in tests
 		},
 	},
 
@@ -258,5 +294,9 @@ export default tseslint.config(
 		linterOptions: {
 			reportUnusedDisableDirectives: true,
 		},
-	}
+	},
+
+	// IMPORTANT: prettier config must be last to disable all conflicting rules
+	// This prevents ESLint and Prettier from fighting over formatting
+	prettierConfig
 );

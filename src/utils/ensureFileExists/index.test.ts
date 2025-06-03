@@ -2,6 +2,7 @@ import fs from 'fs-extra';
 import path from 'path';
 
 import { getRandomCharacters } from '../getRandomCharacters/index';
+
 import { ensureFileExists } from './index';
 
 const folderName = process.cwd().split('\\').pop()!;

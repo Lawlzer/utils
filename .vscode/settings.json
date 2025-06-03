@@ -1,31 +1,40 @@
 {
+	// File handling
 	"files.eol": "\n", // End of Line (use LF, not CRLF)
-	"eslint.validate": ["javascript", "typescript", "javascriptreact", "typescriptreact", "json", "jsonc"],
-	"editor.quickSuggestions": {
-		// Honestly, not 100% sure what this does
-		"strings": true
-	},
-	"typescript.tsdk": "node_modules\\typescript\\lib", // VSCode should use the same TypeScript version as the projects
-	// "editor.tabSize": 4, // tabSize should be from local settings, not forced on users.
+	"editor.detectIndentation": false,
+	"editor.insertSpaces": false,
 
-	// These are used for helping VSCode work nicely with ESLint & Prettier - If removed, code will error a lot, then Prettier will fix it on-save. This just removes the initial errors
-	"editor.detectIndentation": false, // VSCode will automatically change the indentation style depending on what it sees -- but it can be extremely weird and buggy. Unnecessary with ESLint/Prettier.
-	"editor.insertSpaces": false, // Use Tabs for indentation, not spaces! Otherwise, ESLint will error
-	//
-	// ESLint stuff
-	"eslint.options": {
-		"overrideConfigFile": ".config/.eslint.config.mjs"
-	}, // Specify where the eslint config is (relative to CWD)
-	"editor.formatOnSave": true, // Run Prettier on save
-	"eslint.format.enable": true, // Maybe unnecessary? // Maybe we actually want to disable this now?
+	// TypeScript
+	"typescript.tsdk": "node_modules\\typescript\\lib", // VSCode should use the same TypeScript version as the projects
+	"editor.quickSuggestions": { "strings": true },
+
+	// ESLint
+	"eslint.validate": ["javascript", "typescript", "javascriptreact", "typescriptreact", "json", "jsonc"],
+	"eslint.options": { "overrideConfigFile": ".config/.eslint.config.mjs" },
 	"eslint.run": "onSave",
+	"eslint.format.enable": true,
 	"eslint.workingDirectories": ["../config", "../**/*"],
+
+	// Formatting
+	"editor.formatOnSave": true,
+	"editor.defaultFormatter": "esbenp.prettier-vscode", // Force VSCode to use Prettier
+	"prettier.enable": true,
 	"editor.codeActionsOnSave": {
 		"source.fixAll.eslint": "explicit",
 		"source.fixAll.format": "explicit"
 	},
-	//
-	// Prettier settings
-	"editor.defaultFormatter": "esbenp.prettier-vscode", // Force VSCode to use Prettier
-	"prettier.enable": true
+
+	// C/C++ IntelliSense
+	"C_Cpp.default.configurationProvider": "ms-vscode.cpptools",
+	"C_Cpp.errorSquiggles": "enabled",
+	"C_Cpp.intelliSenseEngine": "default",
+	"C_Cpp.intelliSenseEngineFallback": "enabled",
+	"C_Cpp.autocompleteAddParentheses": true,
+	"C_Cpp.default.cppStandard": "c++17",
+	"C_Cpp.default.cStandard": "c11",
+	"files.associations": {
+		"*.h": "cpp",
+		"*.hpp": "cpp",
+		"*.cpp": "cpp"
+	}
 }

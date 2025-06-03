@@ -1,4 +1,5 @@
 import { sleep } from '../sleep';
+
 import { runFunctionsInParallel } from './index';
 
 const folderName = __dirname.split('\\').pop()!;

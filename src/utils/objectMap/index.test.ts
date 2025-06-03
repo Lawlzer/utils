@@ -12,7 +12,7 @@ describe(folderName, () => {
 		const result = objectMap(
 			obj,
 			(val, _obj) => val + 1,
-			(key, _obj) => key + '1'
+			(key, _obj) => `${key}1`
 		);
 		expect(result).toEqual({
 			one1: 2,
@@ -30,7 +30,7 @@ describe(folderName, () => {
 		objectMap(
 			obj,
 			(val, _obj) => val + 1,
-			(key, _obj) => key + '1'
+			(key, _obj) => `${key}1`
 		);
 		expect(obj).toEqual({
 			one: 1,

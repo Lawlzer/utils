@@ -1,4 +1,5 @@
 import { getRandomCharacters } from '../getRandomCharacters/index';
+
 import { returnRandomWeightedObject } from './index';
 
 const folderName = __dirname.split('\\').pop()!;

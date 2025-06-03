@@ -44,7 +44,7 @@ export function clone<T>(input: T): T {
 
 	// Handle RegExp
 	if (input instanceof RegExp) {
-		const flags = input.flags;
+		const { flags } = input;
 		return new RegExp(input.source, flags) as T;
 	}
 
@@ -54,9 +54,7 @@ export function clone<T>(input: T): T {
 	}
 
 	// Handle plain objects
-	const output = objectMap(input as Record<string, unknown>, (value) => {
-		return clone(value);
-	});
+	const output = objectMap(input as Record<string, unknown>, (value) => clone(value));
 
 	return output as T;
 }

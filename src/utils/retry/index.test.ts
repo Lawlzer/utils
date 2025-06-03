@@ -1,5 +1,6 @@
 // @ts-nocheck
-import { mock, beforeEach, afterEach, describe, it, expect } from 'bun:test';
+import { afterEach, beforeEach, describe, expect, it, mock } from 'bun:test';
+
 import { retry } from './index';
 
 const folderName = __dirname.split('\\').pop()!;
@@ -71,7 +72,9 @@ describe(folderName, () => {
 	it('should reject with a timeout error if the function is too slow', async () => {
 		const timeoutMs = 100;
 		const verySlowActualFunction = mock(async () => {
-			await new Promise((r) => setTimeout(r, 500));
+			await new Promise((r) => {
+				setTimeout(r, 500);
+			});
 			return 'actually very slow';
 		});
 

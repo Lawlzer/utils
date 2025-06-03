@@ -2,6 +2,7 @@ import fs from 'fs-extra';
 import path from 'path';
 
 import { createTemporaryDirectory } from '../createTemporaryDirectory';
+
 import { getNextOutputPath } from './index';
 
 const folderName = __dirname.split('\\').pop()!;

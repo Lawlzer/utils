@@ -38,5 +38,5 @@
 	},
 	"exports": ["./src/index.ts"],
 	"include": ["src", "../**/*/tsconfig.json", "**/*/package.json", "**/*/tsconfig.build.json", "**/*/tsconfig.eslint.json", "**/*/package-lock.json", "**/*/.config/.eslintrc.commit.js", "**/*/.config/.eslintrc.js", "**/*/.config/.prettierrc.js", "**/*/.config/.swcrc", "**/*/.config/jest.config.ts", "**/*/.config/lint-staged.config.mjs", "**/*/testUtils/testSetup.ts", "**/*/testUtils/testTeardown.ts"],
-	"exclude": ["node_modules", "scripts", "tools", "webpack", "jest", "legacy", "temp", "dist", ".env", "scripts", "routeTypes"]
+	"exclude": ["build.ts", "dist"]
 }

@@ -34,5 +34,7 @@ export async function sleep(inputTime: number | string): Promise<void> {
 		console.warn(`@lawlzer/utils: sleep() has been called for 1d or longer with input: \"${String(inputTime)}\".`);
 	}
 
-	return new Promise((resolve) => setTimeout(resolve, millisecondsToSleep));
+	return new Promise((resolve) => {
+		setTimeout(resolve, millisecondsToSleep);
+	});
 }

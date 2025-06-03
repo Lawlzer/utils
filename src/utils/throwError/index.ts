@@ -10,12 +10,12 @@ export function throwError(...message: readonly string[]): never {
 	stackTrace.split('\n').splice(1, 5); // Remove these lines, as they are for createError()
 
 	let output = '';
-	output += '\n' + pc.red(pc.bold(packageName));
-	output += '\n' + pc.white(`Function called from the file: ${pc.blue(filePath)}`);
-	output += '\n' + pc.white(`Function called: ${pc.cyan(functionName)}`);
-	output += '\n' + pc.white(`You made the mistake: ${pc.magenta(message.join(' '))}`);
-	output += '\n\n' + pc.gray(stackTrace);
-	output += '\n\n' + pc.gray('This error was thrown by the throwError() function from @lawlzer/utils.');
+	output += `\n${pc.red(pc.bold(packageName))}`;
+	output += `\n${pc.white(`Function called from the file: ${pc.blue(filePath)}`)}`;
+	output += `\n${pc.white(`Function called: ${pc.cyan(functionName)}`)}`;
+	output += `\n${pc.white(`You made the mistake: ${pc.magenta(message.join(' '))}`)}`;
+	output += `\n\n${pc.gray(stackTrace)}`;
+	output += `\n\n${pc.gray('This error was thrown by the throwError() function from @lawlzer/utils.')}`;
 
 	throw new Error(output);
 }

@@ -1,11 +1,10 @@
 import { describe, expect, test } from 'bun:test';
+
 import { exec, execStrict } from './index';
 
 describe('exec', () => {
 	test('should execute a simple command', async () => {
-		// On Windows, echo preserves quotes, so we need to handle it differently
-		const command = process.platform === 'win32' ? 'echo Hello World' : 'echo "Hello World"';
-		const { stdout, stderr } = await exec(command);
+		const { stdout, stderr } = await exec('echo "Hello World"');
 		expect(stdout.trim()).toBe('Hello World');
 		expect(stderr).toBe('');
 	});
@@ -48,9 +47,7 @@ describe('exec', () => {
 
 describe('execStrict', () => {
 	test('should return stdout for successful commands', async () => {
-		// On Windows, echo preserves quotes, so we need to handle it differently
-		const command = process.platform === 'win32' ? 'echo Hello World' : 'echo "Hello World"';
-		const output = await execStrict(command);
+		const output = await execStrict('echo "Hello World"');
 		expect(output.trim()).toBe('Hello World');
 	});
 
@@ -61,9 +58,7 @@ describe('execStrict', () => {
 	});
 
 	test('should not throw if stderr is empty/whitespace', async () => {
-		// On Windows, echo preserves quotes, so we need to handle it differently
-		const command = process.platform === 'win32' ? 'echo Success' : 'echo "Success"';
-		const output = await execStrict(command);
+		const output = await execStrict('echo "Success"');
 		expect(output.trim()).toBe('Success');
 	});
 });

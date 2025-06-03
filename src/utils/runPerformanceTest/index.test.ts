@@ -1,8 +1,8 @@
 // @ts-nocheck
-import { mock, spyOn, beforeEach, afterEach, describe, it, expect, afterAll } from 'bun:test';
+import { afterAll, afterEach, beforeEach, describe, expect, it, mock, spyOn } from 'bun:test';
+
 // Note: No need to import describe, expect, it, beforeEach, afterEach from jest explicitly
 // They are globally available when running via Jest.
-
 import { runPerformanceTest } from './index';
 
 // Store original before mocking

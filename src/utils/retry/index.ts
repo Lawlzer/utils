@@ -1,5 +1,5 @@
-import { throwError } from '../throwError';
 import { sleep as defaultSleep } from '../sleep';
+import { throwError } from '../throwError';
 
 const RETRY_DELAY_MS = 10; // Standard delay between retries
 

@@ -1,11 +1,6 @@
-// This is the tsconfig used for ESLint
-// ESLint needs every linted file to be touched by the TSConfig.
-// I hate ESLint >.>
 {
 	"extends": "./tsconfig.json",
-	"compilerOptions": {
-		"rootDir": "."
-	},
-	"include": ["./src/**/*", "./.config/**/*", "./test-utils/**/*", "./test/integration/consumer-project/src/index.ts"],
-	"exclude": ["node_modules", "dist"]
+	"compilerOptions": {},
+	"include": ["./src", "./.config", "./test-utils", "./.config/tsup.config.ts", "build.ts", "./test"],
+	"exclude": []
 }

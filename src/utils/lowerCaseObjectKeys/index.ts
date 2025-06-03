@@ -10,11 +10,7 @@ export function lowerCaseObjectKeys(input: UnknownObject | UnknownObject[]): Unk
 
 	// Arrays
 	if (Array.isArray(input)) {
-		const result = input
-			.map((item) => {
-				return lowerCaseObjectKeys(item);
-			})
-			.flat(99);
+		const result = input.map((item) => lowerCaseObjectKeys(item)).flat(99);
 		return result;
 	}
 
