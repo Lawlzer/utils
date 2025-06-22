@@ -10,7 +10,7 @@ describe(folderName, () => {
 		expect(end - start).toBeLessThan(100);
 	});
 
-	// I have no idea why this will not work in Bun test
+	// Bun test environment appears to mock/fast-forward timers, making actual sleep timing tests unreliable
 	it.skip('will sleep for approximately the specified amount of time', async () => {
 		const start = Date.now();
 		await sleep(1000);
@@ -19,7 +19,7 @@ describe(folderName, () => {
 		expect(end - start).toBeLessThan(2000); // It may take awhile if the system lags
 	});
 
-	// I have no idea why this will not work in Bun test
+	// Bun test environment appears to mock/fast-forward timers, making actual sleep timing tests unreliable
 	it.skip('will work for strings that represent numbers (ms)', async () => {
 		const start = Date.now();
 		await sleep('1s');
